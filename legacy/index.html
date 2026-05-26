@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thomas Ou • Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <base href="/">
+  <!-- Google Fonts for modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:900,700,400|Inter:400,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- GSAP -->
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <!-- Three.js (for spinning cube + nav hover models) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.155.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.155.0/examples/jsm/"
+      }
+    }
+  </script>
+  <!-- Model Viewer (for animal heads in experience) -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="styles/about.css" />
+  <link rel="stylesheet" href="styles/experience.css?v=2-cardfix" />
+  <link rel="stylesheet" href="styles/spa.css" />
+  <link rel="stylesheet" href="styles/projects-new.css?v=2-cardpolish" />
+  <link rel="stylesheet" href="styles/contact.css" />
+  <link rel="stylesheet" href="styles/bg-effects.css" />
+</head>
+<body data-current-route="home">
+
+  <!-- Background Effects -->
+  <div class="bg-effects" aria-hidden="true">
+    <div class="aurora-blob aurora-blob-1"></div>
+    <div class="aurora-blob aurora-blob-2"></div>
+    <div class="aurora-blob aurora-blob-3"></div>
+  </div>
+  <div class="vignette" aria-hidden="true"></div>
+  <svg class="noise-overlay" aria-hidden="true">
+    <filter id="noise-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noise-filter)"/>
+  </svg>
+
+  <!-- Scroll Progress Indicator (About Only) -->
+  <div class="scroll-progress about-only">
+    <div class="scroll-progress-bar"></div>
+  </div>
+
+
+  <!-- SPA Content Wrapper -->
+  <div class="spa-content-wrapper">
+    
+    <!-- HOME ROUTE CONTENT -->
+    <div id="home-content" data-route-content style="display: block;">
+      <!-- Thomas Ou heading -->
+      <div class="name-heading home-only page-title">
+        <div class="typing-line-1">
+          <span class="typed-text-1"></span><span class="cursor cursor-1">_</span>
+        </div>
+        <div class="typing-line-2">
+          <span class="typed-text-2"></span><span class="cursor cursor-2" style="display: none;">_</span>
+        </div>
+        <div class="home-subtitles">
+          <span>Developer & Analyst</span>
+        </div>
+      </div>
+
+      <!-- 3D Model Container (shown on nav hover) -->
+      <div id="model-container" class="home-only">
+        <canvas id="model-canvas"></canvas>
+      </div>
+
+      <!-- 3D Cube Container -->
+      <div id="cube-container" class="home-only">
+        <canvas id="cube-canvas"></canvas>
+      </div>
+    </div>
+
+    <!-- ABOUT ROUTE CONTENT -->
+    <div id="about-content" data-route-content style="display: none;">
+      <!-- About Container -->
+      <div class="about-container">
+        
+        <!-- About Title -->
+        <div class="about-title page-title">
+          <div class="about-text">
+            <div>ABOUT</div>
+            <div>ME</div>
+          </div>
+          <div class="title-subtitle">Click on underlined words to learn more</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="about-content">
+          
+          <!-- Profile Section -->
+          <div class="profile-section">
+            <div class="profile-text">
+              <h2>Hi there. I'm <strong>Thomas Ou</strong> and welcome to my personal portfolio. I'm a sophomore at <span class="school-badge"><img src="Images/Penn.png" alt="" class="school-badge-icon" /><span>University of Pennsylvania</span></span> studying Mathematics and Computer Science. I specialize in building <a href="#">full-stack systems</a>, probabilistic models, and the occasional <a href="#">passion project</a> that keeps me up at night.</h2>
+              
+              <div class="profile-image">
+                <img src="Images/ThomasPortrait.png" alt="Thomas Ou" />
+              </div>
+              
+              <p>Tech and math have been part of my life for as long as I can remember. As a kid I was taking apart anything with a circuit board. By high school I was building computers and teaching myself to code. <span class="highlight-sweep">At 18, online poker led me to discover a vulnerability in a crypto casino's shuffling algorithm</span> that created predictable patterns every few hundred hands. I taught myself to exploit it (<em>ethically, of course</em>), and was hired to help fix their system. Since then I've been obsessed with applying algorithmic reasoning through game theory, probabilistic thinking, and machine learning to real-world problems.</p>
+
+              <p>I'm excited by projects that are ambitious, creative, and technically challenging. I enjoy turning complex ideas into intuitive and functional digital experiences, whether it's a rough concept or a fully formed vision. When I'm not studying or coding, you'll find me at Penn Boxing, lifting, playing poker, or listening to some good music.</p>
+
+              <div class="tools-dropdown">
+                <div class="tools-dropdown-header">
+                  <span>Click to see some of the tools I work with.</span>
+                </div>
+                <div class="tools-dropdown-content">
+                  <div class="tools-section">
+                    <h5>Languages</h5>
+                    <div class="tools-icons">
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"><span class="icon-tooltip">Python</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++"><span class="icon-tooltip">C++</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" alt="R"><span class="icon-tooltip">R</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ocaml/ocaml-original.svg" alt="OCaml"><span class="icon-tooltip">OCaml</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"><span class="icon-tooltip">Java</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matlab/matlab-original.svg" alt="MATLAB"><span class="icon-tooltip">MATLAB</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"><span class="icon-tooltip">HTML5</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS"><span class="icon-tooltip">CSS</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"><span class="icon-tooltip">JavaScript</span></div>
+                    </div>
+                  </div>
+                  <div class="tools-section">
+                    <h5>Frameworks</h5>
+                    <div class="tools-icons">
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy"><span class="icon-tooltip">NumPy</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="Pandas"><span class="icon-tooltip">Pandas</span></div>
+                      <div class="icon-container"><img src="Images/Icons/Sckit.png" alt="Scikit-learn"><span class="icon-tooltip">Scikit-learn</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span class="icon-tooltip">PyTorch</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"><span class="icon-tooltip">React</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span class="icon-tooltip">TensorFlow</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib"><span class="icon-tooltip">Matplotlib</span></div>
+                    </div>
+                  </div>
+                  <div class="tools-section">
+                    <h5>Databases & Tools</h5>
+                    <div class="tools-icons">
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL"><span class="icon-tooltip">MySQL</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"><span class="icon-tooltip">PostgreSQL</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB"><span class="icon-tooltip">MongoDB</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js"><span class="icon-tooltip">Node.js</span></div>
+                      <div class="icon-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span class="icon-tooltip">Git</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- Bottom Tagline -->
+        <div class="about-tagline">
+          <div>BUILD.</div>
+          <div>OPTIMIZE.</div>
+          <div>DELIVER.</div>
+        </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- EXPERIENCE ROUTE CONTENT -->
+    <div id="experience-content" data-route-content style="display: none;">
+      <!-- Experience Container -->
+      <div class="experience-container">
+        
+        <!-- Full Width Content -->
+        <div class="content-section">
+          
+          <!-- PROFESSIONAL EXPERIENCE Title -->
+          <div class="journey-title page-title">
+            <div class="journey-text">
+              <div>PROFESSIONAL</div>
+              <div>EXPERIENCE</div>
+            </div>
+            <div class="title-subtitle">Scroll down to learn more</div>
+            
+            <!-- Mobile Hello Content (hidden by default, shown in vertical mode) -->
+            <div class="hello-content-mobile" style="display: none; border: none !important; background: transparent !important;">
+              <!-- Photo + Text Container -->
+              <div style="display: flex; gap: 0.75rem; margin: 0 0 0.5rem 0;">
+                <!-- Profile Photo -->
+                <div class="profile-photo-mobile">
+                  <img src="Images/SchoolPortrait.png" alt="Thomas Ou" />
+                </div>
+
+                <!-- Hello + Bio -->
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                  <div style="font-size: clamp(1.4rem, min(5vw, 5vh), 2.4rem); font-weight: 400; font-family: 'Anton', Arial, sans-serif; color: #ffffff; margin: 0 0 0.5rem 0; text-align: left; line-height: 1.05; letter-spacing: 0.02em;">Hello. I am Thomas.</div>
+                  <div style="color: #ffffff; font-family: 'Inter', Arial, sans-serif; font-size: clamp(0.85rem, min(2.5vw, 3vh), 1.1rem); line-height: 1.5; opacity: 0.85;">I'm a math and CS student at Penn with experience across quantitative research, derivatives, and defense tech. At present, I'm completing both my undergrad and accelerated master's in Philadelphia, while also conducting research with faculty.</div>
+                </div>
+              </div>
+
+
+              <!-- Navigation Buttons -->
+              <div style="margin: 1rem 0 0 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; opacity: 1;">
+                <button class="hello-nav-btn" data-section="education" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Education</button>
+                <button class="hello-nav-btn" data-section="experience" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Experience</button>
+                <button class="hello-nav-btn" data-section="research" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Research</button>
+              </div>
+
+            </div>
+          </div>
+
+          
+          <!-- Left Half - Horse Model -->
+          <div class="left-section">
+
+            <!-- Titles - stacked on top of each other, in flow -->
+            <div class="left-section-titles" style="position: relative; width: 100%; min-height: 8rem; margin-bottom: 0;">
+              <!-- RESEARCH Title (in front of all) -->
+              <div class="research-title" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 3; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;">
+                <div class="research-text" style="font-size: min(9vw, 8rem, 13vh); font-weight: 400; font-family: 'Anton', Arial, sans-serif; color: #ffffff; text-align: center; letter-spacing: 0.05em; text-transform: none; margin: 0; line-height: 0.9; width: 100%;">
+                  <div>RESEARCH</div>
+                </div>
+              </div>
+
+              <!-- EXPERIENCE Title (in front) -->
+              <div class="experience-title" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 2; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;">
+                <div class="experience-text" style="font-size: min(9vw, 8rem, 13vh); font-weight: 400; font-family: 'Anton', Arial, sans-serif; color: #ffffff; text-align: center; letter-spacing: -0.02em; text-transform: none; margin: 0; line-height: 0.9; width: 100%;">
+                  <div>EXPERIENCE</div>
+                </div>
+              </div>
+
+              <!-- EDUCATION Title -->
+              <div class="education-title" style="position: absolute; top: 0; left: 0; width: 100%; z-index: 1;">
+                <div class="education-text" style="font-size: min(9vw, 8rem, 13vh); font-weight: 400; font-family: 'Anton', Arial, sans-serif; color: #ffffff; text-align: center; letter-spacing: -0.02em; text-transform: none; margin: 0; line-height: 0.9; width: 100%;">
+                  <div>EDUCATION</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3D Models - stacked on top of each other, in flow -->
+            <div class="left-section-model" style="position: relative; width: 100%; height: 60vh; flex-shrink: 0; min-height: 60vh; margin-top: -2rem;">
+              <!-- 3D Lion Head (in front of all) -->
+              <div class="lion-container-new" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 7; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; border: none;">
+                <model-viewer
+                  src="Models/lion_head_4k.glb"
+                  alt="3D Lion Head"
+                  auto-rotate
+                  rotation-per-second="30deg"
+                  camera-orbit="0deg 75deg 115%"
+                  field-of-view="30deg"
+                  shadow-intensity="0"
+                  environment-image="neutral"
+                  exposure="1"
+                  shadow-softness="0"
+                  loading="lazy"
+                  reveal="auto"
+                  style="width: 100%; height: 100%;">
+                </model-viewer>
+              </div>
+
+              <!-- 3D Bull Head (in front) -->
+              <div class="bull-container-new" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; border: none;">
+                <model-viewer
+                  src="Models/bull_head_4k.glb"
+                  alt="3D Bull Head"
+                  auto-rotate
+                  rotation-per-second="30deg"
+                  camera-orbit="0deg 75deg 115%"
+                  field-of-view="30deg"
+                  shadow-intensity="0"
+                  environment-image="neutral"
+                  exposure="1"
+                  shadow-softness="0"
+                  loading="lazy"
+                  reveal="auto"
+                  style="width: 100%; height: 100%;">
+                </model-viewer>
+              </div>
+
+              <!-- 3D Horse Head -->
+              <div class="horse-container visible" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <model-viewer
+                  src="Models/horse_head_4k.glb"
+                  alt="3D Horse Head"
+                  auto-rotate
+                  rotation-per-second="30deg"
+                  camera-orbit="0deg 75deg 110%"
+                  field-of-view="30deg"
+                  shadow-intensity="0"
+                  environment-image="neutral"
+                  exposure="1"
+                  shadow-softness="0"
+                  loading="eager"
+                  reveal="auto"
+                  style="width: 100%; height: 100%;">
+                </model-viewer>
+              </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons permanent-buttons" style="z-index: 15;">
+              <button class="nav-btn">About</button>
+              <button class="nav-btn">Education</button>
+              <button class="nav-btn">Experience</button>
+              <button class="nav-btn">Research</button>
+            </div>
+          </div>
+
+
+          <!-- Top Container -->
+          <div class="top-container">
+            <!-- Text Content Container -->
+            <div class="text-content-container" style="position: absolute; top: 0; right: 0; height: 100%; padding: 2rem 2rem 2rem 0.5rem; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center;">
+              <!-- Hello Thomas Header -->
+              <div class="hello-section" style="font-size: min(7.5vw, 2.4rem, 5vh); font-weight: 400; font-family: 'Anton', Arial, sans-serif; color: #ffffff; margin: 0; text-align: left; line-height: 1.05; opacity: 0.3; transition: opacity 0.6s ease; letter-spacing: 0.02em;">Hello. I am Thomas.</div>
+              
+              <!-- Bio Section - positioned relative to header -->
+              <div class="hello-section" style="color: #ffffff; font-family: 'Inter', Arial, sans-serif; font-size: min(1.4rem, 3.5vh); line-height: 1.6; margin: 2rem 0 1rem 0; opacity: 0.3; transition: opacity 0.6s ease;">I'm a math and CS student at Penn with experience across quantitative research, derivatives, and defense tech. At present, I'm completing both my undergrad and accelerated master's in Philadelphia, while also conducting research with faculty.</div>
+              
+              
+              <!-- Navigation Buttons - positioned relative to header -->
+              <div class="hello-section" style="margin: 1rem 0 0 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; opacity: 0.3; transition: opacity 0.6s ease;">
+                <button class="hello-nav-btn" data-section="education" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Education</button>
+                <button class="hello-nav-btn" data-section="experience" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Experience</button>
+                <button class="hello-nav-btn" data-section="research" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Anton', Arial, sans-serif; font-size: min(0.8rem, 1.8vh); font-weight: 400; text-transform: none; letter-spacing: 0.1em; padding: 0.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">Research</button>
+              </div>
+              
+            </div>
+            
+            <!-- Profile Photo -->
+            <div class="profile-photo hello-visible">
+              <img src="Images/SchoolPortrait.png" alt="Thomas Ou" />
+            </div>
+          </div>
+
+          <!-- Right Half - Content -->
+          <div class="right-section">
+            
+            <!-- Education Section -->
+            <div class="timeline-container">
+              <div class="timeline-track"></div>
+              
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <h3>Master of Science in Engineering in Computer and Information Science</h3>
+                  <div class="timeline-school">University of Pennsylvania</div>
+                  <div class="timeline-details">
+                    <div class="course-grid">
+                      <span class="course-pill">Operating Systems</span>
+                      <span class="course-pill">Distributed Systems</span>
+                      <span class="course-pill">Machine Learning</span>
+                      <span class="course-pill">Computer Architecture</span>
+                      <span class="course-pill">Database Systems</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <h3>Bachelor of Science in Mathematics/Statistics</h3>
+                  <div class="timeline-school">University of Pennsylvania</div>
+                  <div class="timeline-details">
+                    <div class="course-grid">
+                      <span class="course-pill">Algorithms & Data Structures</span>
+                      <span class="course-pill">Applied Probability</span>
+                      <span class="course-pill">Game Theory</span>
+                      <span class="course-pill">Real Analysis</span>
+                      <span class="course-pill">Abstract Algebra</span>
+                      <span class="course-pill">Probability Theory</span>
+                      <span class="course-pill">Statistical Inference</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Experience Section -->
+            <div class="cards-container experience-cards">
+
+              <div class="card">
+                <div class="card-header">
+                  <h3>Software Engineer</h3>
+                  <div class="card-company">Amazon</div>
+                  <div class="card-location">May 2026 - Sept 2026</div>
+                </div>
+                <div class="card-preview">
+                  <p>Working on Amazon FSx — the managed file-storage service layered on NetApp ONTAP, Lustre, OpenZFS, and Windows File Server — building and scaling the control-plane services that provision, monitor, and heal petabyte-scale file systems for AWS customers.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3>Quantitative Developer</h3>
+                  <div class="card-company">Astera Holdings</div>
+                  <div class="card-location">Jan 2025 - May 2025</div>
+                </div>
+                <div class="card-preview">
+                  <p>Built a low-latency prediction market arbitrage engine in Python that detected and executed cross-platform pricing discrepancies in under 50 milliseconds across 50+ trading pairs.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3>Data Engineer</h3>
+                  <div class="card-company">Flushing CPA Tax Center</div>
+                  <div class="card-location">Jun 2024 - Aug 2024</div>
+                </div>
+                <div class="card-preview">
+                  <p>Built automation scripts and predictive models at a CPA firm to streamline large-scale financial reconciliation and enable forward-looking tax advisory for corporate clients.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spacer between sections -->
+            <div style="height: 2rem; margin: 1rem 0;"></div>
+
+            <!-- Research Section -->
+            <div class="cards-container research-cards">
+
+              <div class="card">
+                <div class="card-header">
+                  <h3>Research Assistant</h3>
+                  <div class="card-company">Penn Center for Undergraduate Research and Fellowships</div>
+                  <div class="card-location">Jul 2025 - Present</div>
+                </div>
+                <div class="card-preview">
+                  <p>Built computer vision and NLP pipelines to digitize 50,000+ pages of historical defense records and conducted quantitative analysis that surfaced significant shifts in government spending patterns.</p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title-stacked">
+                    <span class="card-title-line">Research Assistant</span>
+                    <span class="card-title-line card-title-line--second">(Computational Physics)</span>
+                  </h3>
+                  <div class="card-company">Princeton Plasma Physics Laboratory</div>
+                  <div class="card-location">Feb 2024 - Apr 2024</div>
+                </div>
+                <div class="card-preview">
+                  <p>Optimized Monte Carlo plasma simulations at a DOE fusion research lab through low-level SIMD vectorization and parallel computing, and automated large-scale regression testing infrastructure.</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Resume Link beneath research -->
+            <div style="text-align: center; margin: 4rem 0;">
+              <a href="#" class="resume-link" style="display: inline-block; background: transparent; border: 2px solid #ffffff; color: #ffffff; font-family: 'Montserrat', 'Inter', Arial, sans-serif; font-size: min(1.1rem, 2.4vh); font-weight: 600; text-transform: none; letter-spacing: 0.05em; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease; position: relative; overflow: hidden;">
+                <span style="position: relative; z-index: 2;">See My Resume</span>
+                <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); transition: left 0.6s ease;"></div>
+              </a>
+            </div>
+
+            <!-- Spacer beneath research -->
+            <div style="height: 2rem; margin: 1rem 0;"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS ROUTE CONTENT -->
+    <div id="projects-content" data-route-content style="display: none;">
+      <!-- Projects Container -->
+      <div class="projects-container projects-only">
+        
+        <!-- Featured Projects Section -->
+        <div class="section-title projects-only page-title">
+          <div class="title-featured">FEATURED</div>
+          <div class="title-projects">PROJECTS</div>
+          <div class="title-subtitle">Click on a project to view details</div>
+        </div>
+        
+        <!-- Projects Wheel -->
+        <div class="projects-wheel projects-only">
+          <div class="wheel-container">
+            <div class="project-card" data-project="fightvision">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/STR1KE.gif');"></div>
+              <div class="project-header">
+                <h3>STR1KE — MMA Strike Detection</h3>
+              </div>
+            </div>
+
+            <div class="project-card" data-project="dj">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/D4NCE.gif');"></div>
+              <div class="project-header">
+                <h3>D4NCE — AI-Powered DJ System</h3>
+              </div>
+            </div>
+
+            <div class="project-card" data-project="fightiq">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/V3RSUS.gif');"></div>
+              <div class="project-header">
+                <h3>V3RSUS — MMA Predictive Analytics</h3>
+              </div>
+            </div>
+            
+            <div class="project-card" data-project="harboros">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/HARBOROS.gif');"></div>
+              <div class="project-header">
+                <h3>HarborOS — Maritime Defense Platform</h3>
+              </div>
+            </div>
+            
+            <div class="project-card" data-project="poker">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/R1VER1.gif');"></div>
+              <div class="project-header">
+                <h3>R1VER — Poker Intelligence (MCCFR Solver)</h3>
+              </div>
+            </div>
+
+            <div class="project-card" data-project="smartcv">
+              <div class="project-image" style="background-image: url('Images/ProjectPhotos/DR4FT.gif');"></div>
+              <div class="project-header">
+                <h3>DR4FT — AI Resume Optimizer</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Full-screen Modal for project details -->
+        <div id="projectModal" class="project-fullscreen-modal projects-only">
+          <div class="fullscreen-modal-content">
+            <div class="project-hero-section">
+              <div class="back-to-projects-container">
+                <div class="back-to-projects" id="backToProjects">← Back to Projects</div>
+              </div>
+              <div class="project-hero-image" id="projectHeroImageContainer">
+                <div class="project-hero-image-inner">
+                  <img id="projectHeroImage" src="" alt="" />
+                  <button class="gallery-prev" id="galleryPrev" aria-label="Previous image">&#8249;</button>
+                  <button class="gallery-next" id="galleryNext" aria-label="Next image">&#8250;</button>
+                </div>
+                <div class="gallery-dots" id="galleryDots" aria-label="Gallery images"></div>
+              </div>
+              <div class="project-hero-info">
+                <h1 id="projectTitle" class="project-title"></h1>
+                <p id="projectDescription" class="project-description"></p>
+                <div id="projectTechStack" class="project-tech-stack"></div>
+                <div id="projectLinks" class="project-links project-links-inline"></div>
+              </div>
+            </div>
+            <div id="projectFeatures" class="project-features-grid"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="image-lightbox" id="imageLightbox">
+      <img src="" alt="Zoomed image" id="lightboxImage">
+    </div>
+
+    <!-- CONTACT ROUTE CONTENT -->
+    <div id="contact-content" data-route-content style="display: none;">
+      <!-- Contact Container (background only) -->
+      <div class="contact-container contact-only">
+      </div>
+
+      <!-- CONTACT ME Title (outside container) -->
+      <div class="journey-title contact-only page-title">
+        <div class="journey-text">
+          <div>CONTACT</div>
+          <div>ME</div>
+        </div>
+      </div>
+
+      <!-- Current Focus -->
+      <!-- Contact Buttons (outside container) -->
+      <div class="contact-buttons contact-only">
+        <button class="contact-btn" data-contact="email">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          Email Me
+        </button>
+        <button class="contact-btn" data-contact="linkedin">
+          <svg viewBox="0 0 24 24">
+            <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+          </svg>
+          Connect
+        </button>
+        <button class="contact-btn" data-contact="github">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+          See My Code
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Mobile Menu Button (vertical mode only) -->
+  <div class="mobile-menu-btn" style="position: fixed; bottom: 1rem; right: 1rem; z-index: 10000; width: 50px; height: 50px; background: rgba(10, 10, 22, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1);">
+    <div class="hamburger">
+      <span style="display: block; width: 20px; height: 2px; background: #ffffff; margin: 3px 0; transition: 0.3s; border-radius: 1px;"></span>
+      <span style="display: block; width: 20px; height: 2px; background: #ffffff; margin: 3px 0; transition: 0.3s; border-radius: 1px;"></span>
+      <span style="display: block; width: 20px; height: 2px; background: #ffffff; margin: 3px 0; transition: 0.3s; border-radius: 1px;"></span>
+    </div>
+  </div>
+
+  <!-- Nav auto-show trigger zone (small screens) -->
+  <div class="nav-trigger-zone"></div>
+  <div class="nav-trigger-dot"></div>
+
+  <!-- Scripts -->
+  <script defer src="js/spa-router.js"></script>
+  <script defer src="js/spa-projects-new.js"></script>
+  <script defer src="js/spa-init.js"></script>
+  <script defer src="js/3d-cube.js"></script>
+  <script defer src="js/dynamic-models.js"></script>
+  <script defer src="js/navigation.js"></script>
+  <script defer src="js/about.js"></script>
+  <script defer src="js/experience.js"></script>
+  <script defer src="js/contact.js"></script>
+
+  <!-- Resume notification toast -->
+  <div id="resume-toast" class="resume-toast" role="alert" aria-live="polite">
+    <p>Resume will be sent upon request. Send me an email at <a href="mailto:thomasou@sas.upenn.edu">thomasou@sas.upenn.edu</a></p>
+    <button type="button" class="resume-toast-close" aria-label="Close">&times;</button>
+  </div>
+
+  <!-- Bottom navigation -->
+  <div class="bottom-nav">
+    <a href="#" data-spa-route="home" class="nav-link active">home</a>
+    <a href="#" data-spa-route="about" class="nav-link">about</a>
+    <a href="#" data-spa-route="experience" class="nav-link">experience</a>
+    <a href="#" data-spa-route="projects" class="nav-link">projects</a>
+    <a href="#" data-spa-route="contact" class="nav-link">contact</a>
+  </div>
+
+</body>
+</html>

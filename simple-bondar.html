@@ -912,6 +912,26 @@
     }
     .reveal.in { opacity: 1; transform: translateY(0); }
 
+    /* ─── SIMPLIFICATION OVERRIDES ────────────────────────────────── */
+    .nav { mix-blend-mode: normal; background: rgba(10,10,10,0.7); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); padding: 16px 32px; }
+    .nav .links { font-family: var(--sans); text-transform: none; font-weight: 500; font-size: 14px; letter-spacing: 0; }
+    .nav .links a { color: var(--text-2); padding: 6px 12px; border-radius: 6px; }
+    .nav .links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav .links a::after { display: none; }
+    .nav .cta { font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: 0; text-transform: none; padding: 8px 16px; border-color: var(--line); }
+
+    /* shrink the giant name a touch, push center */
+    .hero-stack { left: 32px; top: 38%; transform: translateY(-50%); }
+    .hero-stack .nm { font-size: clamp(64px, 12vw, 180px); }
+    .hero-cycler-row { bottom: 180px; }
+    .hero-cycler-row .br { display: none; }
+    .hero-cycler-wrap { color: var(--text-2); font-style: normal; font-weight: 400; font-size: clamp(20px, 2vw, 28px); font-family: var(--mono); letter-spacing: 0.05em; }
+
+    /* hide chrome */
+    .case-num, .case .arrow, #cursor { display: none !important; }
+    body, html { cursor: auto; }
+    a, button, .case, .exp-row { cursor: pointer; }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
     @media (max-width: 900px) {
       html, body { cursor: auto; }
@@ -943,146 +963,50 @@
 <nav class="nav">
   <a href="#" class="logo">Thomas Ou<span class="dot">.</span></a>
   <div class="links">
-    <a href="#work" data-cursor><span class="idx">/01</span> Folio</a>
-    <a href="#about" data-cursor><span class="idx">/02</span> Info</a>
-    <a href="#experience" data-cursor><span class="idx">/03</span> Exp</a>
-    <a href="#contact" data-cursor><span class="idx">/04</span> Contact</a>
+    <a href="#about" data-cursor>About</a>
+    <a href="#work" data-cursor>Work</a>
+    <a href="#experience" data-cursor>Experience</a>
+    <a href="#contact" data-cursor>Contact</a>
   </div>
-  <a href="mailto:thomasou@sas.upenn.edu" class="cta" data-cursor>Let's talk →</a>
+  <a href="mailto:thomasou@sas.upenn.edu" class="cta" data-cursor>Email me</a>
 </nav>
 
-<!-- ─── HERO ────────────────────────────────────────────────────────── -->
+<!-- ─── HERO — stripped: no WebGL, no widget, no scramble ───────────── -->
 <section class="hero" id="hero">
-  <canvas id="heroCanvas"></canvas>
-
-  <!-- HUD: minimal—clock + location only -->
-  <div class="hud-readout tr">
-    <span class="row"><b>Philadelphia</b></span>
-    <span class="row" id="hudClock">--:--</span>
-  </div>
-
-  <!-- name stack -->
   <div class="hero-stack">
-    <span class="nm solid" data-name>Thomas</span>
-    <span class="nm outline" data-name>Ou</span>
+    <span class="nm solid">Thomas</span>
+    <span class="nm outline">Ou</span>
   </div>
 
-  <!-- cycler -->
   <div class="hero-cycler-row">
-    <span class="br">[</span>
-    <span class="hero-cycler-wrap" id="cyclerWrap">
-      <span class="layer base" id="cyclerBase">Software Engineer</span>
-      <span class="layer glitch-r" id="cyclerR">Software Engineer</span>
-      <span class="layer glitch-g" id="cyclerG">Software Engineer</span>
-    </span>
-    <span class="br">]</span>
+    <span class="hero-cycler-wrap">Software Engineer</span>
   </div>
 
-  <!-- meta -->
   <div class="hero-meta">
     <div class="col"><span class="k">Currently</span><span class="v"><b>Amazon FSx</b> · SWE</span></div>
     <div class="col"><span class="k">Studying</span><span class="v"><b>UPenn</b> · Math + CS</span></div>
     <div class="col"><span class="k">Available</span><span class="v">2027 · new grad '28</span></div>
   </div>
 
-  <!-- 3D widget -->
-  <div class="hero-widget" id="heroWidget">
-    <canvas id="widgetCanvas"></canvas>
-  </div>
-
   <div class="scroll-prompt-new">SCROLL</div>
 </section>
 
-<!-- ─── MARQUEE ─────────────────────────────────────────────────────── -->
-<div class="marquee-strip">
-  <div class="marquee">
-    <div class="item">Six shipped products <span class="star">★</span></div>
-    <div class="item">50ms arbitrage engine <span class="star">★</span></div>
-    <div class="item">50,000 pages OCR'd <span class="star">★</span></div>
-    <div class="item">Monte Carlo on SIMD <span class="star">★</span></div>
-    <div class="item">Counterfactual regret minimization <span class="star">★</span></div>
-    <div class="item">Maritime defense systems <span class="star">★</span></div>
-    <!-- duplicate for seamless loop -->
-    <div class="item">Six shipped products <span class="star">★</span></div>
-    <div class="item">50ms arbitrage engine <span class="star">★</span></div>
-    <div class="item">50,000 pages OCR'd <span class="star">★</span></div>
-    <div class="item">Monte Carlo on SIMD <span class="star">★</span></div>
-    <div class="item">Counterfactual regret minimization <span class="star">★</span></div>
-    <div class="item">Maritime defense systems <span class="star">★</span></div>
-  </div>
-</div>
+<!-- marquee + stack rail stripped for simplicity -->
 
 <!-- ─── ABOUT ──────────────────────────────────────────────────────── -->
 <section class="about" id="about">
   <div>
-    <span class="section-eyebrow">(_Info)</span>
+    <span class="section-eyebrow">About</span>
   </div>
   <div class="about-prose reveal">
-    I'm Thomas, a math and computer science student at the <b>University of Pennsylvania</b>. I build systems that operate on <em>uncertainty and adversaries</em> — poker solvers, prediction markets, plasma physics, computer vision on fight footage, maritime threat detection. <span class="strike">Thought I'd be a quant.</span> Turns out I just like edges. Currently shipping control-plane infrastructure on <b>AWS FSx</b>, available for 2027 summer roles and new grad '28.
+    I'm Thomas, a math and computer science student at the <b>University of Pennsylvania</b>. I build systems that operate on <em>uncertainty and adversaries</em> — poker solvers, prediction markets, plasma physics, computer vision on fight footage, maritime threat detection. Currently shipping control-plane infrastructure on <b>AWS FSx</b>, available for 2027 summer roles and new grad '28.
   </div>
 </section>
-
-<!-- ─── ACHIEVEMENT STACK ──────────────────────────────────────────── -->
-<div class="stack">
-  <div class="stack-rail">
-    <div class="stack-card accent">
-      <div class="num">50<small>MS</small></div>
-      <div class="lbl">Detection latency</div>
-      <div class="desc">Cross-platform arbitrage engine at Astera Holdings, prediction markets.</div>
-    </div>
-    <div class="stack-card green">
-      <div class="num">50<small>K</small></div>
-      <div class="lbl">Pages digitized</div>
-      <div class="desc">CV + NLP pipeline on historical defense records at Penn CURF.</div>
-    </div>
-    <div class="stack-card">
-      <div class="num">2.3<small>M</small></div>
-      <div class="lbl">MCCFR iterations</div>
-      <div class="desc">R1VER poker solver, GTO convergence on simplified hold'em.</div>
-    </div>
-    <div class="stack-card accent">
-      <div class="num">6<small> shipped</small></div>
-      <div class="lbl">Production products</div>
-      <div class="desc">From AI DJ to maritime defense — see Selected Work below.</div>
-    </div>
-    <div class="stack-card green">
-      <div class="num">18<small> y/o</small></div>
-      <div class="lbl">Casino exploit</div>
-      <div class="desc">Found a vulnerability in a crypto casino's shuffler. Got hired to fix it.</div>
-    </div>
-    <!-- duplicate for loop -->
-    <div class="stack-card accent">
-      <div class="num">50<small>MS</small></div>
-      <div class="lbl">Detection latency</div>
-      <div class="desc">Cross-platform arbitrage engine at Astera Holdings, prediction markets.</div>
-    </div>
-    <div class="stack-card green">
-      <div class="num">50<small>K</small></div>
-      <div class="lbl">Pages digitized</div>
-      <div class="desc">CV + NLP pipeline on historical defense records at Penn CURF.</div>
-    </div>
-    <div class="stack-card">
-      <div class="num">2.3<small>M</small></div>
-      <div class="lbl">MCCFR iterations</div>
-      <div class="desc">R1VER poker solver, GTO convergence on simplified hold'em.</div>
-    </div>
-    <div class="stack-card accent">
-      <div class="num">6<small> shipped</small></div>
-      <div class="lbl">Production products</div>
-      <div class="desc">From AI DJ to maritime defense — see Selected Work below.</div>
-    </div>
-    <div class="stack-card green">
-      <div class="num">18<small> y/o</small></div>
-      <div class="lbl">Casino exploit</div>
-      <div class="desc">Found a vulnerability in a crypto casino's shuffler. Got hired to fix it.</div>
-    </div>
-  </div>
-</div>
 
 <!-- ─── CASES ───────────────────────────────────────────────────────── -->
 <section class="cases" id="work">
   <div class="cases-head">
-    <h2 class="title">(_Folio)<br/><em>selected work</em></h2>
+    <h2 class="title">Selected <em>work</em></h2>
     <div class="meta">
       <b>06</b> projects shipped<br/>
       2024 — 2026
@@ -1096,7 +1020,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© D4NCE</div>
+          <div class="name">D4NCE</div>
           <div class="role">LLM-driven DJ system · 2025</div>
         </div>
         <div class="case-tag">Audio · LLM</div>
@@ -1109,7 +1033,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© V3RSUS</div>
+          <div class="name">V3RSUS</div>
           <div class="role">MMA fight prediction · 2025</div>
         </div>
         <div class="case-tag">ML · Sports</div>
@@ -1122,7 +1046,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© R1VER</div>
+          <div class="name">R1VER</div>
           <div class="role">Poker MCCFR solver · 2024</div>
         </div>
         <div class="case-tag live">▮ Live demo</div>
@@ -1135,7 +1059,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© HARBOROS</div>
+          <div class="name">HARBOROS</div>
           <div class="role">Maritime defense platform · 2026</div>
         </div>
         <div class="case-tag">Defense · Realtime</div>
@@ -1148,7 +1072,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© STR1KE</div>
+          <div class="name">STR1KE</div>
           <div class="role">Strike detection (CV) · 2025</div>
         </div>
         <div class="case-tag">CV · Sports</div>
@@ -1161,7 +1085,7 @@
       <div class="arrow">↗</div>
       <div class="case-content">
         <div class="case-info">
-          <div class="name">© DR4FT</div>
+          <div class="name">DR4FT</div>
           <div class="role">AI resume optimizer · 2024</div>
         </div>
         <div class="case-tag">LLM · Tools</div>
@@ -1173,38 +1097,38 @@
 <!-- ─── EXPERIENCE LIST ────────────────────────────────────────────── -->
 <section class="experience" id="experience">
   <div class="cases-head" style="margin-bottom: 32px;">
-    <h2 class="title">(_Experience)<br/><em>where I've shipped</em></h2>
+    <h2 class="title">Experience</h2>
     <div class="meta">
       <b>2024 →</b><br/>present
     </div>
   </div>
 
   <div class="exp-row" data-cursor>
-    <span class="exp-year">/01 · 2026</span>
+    <span class="exp-year">2026</span>
     <span class="exp-org">Amazon</span>
     <span class="exp-role">Software engineer · FSx control plane · petabyte-scale managed file systems</span>
     <span class="exp-arrow">SWE →</span>
   </div>
   <div class="exp-row" data-cursor>
-    <span class="exp-year">/02 · 2025</span>
+    <span class="exp-year">2025</span>
     <span class="exp-org">Astera Holdings</span>
     <span class="exp-role">Quantitative developer · 50ms cross-platform arbitrage engine on prediction markets</span>
     <span class="exp-arrow">QUANT →</span>
   </div>
   <div class="exp-row" data-cursor>
-    <span class="exp-year">/03 · 2025</span>
+    <span class="exp-year">2025</span>
     <span class="exp-org">Penn CURF</span>
     <span class="exp-role">Research assistant · CV + NLP pipeline digitizing 50,000 pages of historical defense records</span>
     <span class="exp-arrow">RESEARCH →</span>
   </div>
   <div class="exp-row" data-cursor>
-    <span class="exp-year">/04 · 2024</span>
+    <span class="exp-year">2024</span>
     <span class="exp-org">Princeton Plasma Physics Lab</span>
     <span class="exp-role">Research assistant · Monte Carlo plasma simulations, SIMD vectorization for 8x speedup</span>
     <span class="exp-arrow">RESEARCH →</span>
   </div>
   <div class="exp-row" data-cursor>
-    <span class="exp-year">/05 · 2024</span>
+    <span class="exp-year">2024</span>
     <span class="exp-org">Flushing CPA Tax Center</span>
     <span class="exp-role">Data engineer · Automation scripts + predictive models for corporate tax advisory</span>
     <span class="exp-arrow">DATA →</span>
@@ -1213,7 +1137,7 @@
 
 <!-- ─── CONTACT ─────────────────────────────────────────────────────── -->
 <section class="contact" id="contact">
-  <div class="eyebrow">(_Contact)</div>
+  <div class="eyebrow">Contact</div>
   <h2>Let's<br/><em>build</em></h2>
   <div class="contact-buttons">
     <a class="contact-btn primary" href="mailto:thomasou@sas.upenn.edu" data-cursor>Email me →</a>
@@ -1260,28 +1184,14 @@
 </footer>
 
 <script>
-  // ─── CUSTOM CURSOR ─────────────────────────────────────────────────
-  const cursor = document.getElementById('cursor');
-  let mx = 0, my = 0, cx = 0, cy = 0;
-  document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
-  function tick() {
-    cx += (mx - cx) * 0.18;
-    cy += (my - cy) * 0.18;
-    cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-    requestAnimationFrame(tick);
-  }
-  tick();
-
-  document.querySelectorAll('[data-cursor]').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('lg'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('lg'));
-  });
-
   // ─── REVEAL ON SCROLL ──────────────────────────────────────────────
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // (cursor + WebGL hero + widget + scramble scripts stripped for simplicity)
+  /*
 
   // ─── HERO CYCLER — scramble + RGB glitch ────────────────────────────
   (function() {
@@ -1331,383 +1241,7 @@
       wrap.classList.remove('glitching');
     };
 
-    writeAll('Software Engineer');
-    (async () => {
-      await sleep(1600);
-      while (true) {
-        idx = (idx + 1) % WORDS.length;
-        triggerGlitch();
-        await scrambleTo(WORDS[idx]);
-        await sleep(2200);
-      }
-    })();
-  })();
-</script>
-
-<script>
-  /* ════════════════════════════════════════════════════════════════════
-     HERO BLUEPRINT PIPELINE
-     ──────────────────────────────────────────────────────────────────
-     1. WebGL shader plane behind the type (custom FBM noise + cursor
-        ripple + scroll-velocity warp + RGB chromatic aberration)
-     2. Drag-rotate wireframe icosahedron widget (Three.js custom shader)
-     3. Letter-split name intro (GSAP timeline, char stagger)
-     4. Live HUD readouts (clock, mouse XY, scroll%, viewport, FPS)
-     5. Annotation reveal choreography
-     ════════════════════════════════════════════════════════════════════ */
-  (function() {
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobile = matchMedia('(max-width: 900px)').matches;
-    const hero = document.getElementById('hero');
-    if (!hero || !window.THREE) return;
-
-    /* ── 1. Letter-split name ───────────────────────────────────────── */
-    document.querySelectorAll('[data-name]').forEach(el => {
-      const text = el.textContent;
-      el.textContent = '';
-      [...text].forEach(c => {
-        const s = document.createElement('span');
-        s.className = 'char';
-        s.textContent = c === ' ' ? '\u00A0' : c;
-        el.appendChild(s);
-      });
-    });
-
-    if (!reduce) {
-      gsap.set('.hero-stack .nm .char', { yPercent: 110, opacity: 0, rotateZ: 6 });
-      gsap.set('.hero-cycler-row', { opacity: 0, y: 12 });
-      gsap.set('.hero-meta', { opacity: 0, y: 12 });
-      gsap.set('.scroll-prompt-new', { opacity: 0, y: 14 });
-
-      const tl = gsap.timeline({ delay: 0.2 });
-      tl.to('.hero-stack .nm .char', {
-        yPercent: 0, opacity: 1, rotateZ: 0,
-        duration: 1.3, stagger: 0.035, ease: 'expo.out'
-      }, 0)
-      .to('.hero-cycler-row', { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 0.4)
-      .to('.hero-meta', { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.7)
-      .to('.scroll-prompt-new', { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 1.0);
-    }
-
-    /* ── 2. WebGL shader plane (FBM noise + ripple) ─────────────────── */
-    const canvas = document.getElementById('heroCanvas');
-    let renderer = null, scene = null, camera = null, planeMat = null;
-    try {
-      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      scene = new THREE.Scene();
-      camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
-      camera.position.z = 1;
-
-      const planeGeom = new THREE.PlaneGeometry(2, 2);
-      planeMat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      uniforms: {
-        uTime:       { value: 0 },
-        uMouse:      { value: new THREE.Vector2(99, 99) },
-        uMouseAct:   { value: 0 },
-        uScroll:     { value: 0 },
-        uScrollVel:  { value: 0 },
-        uAspect:     { value: 1 },
-        uAccent:     { value: new THREE.Color(0xff5230) },
-        uGreen:      { value: new THREE.Color(0x62ff7a) },
-        uBg:         { value: new THREE.Color(0x0a0a0a) },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
-      `,
-      fragmentShader: `
-        precision highp float;
-        varying vec2 vUv;
-        uniform float uTime;
-        uniform vec2  uMouse;
-        uniform float uMouseAct;
-        uniform float uScroll;
-        uniform float uScrollVel;
-        uniform float uAspect;
-        uniform vec3  uAccent;
-        uniform vec3  uGreen;
-        uniform vec3  uBg;
-
-        /* hash + value noise + FBM */
-        float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-        float vnoise(vec2 p) {
-          vec2 i = floor(p), f = fract(p);
-          float a = hash(i), b = hash(i + vec2(1.0, 0.0));
-          float c = hash(i + vec2(0.0, 1.0)), d = hash(i + vec2(1.0, 1.0));
-          vec2 u = f * f * (3.0 - 2.0 * f);
-          return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-        }
-        float fbm(vec2 p) {
-          float v = 0.0, amp = 0.5;
-          for (int i = 0; i < 5; i++) {
-            v += amp * vnoise(p);
-            p *= 2.02;
-            amp *= 0.5;
-          }
-          return v;
-        }
-
-        /* sample helper for chromatic aberration */
-        float fieldAt(vec2 uv) {
-          vec2 p = uv * 2.0 - 1.0;
-          p.x *= uAspect;
-
-          /* base FBM with slow drift + scroll-bound shear */
-          vec2 q = p * 1.2 + vec2(uTime * 0.05, -uTime * 0.03);
-          q.y += uScroll * 0.4 + uScrollVel * 0.6;
-          float n = fbm(q);
-
-          /* warped FBM with second octave */
-          vec2 r = q + vec2(fbm(q + 5.0), fbm(q + uTime * 0.1));
-          n = fbm(r);
-
-          /* cursor ripple */
-          vec2 m = uMouse; m.x *= uAspect;
-          float d = distance(p, m);
-          float ripple = exp(-d * 2.8) * uMouseAct;
-          float wave = sin(d * 18.0 - uTime * 4.0) * 0.5 * ripple;
-
-          return n + wave + ripple * 0.25;
-        }
-
-        void main() {
-          vec2 uv = vUv;
-
-          /* chromatic split — sample 3 offsets per channel */
-          float aberration = 0.004 + uScrollVel * 0.02;
-          float fr = fieldAt(uv + vec2(aberration, 0.0));
-          float fg = fieldAt(uv);
-          float fb = fieldAt(uv - vec2(aberration, 0.0));
-
-          /* contour bands — push into bg or into accent depending on level */
-          float band = smoothstep(0.42, 0.58, fg);
-          vec3 col = mix(uBg, mix(uAccent * 0.6, uGreen * 0.4, sin(uTime * 0.3) * 0.5 + 0.5), band * 0.18);
-
-          /* RGB drift adds the chromatic aberration */
-          col.r += (fr - fg) * 0.5;
-          col.b += (fb - fg) * 0.5;
-
-          /* vignette */
-          vec2 vc = uv - 0.5;
-          float vig = smoothstep(0.95, 0.35, dot(vc, vc) * 1.4);
-
-          /* scanline */
-          float scan = sin(uv.y * 1200.0) * 0.015;
-          col += scan;
-
-          /* dim overall so it sits behind text */
-          col *= 0.55 * vig;
-
-          /* output with low alpha so type stays dominant */
-          float alpha = 0.85 * vig;
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
-    });
-      scene.add(new THREE.Mesh(planeGeom, planeMat));
-    } catch (err) {
-      console.error('[hero] FBM shader pipeline failed:', err);
-      if (canvas) canvas.style.display = 'none';
-      renderer = null;
-    }
-
-    const setSize = () => {
-      if (!renderer || !planeMat) return;
-      const r = hero.getBoundingClientRect();
-      renderer.setSize(r.width, r.height, false);
-      planeMat.uniforms.uAspect.value = r.width / r.height;
-    };
-    setSize();
-    window.addEventListener('resize', setSize);
-
-    /* ── 3. Mouse + scroll state ────────────────────────────────────── */
-    const state = {
-      mx: 99, my: 99, tx: 99, ty: 99, mAct: 0, tAct: 0,
-      scroll: 0, lastScrollY: 0, scrollVel: 0, scrollVelTarget: 0,
-    };
-    window.addEventListener('mousemove', (e) => {
-      const r = hero.getBoundingClientRect();
-      if (e.clientY < r.bottom && e.clientY > r.top) {
-        state.tx = ((e.clientX - r.left) / r.width) * 2 - 1;
-        state.ty = -(((e.clientY - r.top) / r.height) * 2 - 1);
-        state.tAct = 1;
-      } else {
-        state.tAct = 0;
-      }
-    });
-    window.addEventListener('mouseout', () => { state.tAct = 0; });
-
-    /* ── 4. Wireframe widget — icosahedron with custom shader ──────── */
-    const wCanvas = document.getElementById('widgetCanvas');
-    const widget = document.getElementById('heroWidget');
-    let widgetRenderer, widgetScene, widgetCam, widgetMesh;
-    if (wCanvas && !mobile) {
-      widgetRenderer = new THREE.WebGLRenderer({ canvas: wCanvas, antialias: true, alpha: true });
-      widgetRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      widgetRenderer.setSize(280, 280, false);
-
-      widgetScene = new THREE.Scene();
-      widgetCam = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-      widgetCam.position.z = 3.5;
-
-      const iGeom = new THREE.IcosahedronGeometry(1.1, 1);
-      const wireMat = new THREE.ShaderMaterial({
-        transparent: true,
-        wireframe: true,
-        uniforms: {
-          uTime: { value: 0 },
-          uAccent: { value: new THREE.Color(0xff5230) },
-          uText: { value: new THREE.Color(0xa8a8a8) },
-        },
-        vertexShader: `
-          varying vec3 vPos;
-          uniform float uTime;
-          void main() {
-            vPos = position;
-            vec3 p = position;
-            p += normal * sin(uTime * 1.2 + position.y * 4.0) * 0.04;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-          }
-        `,
-        fragmentShader: `
-          varying vec3 vPos;
-          uniform vec3 uAccent;
-          uniform vec3 uText;
-          uniform float uTime;
-          void main() {
-            float t = sin(vPos.x * 4.0 + uTime * 0.8) * 0.5 + 0.5;
-            vec3 col = mix(uText, uAccent, t * 0.6);
-            gl_FragColor = vec4(col, 0.85);
-          }
-        `,
-      });
-      widgetMesh = new THREE.Mesh(iGeom, wireMat);
-      widgetScene.add(widgetMesh);
-
-      /* drag-rotate */
-      const drag = { active: false, lx: 0, ly: 0, rx: 0.4, ry: 0.4, vx: 0.005, vy: 0.003 };
-      widget.addEventListener('mousedown', (e) => {
-        drag.active = true; drag.lx = e.clientX; drag.ly = e.clientY;
-        widget.classList.add('grabbing'); e.preventDefault();
-      });
-      window.addEventListener('mouseup', () => { drag.active = false; widget.classList.remove('grabbing'); });
-      window.addEventListener('mousemove', (e) => {
-        if (!drag.active) return;
-        const dx = (e.clientX - drag.lx) * 0.01;
-        const dy = (e.clientY - drag.ly) * 0.01;
-        drag.ry += dx;
-        drag.rx += dy;
-        drag.vx = dy * 0.6 + 0.005;
-        drag.vy = dx * 0.6 + 0.003;
-        drag.lx = e.clientX; drag.ly = e.clientY;
-      });
-      widget._drag = drag;
-    }
-
-    /* ── 5. HUD readouts ────────────────────────────────────────────── */
-    const elClock = document.getElementById('hudClock');
-    const elPtrX = document.getElementById('hudPtrX');
-    const elPtrY = document.getElementById('hudPtrY');
-    const elScroll = document.getElementById('hudScroll');
-    const elView = document.getElementById('hudView');
-    const elFps = document.getElementById('hudFps');
-
-    const tickClock = () => {
-      const d = new Date();
-      const t = d.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false });
-      if (elClock) elClock.textContent = t;
-    };
-    tickClock(); setInterval(tickClock, 1000);
-
-    let rawPtrX = 0, rawPtrY = 0;
-    window.addEventListener('mousemove', (e) => { rawPtrX = e.clientX; rawPtrY = e.clientY; });
-    const fmt4 = n => {
-      const s = Math.abs(Math.round(n)).toString().padStart(4, '0');
-      return (n < 0 ? '-' : '+') + s;
-    };
-
-    const updateView = () => {
-      if (elView) elView.textContent = window.innerWidth + ' × ' + window.innerHeight;
-    };
-    updateView();
-    window.addEventListener('resize', updateView);
-
-    let lastScrollY = 0;
-    window.addEventListener('scroll', () => {
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - window.innerHeight;
-      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-      if (elScroll) elScroll.textContent = Math.min(100, Math.round(pct)).toString().padStart(3, '0');
-      const dy = window.scrollY - lastScrollY;
-      state.scrollVelTarget = Math.min(1, Math.abs(dy) / 30);
-      lastScrollY = window.scrollY;
-      state.scroll = window.scrollY / window.innerHeight;
-    });
-
-    /* FPS counter */
-    let fpsT = performance.now(), frames = 0, fps = 60;
-    const updateFps = (now) => {
-      frames++;
-      if (now - fpsT >= 500) {
-        fps = Math.round((frames * 1000) / (now - fpsT));
-        if (elFps) elFps.textContent = fps;
-        frames = 0; fpsT = now;
-      }
-    };
-
-    /* ── 6. Main render loop ────────────────────────────────────────── */
-    const clock = new THREE.Clock();
-    function loop() {
-      const now = performance.now();
-      const t = clock.getElapsedTime();
-
-      /* lerp mouse */
-      state.mx += (state.tx - state.mx) * 0.12;
-      state.my += (state.ty - state.my) * 0.12;
-      state.mAct += (state.tAct - state.mAct) * 0.06;
-      state.scrollVel += (state.scrollVelTarget - state.scrollVel) * 0.08;
-      state.scrollVelTarget *= 0.9;
-
-      if (planeMat) {
-        planeMat.uniforms.uTime.value = t;
-        planeMat.uniforms.uMouse.value.set(state.mx, state.my);
-        planeMat.uniforms.uMouseAct.value = state.mAct;
-        planeMat.uniforms.uScroll.value = state.scroll;
-        planeMat.uniforms.uScrollVel.value = state.scrollVel;
-      }
-
-      if (renderer && scene && camera) renderer.render(scene, camera);
-
-      /* widget */
-      if (widgetMesh) {
-        const d = widget._drag;
-        if (!d.active) {
-          d.ry += d.vy;
-          d.rx += d.vx * 0.4;
-          d.vy *= 0.985;
-          d.vx *= 0.985;
-          d.vy += (0.005 - d.vy) * 0.01;
-          d.vx += (0.003 - d.vx) * 0.01;
-        }
-        widgetMesh.rotation.x = d.rx;
-        widgetMesh.rotation.y = d.ry;
-        widgetMesh.material.uniforms.uTime.value = t;
-        widgetRenderer.render(widgetScene, widgetCam);
-      }
-
-      /* HUD ptr */
-      if (elPtrX) elPtrX.textContent = fmt4(rawPtrX);
-      if (elPtrY) elPtrY.textContent = fmt4(rawPtrY);
-
-      updateFps(now);
-      requestAnimationFrame(loop);
-    }
-    loop();
-  })();
+  */
 </script>
 
 <script>
