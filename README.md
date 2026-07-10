@@ -15,6 +15,7 @@ Open http://localhost:4317.
 ## What It Does
 
 - Interactive Lorenz attractor with rotation, parameter controls, and reduced-motion support
+- Interactive trefoil knot with rotation and adjustable thickness
 
 ## Tech Stack
 
