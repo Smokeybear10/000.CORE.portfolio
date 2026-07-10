@@ -62,7 +62,7 @@ function setupContactButtons() {
           window.open('mailto:thomasou@sas.upenn.edu', '_blank');
           break;
         case 'linkedin':
-          window.open('https://www.linkedin.com/in/thomasou2006', '_blank');
+          window.open('https://www.linkedin.com/in/thomasou0', '_blank');
           break;
         case 'github':
           window.open('https://github.com/Smokeybear10', '_blank');

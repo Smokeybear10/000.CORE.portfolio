@@ -18,8 +18,8 @@ const projectData = {
     technical: "The system architecture combines Meta's SAM2 for mask-based object segmentation with Label Studio's annotation interface, creating a semi-automated labeling workflow for generating training data. The detection pipeline utilizes a Temporal Segment Network (TSN) pre-trained model accessed through the MMAction2 computer vision framework, which processes spatio-temporal features across sequential frames. Initially explored 3D CNN architectures for direct spatio-temporal inference, but pivoted to TSN due to computational constraints. The model processes 5-frame temporal windows representing discrete fight moments, with each frame annotated for fighter masks, strike events, and miss classifications. Training was conducted on 200 labeled frames across 40 sequences using transfer learning from pre-trained TSN weights.",
     challenges: "Primary bottleneck was dataset size limitations - only 200 frames across 40 sequences were manually annotated due to Label Studio Premium subscription access issues, which would have enabled automated learning of labeling patterns after 3-4 examples. Initial 3D CNN architecture was abandoned due to excessive RAM requirements that exceeded Google Colab runtime capacity, even with batching optimizations. Manual mask refinement remained time-consuming despite SAM2 automation. Model accuracy remains below production standards due to limited training data, though results were impressive given the constraint of only 40 data points for transfer learning.",
     links: [
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/STR1KE", type: "github" },
-      { text: "Project Documentation", url: "#", type: "docs", error: "Not publicly available" }
+      { text: "Live Website", url: "https://str1ke.vercel.app", type: "live" },
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/100.RSCH.str1ke", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/STR1KE1.gif", "Images/ProjectPhotos/STR1KE4.gif", "Images/ProjectPhotos/STR1KE2.png", "Images/ProjectPhotos/STR1KE3.png"]
   },
@@ -38,8 +38,8 @@ const projectData = {
     ],
     technical: "Built on Next.js and React with the Web Audio API handling all audio processing including EQ, filters, effects, and crossfading. Grok AI processes natural language commands for mixing control and generates intelligent transition plans. Three.js renders real-time audio-reactive 3D visualizations. BPM detection runs client-side for low-latency beat analysis. Cloud infrastructure handles track storage and automatic metadata extraction.",
     links: [
-      { text: "Live Website", url: "https://d4-nce.vercel.app", type: "live" },
-      { text: "Source Code", url: "https://github.com/Smokeybear10/D4NCE", type: "github" }
+      { text: "Live Website", url: "https://d4ncedj.vercel.app", type: "live" },
+      { text: "Source Code", url: "https://github.com/Smokeybear10/001.CORE.d4nce", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/D4NCE.gif"]
   },
@@ -56,9 +56,8 @@ const projectData = {
     ],
     technical: "Historical UFC fight data is transformed into differential features across 100+ striking, grappling, physical, and career attributes. Career statistics are standardized before training and at inference so two selected fighters map to the same feature space as historical bouts. Random Forest, Gradient Boosting, SVM, and K-Nearest Neighbors are fit on the differential dataset and evaluated side by side. The prediction path takes two fighter inputs, recomputes standardized differentials, and returns win probability estimates from each classifier.",
     links: [
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/UFC-Analytics-Engine", type: "github" },
-      { text: "Model Documentation", url: "#", type: "docs", error: "Not publicly available" },
-      { text: "Feature Analysis Report", url: "#", type: "docs", error: "Not publicly available" }
+      { text: "Live Website", url: "https://v3rsus.vercel.app", type: "live" },
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/102.RSCH.v3rsus", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/STRATOS.png"]
   },
@@ -77,20 +76,20 @@ const projectData = {
     ],
     technical: "FastAPI backend with SQLAlchemy + SQLite persists vessel domain models, anomaly signals, and fuzzy risk scores. The ingestion service streams live AIS data, passes position reports through the 11 detectors, then feeds aggregated signals into the fuzzy inference engine. Frontend is Next.js + TypeScript + Tailwind with MapLibre GL rendering the map, heatmap, and per-sector drill-downs. Data adapters integrate AISStream, Copernicus Sentinel-2, NWS weather, and USCG port state control records. The Sentinel-2 satellite verification path pulls the latest scene for a vessel's bounding box on demand.",
     links: [
-      { text: "Source Code", url: "https://github.com/Smokeybear10/H4BOR", type: "github" },
-      { text: "Algorithm Reference", url: "#", type: "docs", error: "See docs/ALGORITHM.md in repo" }
+      { text: "Live Website", url: "https://h4bor.vercel.app", type: "live" },
+      { text: "Source Code", url: "https://github.com/Smokeybear10/003.CORE.h4bor", type: "github" }
     ],
     gallery: [
       "Images/ProjectPhotos/HARBOROS.gif"
     ]
   },
   poker: {
-    title: "Bayesian Poker Analysis Engine with Monte Carlo CFR",
-    description: "A Rust library for solving No-Limit Texas Hold'em, built toward functional parity with Pluribus. Combines hierarchical k-means clustering over isomorphic hand abstractions, Earth Mover's Distance metrics via optimal transport, and Monte Carlo Counterfactual Regret Minimization (MCCFR) to converge on near-optimal poker strategies. Features nanosecond hand evaluation, exhaustive equity calculation, and efficient serialization of abstraction and blueprint data for persistent training pipelines.",
+    title: "R1VER — Poker Intelligence (MCCFR Solver)",
+    description: "A Rust solver for No-Limit Texas Hold'em implementing the Pluribus abstraction and blueprint-training stack. Collapses the ~10^160-node game tree by clustering 3.1T strategically-equivalent situations into 542 buckets using Earth Mover's Distance over equity distributions, then runs external-sampling MCCFR self-play to produce a blueprint Nash strategy — queryable in real time through an Actix Web API and an interactive explorer. Depth-limited subgame search is not built yet.",
     tech: ["Rust", "MCCFR", "k-means Clustering", "Optimal Transport", "Hand Abstraction", "NLHE", "Serialization"],
     image: "Images/ProjectPhotos/R1VER1.gif",
     features: [
-      { title: "Pluribus-Style NLHE Solver", detail: "Rust library targeting functional parity with Pluribus-style solving: abstractions, distances, and MCCFR training wired for near-optimal strategies in No-Limit Hold'em" },
+      { title: "Pluribus-Style NLHE Solver", detail: "Rust implementation of the Pluribus abstraction and blueprint-training stack: 542-bucket abstractions, EMD distances, and MCCFR training producing a blueprint Nash strategy for No-Limit Hold'em" },
       { title: "Hierarchical k-means on Isomorphic Abstractions", detail: "Clusters isomorphic hand abstractions hierarchically to compress the state space while preserving strategically meaningful structure" },
       { title: "Earth Mover's Distance & Optimal Transport", detail: "Uses EMD-style metrics via optimal transport to compare abstraction distributions and inform clustering and training" },
       { title: "MCCFR Training", detail: "Monte Carlo Counterfactual Regret Minimization drives iterative regret updates and strategy convergence toward strong blueprint policies" },
@@ -99,28 +98,26 @@ const projectData = {
     ],
     technical: "The codebase is organized as a Rust library for NLHE: hand evaluation and equity sit in a fast path for nanosecond-level work; isomorphic abstractions feed hierarchical k-means; Earth Mover's Distance is computed through optimal transport between abstraction masses. MCCFR (external sampling and regret accumulation) trains blueprint strategies toward near-optimal play. Abstractions, distance structures, and learned strategies serialize cleanly so training can persist and resume without rebuilding state from scratch.",
     links: [
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/MontePokerG", type: "github" },
-      { text: "Strategy Analyzer", url: "#", type: "demo", error: "Website is currently down" },
-      { text: "Technical Documentation", url: "#", type: "docs", error: "Website is currently down" }
+      { text: "Live Website", url: "https://river-002.vercel.app", type: "live" },
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/002.CORE.r1ver", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/R1VER1.gif", "Images/ProjectPhotos/R1VER2.gif"]
   },
   smartcv: {
-    title: "AI-Powered Resume Optimizer",
-    description: "An AI-powered resume optimization tool built with Python and Streamlit, leveraging Google Gemini for intelligent content analysis. Features ATS compatibility scoring, skills gap identification, keyword density analysis, and AI-driven content suggestions across 50+ target job roles. Includes a professional resume builder with four exportable templates (PDF/DOCX), multi-portal job search with LinkedIn integration, and a comprehensive analytics dashboard for tracking resume performance metrics.",
-    tech: ["Python", "Streamlit", "Google Gemini", "ATS Optimization", "Selenium", "SQLite", "PDF/DOCX"],
+    title: "DR4FT — AI Resume Optimizer",
+    description: "Your resume, graded. DR4FT runs resumes through ATS simulation and xAI Grok, returning per-section scores, missing keywords, and line-by-line rewrites. The whole product is dressed as a Blue Book exam booklet — cream ruled paper, red pen margin notes, PASS/FAIL grade stamps.",
+    tech: ["Python", "FastAPI", "Next.js", "TypeScript", "xAI Grok", "ATS Simulation", "PDF/DOCX"],
     image: "Images/ProjectPhotos/PR0XIM.png",
     features: [
-      { title: "Gemini-Powered Analysis", detail: "Google Gemini drives content analysis with ATS compatibility scoring, skills gap identification, keyword density insights, and AI suggestions tailored to 50+ target job roles" },
-      { title: "Resume Builder & Exports", detail: "Four professional templates with export to PDF and DOCX for polished, shareable documents" },
-      { title: "Multi-Portal Job Search", detail: "Aggregates opportunities across portals with LinkedIn integration for a unified search workflow" },
-      { title: "Analytics Dashboard", detail: "Tracks resume performance metrics over time so users can see trends and iterate on their materials" }
+      { title: "Dual-Mode Analyzer", detail: "Upload a PDF or DOCX. Standard mode runs NLP scoring across ATS compatibility, keyword match, format, and section coverage. AI mode sends the resume to xAI Grok for overall quality, strengths, weaknesses, ATS score, and skill gaps" },
+      { title: "Blue Book Presentation", detail: "The entire interface is an exam booklet — cream ruled paper, red pen margin annotations, and PASS/FAIL grade stamps rendering the score as a graded test" },
+      { title: "Resume Builder & Exports", detail: "Guided form with five templates (Modern, Classic, Minimal, Technical, Executive) generating a clean, ATS-parseable PDF" },
+      { title: "Multi-Portal Job Aggregation", detail: "Aggregates across LinkedIn, Indeed, Naukri, Foundit, FreshersWorld, TimesJobs, and Instahyre with auto-detected location, returning direct search links plus market insights on trending skills, top locations, and salary ranges" }
     ],
-    technical: "Streamlit provides the app shell in Python; the analysis layer calls Google Gemini for NLP-style review, ATS-oriented scoring, skills-gap and keyword-density signals, and role-aware suggestions across 50+ job profiles. The builder renders four templates and exports via PDF/DOCX libraries. Job discovery combines multi-portal logic with Selenium-backed LinkedIn workflows where needed. SQLite backs user data, resume versions, and analytics series for the dashboard.",
+    technical: "FastAPI backend serves the analysis, builder, and jobs endpoints; a Next.js + TypeScript frontend renders the Blue Book interface. Resume parsing handles both PDF and DOCX. Standard scoring runs local NLP across ATS compatibility, keyword match, format, and section coverage; AI scoring calls xAI Grok for structured quality assessment and skill-gap identification. The builder renders five templates to ATS-parseable PDF. Job discovery aggregates seven portals into direct search links with market insight summaries.",
     links: [
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/SmartCV", type: "github" },
-      { text: "Live Demo", url: "#", type: "demo", error: "Website is currently down" },
-      { text: "Documentation", url: "#", type: "docs", error: "Website is currently down" }
+      { text: "Live Website", url: "https://proj-dr4ft.vercel.app", type: "live" },
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/203.PROJ.dr4ft", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/PR0XIM.png"]
   }

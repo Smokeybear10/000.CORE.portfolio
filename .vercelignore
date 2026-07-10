@@ -1,0 +1,7 @@
+# Local-only: test harnesses, design leftovers, and the unlinked standalone pages
+tests/
+legacy/
+.gstack/
+.claude/
+Cleanshot-2026-04-19-04.42.27-PM.gif
+Cleanshot-2026-04-19-04.56.34-PM.gif
