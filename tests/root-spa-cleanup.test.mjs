@@ -2,8 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
 
-const REPO_ROOT = '/Users/thomasou/Github/THOMAS';
+// resolve the repo from this file's own location — a hardcoded absolute path broke
+// every test the moment the checkout moved
+const REPO_ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 
 class FakeClassList {
   constructor() {
@@ -73,6 +76,11 @@ class FakeElement {
 
   listenerCount(type) {
     return this.listeners.get(type)?.size ?? 0;
+  }
+
+  dispatch(type, event = {}) {
+    const fake = { type, target: this, preventDefault() {}, stopPropagation() {}, ...event };
+    this.listeners.get(type)?.forEach((handler) => handler(fake));
   }
 
   appendChild(child) {
@@ -498,42 +506,65 @@ test('projects route cleanup removes global listeners and animation loop before 
   assert.equal(harness.raf.canceledCount, 1);
 });
 
-test('contact route cleanup removes button handlers, pending timers, and falling shape resources', () => {
+// The contact route used to render a WebGL falling-shapes scene; that was dropped when
+// the site went 2D and the route is now button handlers plus a staggered reveal. These
+// cover what it actually does: handlers and reveal timers must not survive cleanup.
+test('contact route cleanup removes button handlers and reveal timers', () => {
   const harness = createContactHarness();
 
   harness.route.init();
   harness.timers.flushNextTimeoutBatch();
-  harness.timers.flushNextTimeoutBatch();
-  harness.timers.flushNextTimeoutBatch();
 
   assert.equal(harness.buttons[0].listenerCount('click'), 1);
-  assert.equal(harness.contactContent.querySelectorAll('.falling-model').length > 0, true);
-  assert.equal(harness.document.head.children.length > 0, true);
-  assert.equal(harness.raf.pendingCount > 0, true);
-  assert.equal(harness.timers.pendingIntervalCount, 2);
+  assert.equal(harness.buttons[1].listenerCount('click'), 1);
 
   harness.route.cleanup();
 
   assert.equal(harness.buttons[0].listenerCount('click'), 0);
-  assert.equal(harness.contactContent.querySelectorAll('.falling-model').length, 0);
-  assert.equal(harness.document.head.children.length, 0);
-  assert.equal(harness.raf.pendingCount, 0);
-  assert.equal(harness.timers.pendingIntervalCount, 0);
+  assert.equal(harness.buttons[1].listenerCount('click'), 0);
   assert.equal(harness.timers.pendingTimeoutCount, 0);
+  assert.equal(harness.timers.pendingIntervalCount, 0);
+  assert.equal(harness.raf.pendingCount, 0);
 });
 
-test('contact route cleanup cancels delayed burst timers before a late shape can spawn', () => {
+test('contact route re-entry rebinds exactly one click handler per button', () => {
   const harness = createContactHarness();
 
   harness.route.init();
   harness.timers.flushNextTimeoutBatch();
+  harness.route.cleanup();
+  harness.route.init();
   harness.timers.flushNextTimeoutBatch();
 
-  assert.equal(harness.contactContent.querySelectorAll('.falling-model').length, 1);
+  assert.equal(harness.buttons[0].listenerCount('click'), 1);
+  assert.equal(harness.buttons[1].listenerCount('click'), 1);
+});
+
+test('contact route cleanup cancels the pending init timer before handlers attach', () => {
+  const harness = createContactHarness();
+
+  // init defers setupContactButtons; leaving before it fires must cancel it outright
+  harness.route.init();
   assert.equal(harness.timers.pendingTimeoutCount > 0, true);
 
   harness.route.cleanup();
+  harness.timers.flushAll?.();
 
-  assert.equal(harness.contactContent.querySelectorAll('.falling-model').length, 0);
   assert.equal(harness.timers.pendingTimeoutCount, 0);
+  assert.equal(harness.buttons[0].listenerCount('click'), 0);
+});
+
+test('contact buttons open the expected destinations', () => {
+  const harness = createContactHarness();
+
+  harness.route.init();
+  harness.timers.flushNextTimeoutBatch();
+
+  harness.buttons[0].dispatch('click');
+  harness.buttons[1].dispatch('click');
+
+  assert.deepEqual(
+    harness.openedUrls.map((entry) => entry.url),
+    ['mailto:thomasou@sas.upenn.edu', 'https://github.com/Smokeybear10'],
+  );
 });

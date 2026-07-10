@@ -2,8 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
 
-const REPO_ROOT = '/Users/thomasou/Github/THOMAS';
+// resolve the repo from this file's own location — a hardcoded absolute path broke
+// every test the moment the checkout moved
+const REPO_ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 
 class FakeClassList {
   constructor() {
@@ -39,7 +42,16 @@ class FakeElement {
     this.style = new FakeStyle();
     this.classList = new FakeClassList();
     this.listeners = new Map();
+    this.attributes = new Map();
     this.innerHTML = '';
+  }
+
+  setAttribute(name, value) {
+    this.attributes.set(name, String(value));
+  }
+
+  getAttribute(name) {
+    return this.attributes.get(name) ?? null;
   }
 
   addEventListener(type, handler) {
@@ -123,6 +135,9 @@ function createTimerControls() {
         pending.forEach((callback) => callback());
       }
     },
+    get pendingCount() {
+      return timeouts.size;
+    },
   };
 }
 
@@ -198,39 +213,59 @@ function loadExperienceHarness() {
   return {
     timers,
     window: windowObject,
+    windowListeners,
     document,
     cards,
     modal,
     closeBtn,
+    leftSection,
+    profilePhoto,
   };
 }
 
-test('experience route cleanup removes modal listeners before re-entry', () => {
+// The card-detail modal this file used to cover was removed when experience became a
+// plain scrolling page. What still matters on route exit is that the deferred layout
+// pass and the registered scroll/resize handlers don't outlive the route.
+test('experience cleanup cancels the deferred layout pass', () => {
+  const harness = loadExperienceHarness();
+
+  harness.window.initExperienceAnimations();
+  assert.equal(harness.timers.pendingCount > 0, true);
+
+  harness.window.cleanupExperienceAnimations();
+  harness.timers.flushAll();
+
+  assert.equal(harness.timers.pendingCount, 0);
+});
+
+test('experience cleanup unregisters tracked scroll and resize handlers', () => {
+  const harness = loadExperienceHarness();
+
+  const handler = () => {};
+  harness.window.experienceScrollHandlers = [handler];
+  harness.window.addEventListener('scroll', handler);
+  harness.window.addEventListener('resize', handler);
+
+  assert.equal(harness.windowListeners.get('scroll').size, 1);
+  assert.equal(harness.windowListeners.get('resize').size, 1);
+
+  harness.window.cleanupExperienceAnimations();
+
+  assert.equal(harness.windowListeners.get('scroll').size, 0);
+  assert.equal(harness.windowListeners.get('resize').size, 0);
+  assert.equal(harness.window.experienceScrollHandlers.length, 0);
+});
+
+test('experience re-entry runs the layout pass again', () => {
   const harness = loadExperienceHarness();
 
   harness.window.initExperienceAnimations();
   harness.timers.flushAll();
+  assert.equal(harness.profilePhoto.classList.contains('in-view'), true);
 
-  assert.equal(harness.cards[0].listenerCount('click'), 1);
-  assert.equal(harness.cards[0].listenerCount('touchend'), 1);
-  assert.equal(harness.closeBtn.listenerCount('click'), 1);
-  assert.equal(harness.modal.listenerCount('click'), 1);
-  assert.equal(harness.document.listenerCount('keydown'), 1);
-
-  harness.window.cleanupExperienceAnimations();
-
-  assert.equal(harness.cards[0].listenerCount('click'), 0);
-  assert.equal(harness.cards[0].listenerCount('touchend'), 0);
-  assert.equal(harness.closeBtn.listenerCount('click'), 0);
-  assert.equal(harness.modal.listenerCount('click'), 0);
-  assert.equal(harness.document.listenerCount('keydown'), 0);
-
+  harness.profilePhoto.classList.remove('in-view');
   harness.window.initExperienceAnimations();
   harness.timers.flushAll();
 
-  assert.equal(harness.cards[0].listenerCount('click'), 1);
-  assert.equal(harness.cards[0].listenerCount('touchend'), 1);
-  assert.equal(harness.closeBtn.listenerCount('click'), 1);
-  assert.equal(harness.modal.listenerCount('click'), 1);
-  assert.equal(harness.document.listenerCount('keydown'), 1);
+  assert.equal(harness.profilePhoto.classList.contains('in-view'), true);
 });

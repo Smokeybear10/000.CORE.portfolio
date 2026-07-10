@@ -216,11 +216,19 @@ async function initializeCube() {
 window.init3DCube = async function() {
   if (!isCubeInitialized) {
     await initializeCube();
-  } else {
-    cubePaused = false;
-    startCubeLoop();
-    if (cubeResizeHandler) cubeResizeHandler();
+    return;
   }
+
+  cubePaused = false;
+  startCubeLoop();
+  // cleanup3DCube detached these on the way out, so re-entering home has to rebind
+  // them or the cube stops responding to drags and resizes
+  if (cubeResizeHandler) {
+    window.addEventListener('resize', cubeResizeHandler);
+    cubeResizeHandler();
+  }
+  const cubeCanvas = document.getElementById('cube-canvas');
+  if (cubeCanvas) setupCubeInteraction(cubeCanvas);
 };
 
 window.cleanup3DCube = function() {
@@ -230,4 +238,13 @@ window.cleanup3DCube = function() {
     cancelAnimationFrame(cubeAnimationId);
     cubeAnimationId = null;
   }
+
+  // The cube only lives on home, but its listeners are bound to window and document,
+  // so leaving them attached means every other route still runs cube drag math on
+  // mousemove and resizes a renderer that isn't on screen. init3DCube rebinds them.
+  if (cubeResizeHandler) {
+    window.removeEventListener('resize', cubeResizeHandler);
+  }
+  cubeInteractionCleanup.forEach(fn => fn());
+  cubeInteractionCleanup = [];
 };

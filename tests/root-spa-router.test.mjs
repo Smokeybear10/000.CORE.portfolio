@@ -2,17 +2,27 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
+
+// resolve the repo from this file's own location — a hardcoded absolute path broke
+// every test the moment the checkout moved
+const REPO_ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 
 class FakeDocument {
   constructor() {
     this.listeners = new Map();
     this.title = '';
+    this.attributes = new Map();
     this.body = {
       style: {},
       classList: {
         add() {},
         remove() {},
       },
+      // the router marks the active route on <body>; without this the navigation
+      // throws and currentRoute is never assigned
+      setAttribute: (name, value) => this.attributes.set(name, value),
+      getAttribute: (name) => this.attributes.get(name) ?? null,
     };
   }
 
@@ -36,6 +46,7 @@ class FakeWindow {
   constructor({ pathname = '/index.html', hash = '' } = {}) {
     this.listeners = new Map();
     this.location = { pathname, hash };
+    this.scrollCalls = [];
     this.historyCalls = [];
     this.history = {
       pushState: (state, title, url) => {
@@ -60,6 +71,10 @@ class FakeWindow {
     this.listeners.get(event.type)?.forEach((handler) => handler(event));
   }
 
+  scrollTo(x, y) {
+    this.scrollCalls.push({ x, y });
+  }
+
   #applyUrl(url) {
     if (!url) {
       return;
@@ -79,7 +94,7 @@ class FakeCustomEvent {
 }
 
 function loadRouterHarness(options) {
-  const source = readFileSync('/Users/thomasou/Github/THOMAS/js/spa-router.js', 'utf8');
+  const source = readFileSync(`${REPO_ROOT}/js/spa-router.js`, 'utf8');
   const document = new FakeDocument();
   const window = new FakeWindow(options);
   const context = {

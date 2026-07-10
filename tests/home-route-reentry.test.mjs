@@ -2,8 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { fileURLToPath } from 'node:url';
 
-const REPO_ROOT = '/Users/thomasou/Github/THOMAS';
+// resolve the repo from this file's own location — a hardcoded absolute path broke
+// every test the moment the checkout moved
+const REPO_ROOT = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 
 class FakeElement {
   constructor({ id = '', textContent = '' } = {}) {
