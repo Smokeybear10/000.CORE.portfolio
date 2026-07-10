@@ -58,6 +58,26 @@ main { margin-top: 58px; }
 .attractor-controls button { border: 0; background: none; color: var(--muted); padding: 8px 0; min-height: 44px; cursor: pointer; font-size: 13px; }
 .attractor-controls button:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
 .page-intro { margin-top: 14px; color: var(--muted); font-size: 18px; }
+.notes { max-width: 720px; }
+.notes .page-intro { max-width: 580px; }
+.notes-list { list-style: none; padding: 0; margin: 16px 0 0; }
+.note-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; padding: 20px 0; border-top: 1px solid var(--line); }
+.note-course { display: inline-block; margin-bottom: 6px; color: var(--muted); font: 11px/1.6 var(--mono); letter-spacing: .04em; text-decoration: none; }
+a.note-course:hover { text-decoration: underline; }
+.note-row h3 { margin: 0; font-size: 23px; line-height: 1.3; font-weight: 500; letter-spacing: -.2px; }
+.note-origin, .note-detail { font-size: 15px; color: var(--muted); line-height: 1.5; }
+.note-origin { margin-top: 6px; }
+.note-detail { margin-top: 4px; max-width: 560px; }
+.note-pdf { align-self: center; justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 10px 13px; border: 1px solid #bac9d6; border-radius: 5px; background: #f0f4f7; font: 12px/1.5 var(--mono); text-decoration: none; white-space: nowrap; }
+.note-pdf:hover { border-color: var(--link); background: #e5edf3; color: #183d63; }
+.note-pdf svg { width: 17px; height: 19px; flex-shrink: 0; }
+.note-pdf .pdf-arrow { font-size: 15px; }
+.notes-footnote { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 4px; max-width: 620px; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.notes-group { margin-top: 36px; }
+.notes-group + .notes-group { margin-top: 44px; }
+.notes-group-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+.notes-group-heading h2 { font-size: 23px; }
+.notes-group-heading > span { color: var(--muted); font: 11px/1.5 var(--mono); }
 footer { margin-top: 44px; }
 footer nav { display: flex; align-items: center; gap: 15px; font-size: 17px; }
 footer nav a { text-decoration: none; }
@@ -97,6 +117,10 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .identity p { font-size: 15px; }
   .site-header nav { font-size: 17px; gap: 26px; }
   main { margin-top: 33px; }
+  .notes-group { margin-top: 30px; }
+  .note-row { gap: 16px; padding: 18px 0; }
+  .note-row h3 { font-size: 21px; }
+  .note-origin, .note-detail { font-size: 14px; }
   .biography p + p { margin-top: 22px; }
   .home-layout { display: block; }
   .biography { padding-top: 0; }
@@ -116,6 +140,9 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .figure-buttons { gap: 14px; }
   .figure-buttons button { min-height: 44px; }
   .equation { flex-direction: column; }
+}
+@media (max-width: 500px) {
+  .note-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 }
 @media (max-width: 380px) {
   .site { width: calc(100% - 36px); margin-top: 32px; }
