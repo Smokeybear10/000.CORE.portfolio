@@ -43,6 +43,7 @@
   let visible = true;
   let frameId = 0;
   let previousTime = 0;
+  let contextLost = false;
   let pointer = null;
   let dragging = false;
 
@@ -161,7 +162,7 @@
   }
 
   function requestDraw() {
-    if (frameId || !visible || document.hidden || !width || !height) return;
+    if (frameId || contextLost || !visible || document.hidden || !width || !height) return;
     frameId = window.requestAnimationFrame(animate);
   }
 
@@ -183,12 +184,13 @@
   function resize() {
     const bounds = canvas.getBoundingClientRect();
     const nextRatio = Math.min(window.devicePixelRatio || 1, 2);
-    if (bounds.width === width && bounds.height === height && pixelRatio === nextRatio) return;
     width = bounds.width;
     height = bounds.height;
     pixelRatio = nextRatio;
-    canvas.width = Math.round(width * pixelRatio);
-    canvas.height = Math.round(height * pixelRatio);
+    const pixelWidth = Math.round(width * pixelRatio);
+    const pixelHeight = Math.round(height * pixelRatio);
+    if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
+    if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     requestDraw();
   }
@@ -305,7 +307,15 @@
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) suspend();
-    else requestDraw();
+    else resize();
+  });
+  canvas.addEventListener('contextlost', () => {
+    contextLost = true;
+    suspend();
+  });
+  canvas.addEventListener('contextrestored', () => {
+    contextLost = false;
+    resize();
   });
 
   new IntersectionObserver(([entry]) => {
@@ -316,6 +326,8 @@
 
   new ResizeObserver(resize).observe(canvas);
   window.addEventListener('resize', resize, { passive: true });
+  window.visualViewport?.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('pageshow', resize);
   updateGeometry();
   updateMotionButton();
   resize();

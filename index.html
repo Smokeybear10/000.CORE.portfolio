@@ -8,56 +8,50 @@
   <title>Thomas Ou</title>
   <link rel="icon" href="notebook-assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="notebook-assets/newsreader.css">
-  <link rel="stylesheet" href="styles.css?v=pdf-links">
-  <script src="navigation.js" defer></script>
-  <script src="attractor.js" defer></script>
-  <script src="geometry.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=publish-1">
+  <script src="ambient.js?v=canvas-resize" defer></script>
+  <script src="navigation.js?v=publish-1" defer></script>
+  <script src="attractor.js?v=canvas-resize" defer></script>
+  <script src="geometry.js?v=canvas-resize" defer></script>
+  <script src="text-motion.js?v=publish-1" defer></script>
 </head>
 <body>
+  <div class="ambient-background" aria-hidden="true">
+    <canvas class="ambient-field"></canvas>
+  </div>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="site">
     <header class="site-header">
       <div class="identity">
-        <a class="name" href="#home" aria-label="Thomas Ou, home">Thomas Ou</a>
-        <p>mathematics::stats@penn</p>
+        <a class="name" href="#about" aria-label="Thomas Ou, about">Thomas Ou</a>
+        <p>Mathematics@Penn</p>
       </div>
       <nav aria-label="Main navigation">
-        <a href="#home" aria-current="page">Home</a>
+        <a href="#about" aria-current="page">About</a>
         <a href="#notes">Notes</a>
-        <a href="#math">Math</a>
+        <a href="#blog">Blog</a>
       </nav>
     </header>
     <main id="main" tabindex="-1">
-      <section id="home" class="page-section home" aria-labelledby="home-title">
-        <h1 id="home-title" class="visually-hidden">About Thomas</h1>
+      <section id="about" class="page-section home" aria-labelledby="about-title">
+        <h1 id="about-title" class="visually-hidden">About Thomas</h1>
         <div class="home-layout">
           <div class="biography">
-            <p>I’m a mathematics and computer science student at the <a href="https://www.upenn.edu/">University of Pennsylvania</a>. I’m interested in probabilistic modeling, game theory, and building software around interesting problems.</p>
+            <p>I’m a mathematics and computer science student at the <a href="https://www.upenn.edu/">University of Pennsylvania.</a> I’m interested in probabilistic modeling, game theory, and building software around interesting problems.</p>
             <p>Outside of that, I’m usually boxing, lifting, playing poker, or listening to music.</p>
           </div>
-          <figure class="attractor" aria-labelledby="attractor-title" aria-describedby="attractor-description">
+          <figure class="attractor" aria-labelledby="attractor-title">
             <div class="attractor-plot">
-              <canvas id="attractor-canvas" tabindex="0" role="img" aria-label="Interactive Lorenz attractor. Drag or use arrow keys to rotate; Home resets the view.">A fine-line, butterfly-shaped trajectory of the Lorenz equations.</canvas>
-              <span class="plot-hint" aria-hidden="true">drag to rotate</span>
-              <noscript><p class="no-script">Enable JavaScript to explore the attractor.</p></noscript>
+              <canvas id="attractor-canvas" tabindex="0" role="img" aria-label="Interactive mathematical model. Drag or use arrow keys to rotate. Press Space to pause or resume.">An interactive mathematical model.</canvas>
+              <noscript><p class="no-script">Enable JavaScript to explore the mathematics.</p></noscript>
             </div>
             <figcaption>
-              <span id="attractor-title">Lorenz attractor</span>
-              <span id="attractor-description">A trajectory in ℝ³</span>
+              <span id="attractor-title">Mathematical model</span>
             </figcaption>
-            <div class="attractor-equations" aria-label="x dot equals sigma times y minus x; y dot equals x times rho minus z, minus y; z dot equals x y minus beta z. Sigma is 10 and beta is eight thirds.">
-              <span>ẋ = σ(y − x)</span><span>ẏ = x(ρ − z) − y</span><span>ż = xy − βz</span>
-            </div>
-            <div class="attractor-controls">
-              <label for="attractor-rho"><span>ρ</span><input id="attractor-rho" type="range" min="24" max="40" step="0.1" value="28" aria-label="Lorenz parameter rho"><output id="rho-value" for="attractor-rho">28.0</output></label>
-              <span class="fixed-parameters">σ = 10 · β = 8/3</span>
-              <button id="attractor-motion" type="button" aria-pressed="true" aria-label="Pause attractor animation">Pause</button>
-              <button id="attractor-reset" type="button">Reset</button>
-            </div>
           </figure>
         </div>
       </section>
-      <section id="notes" class="page-section notes" aria-labelledby="notes-title">
+      <section id="notes" hidden class="page-section notes" aria-labelledby="notes-title">
         <h1 id="notes-title">Notes</h1>
         <p class="page-intro">Handwritten notes in mathematics, probability, and physics.</p>
         <section class="notes-group" aria-labelledby="undergraduate-notes">
@@ -149,7 +143,14 @@
           </ol>
         </section>
       </section>
-      <section id="math" class="page-section math" aria-labelledby="math-title">
+      <section id="blog" hidden class="page-section blog" aria-labelledby="blog-title">
+        <h1 id="blog-title">Blog</h1>
+        <div class="blog-placeholder">
+          <img class="blog-doodle" src="notebook-assets/blog-cat.png" width="200" height="160" alt="A sleepy cat resting on a notebook.">
+          <p class="page-intro">In development</p>
+        </div>
+      </section>
+      <section id="math" hidden class="page-section math" aria-labelledby="math-title">
         <h1 id="math-title">A little knot theory</h1>
         <p class="page-intro">The trefoil is the simplest nontrivial knot. Drag to turn it around.</p>
         <figure aria-labelledby="math-title" aria-describedby="figure-description">
