@@ -1,7 +1,7 @@
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const roots = document.querySelectorAll('.name, .identity p, .site-header nav a, .biography p, .page-section > h1:not(.visually-hidden), .page-intro, .cv-group > h2, .cv-details h3, .cv-role, .notes-group-heading h2, .note-title, #attractor-title, footer nav a');
+  const roots = document.querySelectorAll('.name, .identity p, .site-header nav a, .biography p, .page-section > h1:not(.visually-hidden), .page-intro, .research-group-heading h2, .research-details h2, .research-details h3, .technical-projects a, .cv-group > h2, .cv-details h3, .cv-role, .notes-group-heading h2, .note-title, #attractor-title, footer nav a');
   const pointer = { x: 0, y: 0, active: false };
   let words = [];
   let frame = 0;
