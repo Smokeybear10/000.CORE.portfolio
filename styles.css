@@ -36,9 +36,9 @@ h2 { font-size: 24px; letter-spacing: -.2px; }
 .identity p { margin-top: 5px; font-size: 14px; color: var(--muted); }
 .site-header nav { display: flex; flex-wrap: wrap; gap: 0 26px; max-width: 100%; flex-shrink: 0; font-size: 16px; }
 .site-header nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-decoration: none; padding: 8px 0; }
-.site-header nav a::after, footer nav a::after { content: ''; position: absolute; right: 0; bottom: 6px; left: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--duration) var(--ease); }
+.site-header nav a::after { content: ''; position: absolute; right: 0; bottom: 6px; left: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--duration) var(--ease); }
 .site-header nav a[aria-current='page'], .site-header nav a:focus-visible { color: var(--ink); }
-.site-header nav a[aria-current='page']::after, .site-header nav a:focus-visible::after, footer nav a:focus-visible::after { transform: scaleX(1); }
+.site-header nav a[aria-current='page']::after, .site-header nav a:focus-visible::after { transform: scaleX(1); }
 main { display: flex; flex: 1; flex-direction: column; min-width: 0; margin-top: clamp(28px, 5svh, 48px); }
 .page-section { width: 100%; min-width: 0; }
 .page-section + .page-section { margin-top: 64px; }
@@ -135,10 +135,11 @@ a.note-course:hover { text-decoration: underline; }
 .pdf-preview-full { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
 .pdf-preview-pagination { display: flex; align-items: center; gap: 12px; }
 #pdf-preview-count { min-width: 5ch; text-align: center; color: var(--muted); font: 12px/1.5 var(--mono); }
-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
-footer nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 15px; font-size: 15px; }
-footer nav a { position: relative; display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-footer nav > span { color: #9b9e9e; font-size: 14px; }
+.site-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
+.social-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px clamp(12px, 2.2vw, 28px); }
+.social-links a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: #111; border-radius: 3px; text-decoration: none; transition: color var(--duration) var(--ease), transform var(--duration) var(--ease); }
+.social-links svg { display: block; width: 28px; height: 28px; }
+.social-links a:focus-visible { color: var(--link); }
 .math { max-width: 660px; }
 .plot { height: 340px; position: relative; margin-top: 16px; }
 #knot-canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
@@ -177,7 +178,6 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .note-pdf { min-height: 48px; padding: 12px 16px; font-size: clamp(13px, .9vw, 15px); }
   .blog-doodle { width: clamp(240px, 18vw, 300px); }
   .blog-placeholder .page-intro { font-size: clamp(18px, 1.2vw, 21px); }
-  footer nav { font-size: clamp(17px, 1.1vw, 20px); }
   .math { max-width: 900px; }
   .plot { height: clamp(340px, 33vw, 480px); }
 }
@@ -210,7 +210,7 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .pdf-preview-body { padding: 12px; }
   .pdf-preview-footer { padding: 8px 12px; font-size: 16px; }
   .pdf-preview-pagination { gap: 6px; }
-  footer { margin-top: 32px; padding-top: 18px; }
+  .site-footer { margin-top: 32px; padding-top: 18px; }
   .plot { height: 280px; }
   .figure-controls { flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
   .figure-controls label { gap: 8px; }
@@ -227,7 +227,8 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
 }
 @media (hover: hover) and (pointer: fine) {
   .site-header nav a:hover { color: var(--ink); }
-  .site-header nav a:hover::after, footer nav a:hover::after { transform: scaleX(1); }
+  .site-header nav a:hover::after { transform: scaleX(1); }
+  .social-links a:hover { color: var(--link); transform: translateY(-2px); }
   .note-row:hover { background: rgb(52 91 131 / .035); }
   .note-row:hover .note-title { color: var(--link); }
   .note-title:hover { text-decoration: underline; }
@@ -236,6 +237,7 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .reactive-word { transform: none !important; }
-  a, .note-row, .note-pdf .pdf-arrow, .site-header nav a::after, footer nav a::after { transition: none; }
+  a, .social-links a, .note-row, .note-pdf .pdf-arrow, .site-header nav a::after { transition: none; }
+  .social-links a:hover { transform: none; }
   .note-pdf:hover, .note-pdf:active, .note-pdf:hover .pdf-arrow { transform: none; }
 }
