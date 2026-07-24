@@ -249,10 +249,13 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .note-origin, .note-detail { font-size: 14px; }
   .note-pdf { grid-area: 3 / 2; justify-self: end; gap: 6px; min-width: 78px; padding: 10px; background: var(--paper); }
   .pdf-label-prefix { display: none; }
-  .pdf-preview { width: calc(100% - 16px); height: calc(100dvh - 16px); }
-  .pdf-preview-header { padding: 16px; gap: 12px; }
+  .pdf-preview { width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; border: 0; border-radius: 0; }
+  .pdf-preview-header { padding: max(16px, env(safe-area-inset-top)) 20px 16px; gap: 12px; }
+  .pdf-preview-header h2 { font-size: 21px; line-height: 1.3; }
+  #pdf-preview-meta { font-size: 12px; line-height: 1.6; }
   .pdf-preview-body { padding: 12px; }
-  .pdf-preview-footer { padding: 8px 12px; font-size: 16px; }
+  .pdf-preview-footer { flex-wrap: nowrap; gap: 12px; padding: 12px 20px max(12px, env(safe-area-inset-bottom)); font-size: 15px; }
+  .pdf-preview-full { min-width: 0; line-height: 1.4; }
   .pdf-preview-pagination { gap: 6px; }
   .plot { height: 280px; }
   .figure-controls { flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
