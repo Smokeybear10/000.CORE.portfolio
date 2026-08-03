@@ -1,3 +1,4 @@
+@font-face { font-family: 'Shippori Mincho'; font-style: normal; font-weight: 700; font-display: swap; src: url('blog/shippori-mincho-bold.woff2') format('woff2'); }
 :root {
   color-scheme: light;
   --paper: #fafaf8;
@@ -87,10 +88,68 @@ main { display: flex; flex: 1; flex-direction: column; min-width: 0; margin-top:
 .cv-role { margin-top: 7px; font-size: clamp(18px, 1.4vw, 22px); line-height: 1.4; }
 .cv-location { margin-top: 5px; color: var(--muted); font-size: 15px; line-height: 1.5; }
 .cv-description { max-width: 58ch; margin-top: 14px; color: var(--muted); font-size: clamp(17px, 1.3vw, 21px); line-height: 1.6; }
-.blog { display: flex; flex: 1; flex-direction: column; }
-.blog-placeholder { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; min-height: 240px; padding: 24px 0; text-align: center; }
-.blog-doodle { display: block; width: min(200px, 100%); height: auto; aspect-ratio: 5 / 4; object-fit: cover; }
-.blog-placeholder .page-intro { margin-top: 2px; font-size: 16px; }
+.blog, .post-page { --blog-display: 'Shippori Mincho', Georgia, serif; }
+body:has(#blog:not([hidden])) .ambient-background { opacity: .12; }
+.blog { max-width: 900px; margin-inline: auto; }
+.blog > h1 { margin-block: 8px 56px; font: 700 clamp(48px, 6.5vw, 80px)/1 var(--blog-display); letter-spacing: -2px; text-align: center; }
+.blog-group-title { margin-bottom: 16px; font: 700 44px/1.15 var(--blog-display); letter-spacing: -1px; }
+.blog-list { list-style: none; margin: 0; padding: 0; }
+.blog-entry { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: center; gap: 48px; padding: 36px 16px; border-block: 1px solid var(--line); }
+.blog-entry + .blog-entry { border-top: 0; }
+.blog-entry-image { display: block; transform: rotate(-4deg); background: #eef0ed; }
+.blog-entry-image img { display: block; width: 100%; height: auto; }
+.blog-entry-copy { min-width: 0; }
+.blog-entry-meta, .post-meta { color: var(--muted); font: 13px/1.6 var(--serif); letter-spacing: .1em; text-transform: uppercase; }
+.post-meta span { margin-inline: 5px; }
+.blog-entry h3 { margin: 8px 0 0; font: 700 27px/1.2 var(--blog-display); letter-spacing: -.45px; }
+.blog-entry h3 a { color: var(--ink); text-decoration: none; }
+.blog-entry h3 a:hover { color: var(--link); text-decoration: underline; }
+.blog-entry-summary { max-width: 55ch; margin-top: 12px; font-size: 18px; line-height: 1.6; }
+.post-page { --post-gutter: max(24px, env(safe-area-inset-left), env(safe-area-inset-right)); }
+.post-page .site { width: min(100% - var(--post-gutter) * 2, 720px); min-height: 0; margin-top: max(24px, env(safe-area-inset-top)); margin-bottom: max(48px, env(safe-area-inset-bottom)); }
+.post-masthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-family: var(--serif); }
+.post-masthead a { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; text-decoration: none; }
+.post-masthead .post-home { color: var(--ink); font-size: 20px; }
+.post-page main { display: block; margin-top: 40px; }
+.blog-post { width: 100%; }
+.post-back { display: inline-flex; align-items: center; min-height: 44px; font: 15px/1.5 var(--serif); text-decoration: none; }
+.post-header { padding: 0; text-align: center; }
+.post-header h1 { font: 700 clamp(36px, 5vw, 58px)/1.1 var(--blog-display); letter-spacing: -1.2px; text-wrap: balance; }
+.post-deck { margin-top: 18px; color: var(--muted); font-size: 20px; font-style: italic; line-height: 1.5; }
+.post-meta { margin-top: 12px; }
+.post-prose { margin-top: 40px; font-size: 19px; line-height: 1.7; overflow-wrap: break-word; text-wrap: pretty; }
+.post-prose > * { margin: 0; }
+.post-prose > * + * { margin-top: 18px; }
+.post-prose h2 { margin-top: 36px; font: 700 28px/1.25 var(--blog-display); letter-spacing: -.4px; }
+.post-prose h3 { margin-top: 28px; font-size: 18px; font-weight: 600; line-height: 1.4; }
+.post-prose h2 + *, .post-prose h3 + * { margin-top: 12px; }
+.post-prose ul, .post-prose ol { padding-left: 1.3em; }
+.post-prose li + li { margin-top: 8px; }
+.post-prose blockquote { padding: 4px 0 4px 24px; border-left: 2px solid #a9bdcf; color: var(--muted); font-style: italic; }
+.post-prose code { padding: .1em .25em; background: #eef0ed; font: .72em/1.7 var(--mono); }
+.post-prose pre { max-width: 100%; padding: 16px 18px; overflow-x: auto; background: #f0f1ee; font-size: 14px; line-height: 1.7; tab-size: 4; }
+.post-prose pre code { padding: 0; background: none; font: inherit; overflow-wrap: normal; }
+.post-prose figure { margin-block: 28px; }
+.post-prose figure img, .post-prose figure svg { display: block; max-width: 100%; height: auto; }
+.post-figure-legend { display: flex; justify-content: flex-end; gap: 24px; margin-bottom: 8px; font-size: 15px; line-height: 1.5; }
+.post-figure-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.post-figure-legend i { width: 24px; height: 2px; background: #9bb0c1; }
+.post-figure-legend span:last-child i { background: var(--link); }
+.post-figure-axis { display: grid; grid-template-columns: repeat(3, 1fr); width: 85%; margin: 4px auto 0; color: var(--muted); font: 13px/1.5 var(--mono); text-align: center; }
+.post-prose figcaption { max-width: 60ch; margin-top: 12px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.post-equation { max-width: 100%; padding: 6px 0; overflow-x: auto; font-size: 21px; }
+.post-equation math { width: max-content; min-width: 100%; margin: 0; }
+.post-table { max-width: 100%; overflow-x: auto; }
+.post-table table { width: 100%; border-collapse: collapse; font-size: 16px; font-variant-numeric: tabular-nums; text-align: left; }
+.post-table caption { margin-bottom: 12px; color: var(--muted); font-size: 15px; text-align: left; }
+.post-table th { font-weight: 500; }
+.post-table th, .post-table td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--line); }
+.post-prose sup { line-height: 0; }
+.post-prose sup a { padding: 5px 3px; }
+.post-footnotes { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; line-height: 1.6; }
+.post-footnotes ol { margin: 0; }
+.post-prose :target { scroll-margin-top: 32px; }
+.post-end { margin-top: 24px; }
 .notes .page-intro { max-width: 580px; }
 .notes-list { list-style: none; padding: 0; margin: 16px 0 0; }
 .note-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; padding: 20px 0; border-top: 1px solid var(--line); transition: background-color var(--duration) var(--ease); }
@@ -177,8 +236,6 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .note-row h3 { font-size: clamp(24px, 1.8vw, 30px); }
   .note-origin, .note-detail { font-size: clamp(16px, 1.05vw, 18px); }
   .note-pdf { min-height: 48px; padding: 12px 16px; font-size: clamp(13px, .9vw, 15px); }
-  .blog-doodle { width: clamp(240px, 18vw, 300px); }
-  .blog-placeholder .page-intro { font-size: clamp(18px, 1.2vw, 21px); }
   .math { max-width: 900px; }
   .plot { height: clamp(340px, 33vw, 480px); }
 }
@@ -238,6 +295,25 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .social-links { gap: 16px; }
   .social-links a { color: var(--ink); }
   .social-links svg { width: 24px; height: 24px; }
+  .blog > h1 { margin-block: 4px 36px; font-size: 52px; letter-spacing: -1px; }
+  .blog-group-title { margin-bottom: 12px; font-size: 34px; }
+  .blog-entry { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 0 32px; }
+  .blog-entry-image { width: min(82%, 320px); margin: 6px auto 0; }
+  .blog-entry h3 { font-size: 25px; }
+  .blog-entry-summary { font-size: 17px; }
+  .post-page .site { margin-top: max(16px, env(safe-area-inset-top)); }
+  .post-page main { margin-top: 24px; }
+  .post-header h1 { font-size: 36px; letter-spacing: -.7px; }
+  .post-deck { margin-top: 14px; font-size: 18px; }
+  .post-meta { font-size: 11px; letter-spacing: .07em; }
+  .post-prose { margin-top: 28px; font-size: 18px; line-height: 1.65; }
+  .post-prose > * + * { margin-top: 17px; }
+  .post-prose h2 { margin-top: 30px; font-size: 25px; }
+  .post-prose h3 { margin-top: 24px; font-size: 17px; }
+  .post-prose blockquote { padding-left: 18px; }
+  .post-prose pre { padding: 16px; font-size: 13px; }
+  .post-equation { font-size: 19px; }
+  .post-table table { font-size: 16px; }
 }
 @media (max-width: 540px) {
   .notes-list { margin-top: 18px; }
