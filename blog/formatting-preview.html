@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fafaf8">
+  <meta name="description" content="Formatting preview for essays, mathematical notes, and technical posts.">
+  <meta name="robots" content="noindex">
+  <title>A note on randomness — formatting preview — Thomas Ou</title>
+  <link rel="icon" href="../notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
+  <link rel="stylesheet" href="../notebook-assets/newsreader.css">
+  <link rel="stylesheet" href="../styles.css?v=notebook-blog">
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site">
+    <header class="post-masthead">
+      <a class="post-home" href="../index.html#about">Thomas Ou</a>
+      <a href="../index.html#blog">← Blog</a>
+    </header>
+    <main id="main" tabindex="-1">
+      <article class="blog-post" aria-labelledby="post-title">
+        <header class="post-header">
+          <h1 id="post-title">A note on randomness</h1>
+          <p class="post-deck">How averaging changes uncertainty.</p>
+          <p class="post-meta">Formatting preview <span aria-hidden="true">|</span> 2 min read</p>
+        </header>
+        <div class="post-prose">
+          <p>Take 100 independent draws from a standard normal distribution and average them. Repeat this a thousand times. The averages still vary, but they cluster much closer to zero than the individual draws.</p>
+          <p>The standard deviation drops by a factor of ten. Write the sample mean as</p>
+          <div class="post-equation" tabindex="0" role="region" aria-label="Sample mean equation">
+            <math display="block" aria-label="X bar n equals one over n times the sum from i equals one to n of X i">
+              <msub><mover><mi>X</mi><mo>¯</mo></mover><mi>n</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>X</mi><mi>i</mi></msub>
+            </math>
+          </div>
+          <p>When the observations are independent and have a common variance, averaging reduces that variance by a factor of <math aria-label="n"><mi>n</mi></math>.<sup><a id="note-ref-1" href="#note-1" role="doc-noteref" aria-label="Footnote 1">1</a></sup> The <a href="#small-experiment">simulation below</a> makes that change visible.</p>
+          <div class="post-equation" tabindex="0" role="region" aria-label="Variance of the sample mean equation">
+            <math display="block" aria-label="Variance of X bar n equals sigma squared divided by n">
+              <mi mathvariant="normal">Var</mi><mo>(</mo><msub><mover><mi>X</mi><mo>¯</mo></mover><mi>n</mi></msub><mo>)</mo><mo>=</mo><mfrac><msup><mi>σ</mi><mn>2</mn></msup><mi>n</mi></mfrac>
+            </math>
+          </div>
+          <figure>
+            <div class="post-figure-legend" aria-hidden="true"><span><i></i>n = 1</span><span><i></i>n = 16</span></div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 208" role="img" aria-labelledby="distribution-title distribution-description">
+              <title id="distribution-title">Averaging concentrates the distribution around zero</title>
+              <desc id="distribution-description">Two normal probability density curves. The sample mean of sixteen independent standard normal observations is narrower and taller than a single observation.</desc>
+              <path d="M48 200H592" fill="none" stroke="#bfc7cb"/>
+              <path d="M138.67 200v5M320 200v5M501.33 200v5" fill="none" stroke="#bfc7cb"/>
+              <path d="M48.00,199.54 L50.27,199.51 L52.53,199.47 L54.80,199.43 L57.07,199.39 L59.33,199.34 L61.60,199.29 L63.87,199.24 L66.13,199.18 L68.40,199.13 L70.67,199.06 L72.93,199.00 L75.20,198.93 L77.47,198.85 L79.73,198.77 L82.00,198.69 L84.27,198.60 L86.53,198.51 L88.80,198.41 L91.07,198.30 L93.33,198.19 L95.60,198.08 L97.87,197.96 L100.13,197.83 L102.40,197.69 L104.67,197.55 L106.93,197.40 L109.20,197.25 L111.47,197.08 L113.73,196.91 L116.00,196.73 L118.27,196.54 L120.53,196.35 L122.80,196.14 L125.07,195.93 L127.33,195.70 L129.60,195.47 L131.87,195.23 L134.13,194.97 L136.40,194.71 L138.67,194.44 L140.93,194.16 L143.20,193.86 L145.47,193.56 L147.73,193.24 L150.00,192.92 L152.27,192.58 L154.53,192.23 L156.80,191.87 L159.07,191.50 L161.33,191.11 L163.60,190.72 L165.87,190.31 L168.13,189.90 L170.40,189.47 L172.67,189.03 L174.93,188.58 L177.20,188.11 L179.47,187.64 L181.73,187.15 L184.00,186.66 L186.27,186.15 L188.53,185.64 L190.80,185.11 L193.07,184.58 L195.33,184.03 L197.60,183.48 L199.87,182.92 L202.13,182.35 L204.40,181.77 L206.67,181.19 L208.93,180.60 L211.20,180.00 L213.47,179.40 L215.73,178.79 L218.00,178.18 L220.27,177.56 L222.53,176.94 L224.80,176.32 L227.07,175.70 L229.33,175.08 L231.60,174.45 L233.87,173.83 L236.13,173.21 L238.40,172.59 L240.67,171.98 L242.93,171.37 L245.20,170.76 L247.47,170.16 L249.73,169.57 L252.00,168.98 L254.27,168.41 L256.53,167.84 L258.80,167.28 L261.07,166.73 L263.33,166.20 L265.60,165.68 L267.87,165.17 L270.13,164.68 L272.40,164.20 L274.67,163.74 L276.93,163.29 L279.20,162.87 L281.47,162.46 L283.73,162.07 L286.00,161.70 L288.27,161.35 L290.53,161.02 L292.80,160.72 L295.07,160.43 L297.33,160.17 L299.60,159.94 L301.87,159.72 L304.13,159.53 L306.40,159.37 L308.67,159.23 L310.93,159.11 L313.20,159.02 L315.47,158.96 L317.73,158.92 L320.00,158.91 L322.27,158.92 L324.53,158.96 L326.80,159.02 L329.07,159.11 L331.33,159.23 L333.60,159.37 L335.87,159.53 L338.13,159.72 L340.40,159.94 L342.67,160.17 L344.93,160.43 L347.20,160.72 L349.47,161.02 L351.73,161.35 L354.00,161.70 L356.27,162.07 L358.53,162.46 L360.80,162.87 L363.07,163.29 L365.33,163.74 L367.60,164.20 L369.87,164.68 L372.13,165.17 L374.40,165.68 L376.67,166.20 L378.93,166.73 L381.20,167.28 L383.47,167.84 L385.73,168.41 L388.00,168.98 L390.27,169.57 L392.53,170.16 L394.80,170.76 L397.07,171.37 L399.33,171.98 L401.60,172.59 L403.87,173.21 L406.13,173.83 L408.40,174.45 L410.67,175.08 L412.93,175.70 L415.20,176.32 L417.47,176.94 L419.73,177.56 L422.00,178.18 L424.27,178.79 L426.53,179.40 L428.80,180.00 L431.07,180.60 L433.33,181.19 L435.60,181.77 L437.87,182.35 L440.13,182.92 L442.40,183.48 L444.67,184.03 L446.93,184.58 L449.20,185.11 L451.47,185.64 L453.73,186.15 L456.00,186.66 L458.27,187.15 L460.53,187.64 L462.80,188.11 L465.07,188.58 L467.33,189.03 L469.60,189.47 L471.87,189.90 L474.13,190.31 L476.40,190.72 L478.67,191.11 L480.93,191.50 L483.20,191.87 L485.47,192.23 L487.73,192.58 L490.00,192.92 L492.27,193.24 L494.53,193.56 L496.80,193.86 L499.07,194.16 L501.33,194.44 L503.60,194.71 L505.87,194.97 L508.13,195.23 L510.40,195.47 L512.67,195.70 L514.93,195.93 L517.20,196.14 L519.47,196.35 L521.73,196.54 L524.00,196.73 L526.27,196.91 L528.53,197.08 L530.80,197.25 L533.07,197.40 L535.33,197.55 L537.60,197.69 L539.87,197.83 L542.13,197.96 L544.40,198.08 L546.67,198.19 L548.93,198.30 L551.20,198.41 L553.47,198.51 L555.73,198.60 L558.00,198.69 L560.27,198.77 L562.53,198.85 L564.80,198.93 L567.07,199.00 L569.33,199.06 L571.60,199.13 L573.87,199.18 L576.13,199.24 L578.40,199.29 L580.67,199.34 L582.93,199.39 L585.20,199.43 L587.47,199.47 L589.73,199.51 L592.00,199.54" fill="none" stroke="#9bb0c1" stroke-width="2"/>
+              <path d="M48.00,200.00 L50.27,200.00 L52.53,200.00 L54.80,200.00 L57.07,200.00 L59.33,200.00 L61.60,200.00 L63.87,200.00 L66.13,200.00 L68.40,200.00 L70.67,200.00 L72.93,200.00 L75.20,200.00 L77.47,200.00 L79.73,200.00 L82.00,200.00 L84.27,200.00 L86.53,200.00 L88.80,200.00 L91.07,200.00 L93.33,200.00 L95.60,200.00 L97.87,200.00 L100.13,200.00 L102.40,200.00 L104.67,200.00 L106.93,200.00 L109.20,200.00 L111.47,200.00 L113.73,200.00 L116.00,200.00 L118.27,200.00 L120.53,200.00 L122.80,200.00 L125.07,200.00 L127.33,200.00 L129.60,200.00 L131.87,200.00 L134.13,200.00 L136.40,200.00 L138.67,200.00 L140.93,200.00 L143.20,200.00 L145.47,200.00 L147.73,200.00 L150.00,200.00 L152.27,200.00 L154.53,200.00 L156.80,200.00 L159.07,200.00 L161.33,200.00 L163.60,200.00 L165.87,200.00 L168.13,200.00 L170.40,200.00 L172.67,200.00 L174.93,200.00 L177.20,200.00 L179.47,200.00 L181.73,200.00 L184.00,200.00 L186.27,200.00 L188.53,200.00 L190.80,200.00 L193.07,200.00 L195.33,200.00 L197.60,200.00 L199.87,200.00 L202.13,200.00 L204.40,200.00 L206.67,200.00 L208.93,200.00 L211.20,200.00 L213.47,200.00 L215.73,200.00 L218.00,199.99 L220.27,199.99 L222.53,199.98 L224.80,199.98 L227.07,199.96 L229.33,199.94 L231.60,199.92 L233.87,199.88 L236.13,199.82 L238.40,199.75 L240.67,199.64 L242.93,199.49 L245.20,199.29 L247.47,199.02 L249.73,198.65 L252.00,198.17 L254.27,197.55 L256.53,196.74 L258.80,195.71 L261.07,194.40 L263.33,192.78 L265.60,190.77 L267.87,188.33 L270.13,185.38 L272.40,181.88 L274.67,177.76 L276.93,172.97 L279.20,167.47 L281.47,161.25 L283.73,154.30 L286.00,146.64 L288.27,138.31 L290.53,129.40 L292.80,120.00 L295.07,110.24 L297.33,100.31 L299.60,90.37 L301.87,80.65 L304.13,71.35 L306.40,62.71 L308.67,54.95 L310.93,48.27 L313.20,42.87 L315.47,38.89 L317.73,36.46 L320.00,35.64 L322.27,36.46 L324.53,38.89 L326.80,42.87 L329.07,48.27 L331.33,54.95 L333.60,62.71 L335.87,71.35 L338.13,80.65 L340.40,90.37 L342.67,100.31 L344.93,110.24 L347.20,120.00 L349.47,129.40 L351.73,138.31 L354.00,146.64 L356.27,154.30 L358.53,161.25 L360.80,167.47 L363.07,172.97 L365.33,177.76 L367.60,181.88 L369.87,185.38 L372.13,188.33 L374.40,190.77 L376.67,192.78 L378.93,194.40 L381.20,195.71 L383.47,196.74 L385.73,197.55 L388.00,198.17 L390.27,198.65 L392.53,199.02 L394.80,199.29 L397.07,199.49 L399.33,199.64 L401.60,199.75 L403.87,199.82 L406.13,199.88 L408.40,199.92 L410.67,199.94 L412.93,199.96 L415.20,199.98 L417.47,199.98 L419.73,199.99 L422.00,199.99 L424.27,200.00 L426.53,200.00 L428.80,200.00 L431.07,200.00 L433.33,200.00 L435.60,200.00 L437.87,200.00 L440.13,200.00 L442.40,200.00 L444.67,200.00 L446.93,200.00 L449.20,200.00 L451.47,200.00 L453.73,200.00 L456.00,200.00 L458.27,200.00 L460.53,200.00 L462.80,200.00 L465.07,200.00 L467.33,200.00 L469.60,200.00 L471.87,200.00 L474.13,200.00 L476.40,200.00 L478.67,200.00 L480.93,200.00 L483.20,200.00 L485.47,200.00 L487.73,200.00 L490.00,200.00 L492.27,200.00 L494.53,200.00 L496.80,200.00 L499.07,200.00 L501.33,200.00 L503.60,200.00 L505.87,200.00 L508.13,200.00 L510.40,200.00 L512.67,200.00 L514.93,200.00 L517.20,200.00 L519.47,200.00 L521.73,200.00 L524.00,200.00 L526.27,200.00 L528.53,200.00 L530.80,200.00 L533.07,200.00 L535.33,200.00 L537.60,200.00 L539.87,200.00 L542.13,200.00 L544.40,200.00 L546.67,200.00 L548.93,200.00 L551.20,200.00 L553.47,200.00 L555.73,200.00 L558.00,200.00 L560.27,200.00 L562.53,200.00 L564.80,200.00 L567.07,200.00 L569.33,200.00 L571.60,200.00 L573.87,200.00 L576.13,200.00 L578.40,200.00 L580.67,200.00 L582.93,200.00 L585.20,200.00 L587.47,200.00 L589.73,200.00 L592.00,200.00" fill="none" stroke="#345b83" stroke-width="2"/>
+            </svg>
+            <div class="post-figure-axis" aria-hidden="true"><span>−2</span><span>0</span><span>2</span></div>
+            <figcaption>The distribution of the sample mean for independent standard normal observations.</figcaption>
+          </figure>
+
+          <h2 id="small-experiment" tabindex="-1">A small experiment</h2>
+          <p>This Python example takes the average of 100 draws, then repeats the experiment 1,000 times. A fixed seed makes the results reproducible.</p>
+          <pre tabindex="0" aria-label="Python simulation"><code>from random import Random
+
+rng = Random(7)
+means = [
+    sum(
+        rng.gauss(0, 1)
+        for _ in range(100)
+    ) / 100
+    for _ in range(1_000)
+]</code></pre>
+          <p>The values in <code>means</code> will cluster more tightly around zero than the individual draws. Increasing the number of observations makes the average more stable.</p>
+
+          <div class="post-table" tabindex="0" role="region" aria-label="Sample size and uncertainty">
+            <table>
+              <caption>For independent observations with variance 1</caption>
+              <thead><tr><th scope="col">Sample size</th><th scope="col">Variance of the mean</th></tr></thead>
+              <tbody><tr><td>1</td><td>1</td></tr><tr><td>16</td><td>0.0625</td></tr><tr><td>100</td><td>0.01</td></tr></tbody>
+            </table>
+          </div>
+          <section class="post-footnotes" role="doc-endnotes" aria-label="Footnotes">
+            <ol><li id="note-1" tabindex="-1">The common variance must be finite. Dependence can change the result because covariance terms no longer vanish. <a href="#note-ref-1" role="doc-backlink" aria-label="Back to footnote 1 reference">↩</a></li></ol>
+          </section>
+        </div>
+        <footer class="post-end"><a class="post-back" href="../index.html#blog">← Blog</a></footer>
+      </article>
+    </main>
+  </div>
+</body>
+</html>
