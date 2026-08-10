@@ -101,9 +101,9 @@ body:has(#blog:not([hidden])) .ambient-background { opacity: .12; }
 .blog-entry-copy { min-width: 0; }
 .blog-entry-meta, .post-meta { color: var(--muted); font: 13px/1.6 var(--serif); letter-spacing: .1em; text-transform: uppercase; }
 .post-meta span { margin-inline: 5px; }
-.blog-entry h3 { margin: 8px 0 0; font: 700 27px/1.2 var(--blog-display); letter-spacing: -.45px; }
-.blog-entry h3 a { color: var(--ink); text-decoration: none; }
-.blog-entry h3 a:hover { color: var(--link); text-decoration: underline; }
+.blog-entry h2 { margin: 8px 0 0; font: 700 27px/1.2 var(--blog-display); letter-spacing: -.45px; }
+.blog-entry h2 a { color: var(--ink); text-decoration: none; }
+.blog-entry h2 a:hover { color: var(--link); text-decoration: underline; }
 .blog-entry-summary { max-width: 55ch; margin-top: 12px; font-size: 18px; line-height: 1.6; }
 .post-page { --post-gutter: max(24px, env(safe-area-inset-left), env(safe-area-inset-right)); }
 .post-page .site { width: min(100% - var(--post-gutter) * 2, 720px); min-height: 0; margin-top: max(24px, env(safe-area-inset-top)); margin-bottom: max(48px, env(safe-area-inset-bottom)); }
@@ -299,7 +299,7 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .blog-group-title { margin-bottom: 12px; font-size: 34px; }
   .blog-entry { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 0 32px; }
   .blog-entry-image { width: min(82%, 320px); margin: 6px auto 0; }
-  .blog-entry h3 { font-size: 25px; }
+  .blog-entry h2 { font-size: 25px; }
   .blog-entry-summary { font-size: 17px; }
   .post-page .site { margin-top: max(16px, env(safe-area-inset-top)); }
   .post-page main { margin-top: 24px; }
