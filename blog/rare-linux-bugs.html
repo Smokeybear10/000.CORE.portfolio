@@ -2,43 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#fafaf8">
-  <meta name="description" content="A rare Linux NFS failure, misleading permission errors, and the timing of retries.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>When a retry becomes the bug — draft — Thomas Ou</title>
-  <link rel="icon" href="../notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
-  <link rel="stylesheet" href="../notebook-assets/newsreader.css">
-  <link rel="stylesheet" href="../styles.css?v=notebook-blog">
+  <meta http-equiv="refresh" content="0; url=../index.html#blog">
+  <title>Blog — Thomas Ou</title>
 </head>
-<body class="post-page">
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="site">
-    <header class="post-masthead">
-      <a class="post-home" href="../index.html#about">Thomas Ou</a>
-      <a href="../index.html#blog">← Blog</a>
-    </header>
-    <main id="main" tabindex="-1">
-      <article class="blog-post" aria-labelledby="post-title">
-        <header class="post-header">
-          <h1 id="post-title">When a retry becomes the bug</h1>
-          <p class="post-deck">A delayed response can be more revealing than a failed request.</p>
-          <p class="post-meta">Draft <span aria-hidden="true">|</span> 2 min read</p>
-        </header>
-        <div class="post-prose">
-          <p>A file copy fails with <code>Permission denied</code>. Checking the permissions seems reasonable. But the error names the result, not necessarily the cause.</p>
-          <p>In <a href="https://blog.janestreet.com/a-higgs-bugson-in-the-linux-kernel/">Nikhil Jha’s Linux debugging account</a>, rare NFS copy failures led through authentication code to a timing problem. A retried request used a new GSS sequence number, while a delayed response could still correspond to the earlier one. Validation failed, and the resulting retries could keep the failure going.</p>
-          <figure><img src="retries.svg" width="640" height="320" alt="A client sends a request and then retries before the original response arrives from the server."><figcaption>A retry can be in flight before the first response arrives.</figcaption></figure>
-          <h2>Make the ordering visible</h2>
-          <p>The useful question becomes: which events must happen in which order? Write down the first request, the timeout, the retry, and each possible response. Then ask what state the client retains at every step.</p>
-          <p><a href="https://www.rfc-editor.org/rfc/rfc2203#section-5.3.3.1">RFC 2203</a> explicitly discusses keeping sequence numbers for retransmitted requests so a reply can be checked against the appropriate attempt. A single operation can have several attempts in flight; treating only the latest attempt as relevant loses information.</p>
-          <p>A useful reproducer should control that ordering. More traffic might expose a rare failure, but deliberately delaying a response tests a narrower hypothesis. Record the request identifiers and state transitions before running the experiment, so an unexpected result has something to explain.</p>
-          <p>Once a fix appears to work, keep the awkward ordering in the test. Otherwise the next successful run might only mean the response arrived sooner.</p>
-          <aside class="post-footnotes" aria-label="Inspiration"><p>Topic inspired by Nikhil Jha’s <a href="https://blog.janestreet.com/a-higgs-bugson-in-the-linux-kernel/">A Higgs-bugson in the Linux Kernel</a>.</p></aside>
-        </div>
-        <footer class="post-end"><a class="post-back" href="../index.html#blog">← Blog</a></footer>
-      </article>
-    </main>
-  </div>
-</body>
+<body><p><a href="../index.html#blog">Continue to the blog</a>.</p></body>
 </html>
