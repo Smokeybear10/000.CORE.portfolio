@@ -3,7 +3,7 @@
 // Project data with enhanced information
 const projectData = {
   fightvision: {
-    title: "Computer Vision Strike Detection System for MMA",
+    title: "Strike — MMA Strike Detection",
     description: "A computer vision project using SAM2 and MMAction2 to detect and classify MMA strikes. It leverages foundational segmentation models and Temporal Segment Networks (TSN) to provide a functional proof-of-concept for automated combat sports analysis using a custom, high-precision dataset.",
     tech: ["Python", "Computer Vision", "Deep Learning", "SAM2", "Label Studio", "MMAction2", "Temporal Segment Networks", "3D CNN"],
     image: "Images/ProjectPhotos/STR1KE1.gif",
@@ -19,12 +19,12 @@ const projectData = {
     challenges: "Primary bottleneck was dataset size limitations - only 200 frames across 40 sequences were manually annotated due to Label Studio Premium subscription access issues, which would have enabled automated learning of labeling patterns after 3-4 examples. Initial 3D CNN architecture was abandoned due to excessive RAM requirements that exceeded Google Colab runtime capacity, even with batching optimizations. Manual mask refinement remained time-consuming despite SAM2 automation. Model accuracy remains below production standards due to limited training data, though results were impressive given the constraint of only 40 data points for transfer learning.",
     links: [
       { text: "Live Website", url: "https://str1ke.vercel.app", type: "live" },
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/100.RSCH.str1ke", type: "github" }
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/100.RSCH.strike", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/STR1KE1.gif", "Images/ProjectPhotos/STR1KE4.gif", "Images/ProjectPhotos/STR1KE2.png", "Images/ProjectPhotos/STR1KE3.png"]
   },
   dj: {
-    title: "AI-Powered DJ System",
+    title: "D4NCE — AI-Powered DJ System",
     description: "A browser-based DJ system powered by Grok AI, built with Next.js, React, and the Web Audio API. Features a dual-deck engine with full mixer controls (3-band EQ, filters, reverb, delay, crossfader), voice and text command processing via natural language, and AI-generated transition plans with crossfade automation, EQ bass swapping, and phrase-aware tempo matching. Includes real-time BPM detection, audio-reactive 3D visualization via Three.js, and cloud-backed track management with automatic metadata analysis.",
     tech: ["Next.js", "React", "Web Audio API", "Grok AI", "Three.js", "TypeScript", "NLP"],
     image: "Images/ProjectPhotos/D4NCE.gif",
@@ -44,7 +44,7 @@ const projectData = {
     gallery: ["Images/ProjectPhotos/D4NCE.gif"]
   },
   fightiq: {
-    title: "Predictive Analysis of Fight Outcomes in MMA",
+    title: "Versus — MMA Predictive Analytics",
     description: "A machine learning project that predicts MMA fight outcomes using historical UFC fight data. Differential calculations across 100+ fighter attributes (striking, grappling, physical metrics, career performance) are used to train and compare multiple classification models including Random Forest, Gradient Boosting, SVM, and K-Nearest Neighbors. The system accepts two fighter inputs, standardizes their career statistics, and outputs win probability predictions across each model.",
     tech: ["Python", "Machine Learning", "scikit-learn", "Random Forest", "Gradient Boosting", "SVM", "K-Nearest Neighbors", "pandas", "NumPy"],
     image: "Images/ProjectPhotos/STRATOS.png",
@@ -57,13 +57,13 @@ const projectData = {
     technical: "Historical UFC fight data is transformed into differential features across 100+ striking, grappling, physical, and career attributes. Career statistics are standardized before training and at inference so two selected fighters map to the same feature space as historical bouts. Random Forest, Gradient Boosting, SVM, and K-Nearest Neighbors are fit on the differential dataset and evaluated side by side. The prediction path takes two fighter inputs, recomputes standardized differentials, and returns win probability estimates from each classifier.",
     links: [
       { text: "Live Website", url: "https://v3rsus.vercel.app", type: "live" },
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/102.RSCH.v3rsus", type: "github" }
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/102.RSCH.versus", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/STRATOS.png"]
   },
   harboros: {
-    title: "HarborOS — Maritime Defense Platform",
-    description: "Maritime awareness and operator decision-support platform for contested littoral defense. HarborOS turns raw AIS vessel traffic into actionable operator decisions through a four-stage pipeline: detect suspicious behavior across 11 research-backed anomaly detectors, assess risk with a Mamdani fuzzy inference engine, recommend MARSEC-aligned actions, and verify with Sentinel-2 satellite imagery pulled directly from Copernicus. Every alert is explainable; every risk score shows its work.",
+    title: "Harbor — Maritime Defense Platform",
+    description: "Maritime awareness and operator decision-support platform for contested littoral defense. Harbor turns raw AIS vessel traffic into actionable operator decisions through a four-stage pipeline: detect suspicious behavior across 11 research-backed anomaly detectors, assess risk with a Mamdani fuzzy inference engine, recommend MARSEC-aligned actions, and verify with Sentinel-2 satellite imagery pulled directly from Copernicus. Every alert is explainable; every risk score shows its work.",
     tech: ["Python", "FastAPI", "Next.js", "TypeScript", "MapLibre GL", "SQLAlchemy", "Fuzzy Inference", "Sentinel-2"],
     image: "Images/ProjectPhotos/HARBOROS.gif",
     features: [
@@ -77,14 +77,14 @@ const projectData = {
     technical: "FastAPI backend with SQLAlchemy + SQLite persists vessel domain models, anomaly signals, and fuzzy risk scores. The ingestion service streams live AIS data, passes position reports through the 11 detectors, then feeds aggregated signals into the fuzzy inference engine. Frontend is Next.js + TypeScript + Tailwind with MapLibre GL rendering the map, heatmap, and per-sector drill-downs. Data adapters integrate AISStream, Copernicus Sentinel-2, NWS weather, and USCG port state control records. The Sentinel-2 satellite verification path pulls the latest scene for a vessel's bounding box on demand.",
     links: [
       { text: "Live Website", url: "https://h4bor.vercel.app", type: "live" },
-      { text: "Source Code", url: "https://github.com/Smokeybear10/003.CORE.h4bor", type: "github" }
+      { text: "Source Code", url: "https://github.com/Smokeybear10/003.CORE.harbor", type: "github" }
     ],
     gallery: [
       "Images/ProjectPhotos/HARBOROS.gif"
     ]
   },
   poker: {
-    title: "R1VER — Poker Intelligence (MCCFR Solver)",
+    title: "River — Poker Intelligence (MCCFR Solver)",
     description: "A Rust solver for No-Limit Texas Hold'em implementing the Pluribus abstraction and blueprint-training stack. Collapses the ~10^160-node game tree by clustering 3.1T strategically-equivalent situations into 542 buckets using Earth Mover's Distance over equity distributions, then runs external-sampling MCCFR self-play to produce a blueprint Nash strategy — queryable in real time through an Actix Web API and an interactive explorer. Depth-limited subgame search is not built yet.",
     tech: ["Rust", "MCCFR", "k-means Clustering", "Optimal Transport", "Hand Abstraction", "NLHE", "Serialization"],
     image: "Images/ProjectPhotos/R1VER1.gif",
@@ -99,13 +99,13 @@ const projectData = {
     technical: "The codebase is organized as a Rust library for NLHE: hand evaluation and equity sit in a fast path for nanosecond-level work; isomorphic abstractions feed hierarchical k-means; Earth Mover's Distance is computed through optimal transport between abstraction masses. MCCFR (external sampling and regret accumulation) trains blueprint strategies toward near-optimal play. Abstractions, distance structures, and learned strategies serialize cleanly so training can persist and resume without rebuilding state from scratch.",
     links: [
       { text: "Live Website", url: "https://river-002.vercel.app", type: "live" },
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/002.CORE.r1ver", type: "github" }
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/103.RSCH.river", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/R1VER1.gif", "Images/ProjectPhotos/R1VER2.gif"]
   },
   smartcv: {
-    title: "DR4FT — AI Resume Optimizer",
-    description: "Your resume, graded. DR4FT runs resumes through ATS simulation and xAI Grok, returning per-section scores, missing keywords, and line-by-line rewrites. The whole product is dressed as a Blue Book exam booklet — cream ruled paper, red pen margin notes, PASS/FAIL grade stamps.",
+    title: "Draft — AI Resume Optimizer",
+    description: "Your resume, graded. Draft runs resumes through ATS simulation and xAI Grok, returning per-section scores, missing keywords, and line-by-line rewrites. The whole product is dressed as a Blue Book exam booklet — cream ruled paper, red pen margin notes, PASS/FAIL grade stamps.",
     tech: ["Python", "FastAPI", "Next.js", "TypeScript", "xAI Grok", "ATS Simulation", "PDF/DOCX"],
     image: "Images/ProjectPhotos/PR0XIM.png",
     features: [
@@ -117,7 +117,7 @@ const projectData = {
     technical: "FastAPI backend serves the analysis, builder, and jobs endpoints; a Next.js + TypeScript frontend renders the Blue Book interface. Resume parsing handles both PDF and DOCX. Standard scoring runs local NLP across ATS compatibility, keyword match, format, and section coverage; AI scoring calls xAI Grok for structured quality assessment and skill-gap identification. The builder renders five templates to ATS-parseable PDF. Job discovery aggregates seven portals into direct search links with market insight summaries.",
     links: [
       { text: "Live Website", url: "https://proj-dr4ft.vercel.app", type: "live" },
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/203.PROJ.dr4ft", type: "github" }
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/203.PROJ.draft", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/PR0XIM.png"]
   }
