@@ -57,7 +57,7 @@ const projectData = {
     technical: "Historical UFC fight data is transformed into differential features across 100+ striking, grappling, physical, and career attributes. Career statistics are standardized before training and at inference so two selected fighters map to the same feature space as historical bouts. Random Forest, Gradient Boosting, SVM, and K-Nearest Neighbors are fit on the differential dataset and evaluated side by side. The prediction path takes two fighter inputs, recomputes standardized differentials, and returns win probability estimates from each classifier.",
     links: [
       { text: "Live Website", url: "https://v3rsus.vercel.app", type: "live" },
-      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/102.RSCH.versus", type: "github" }
+      { text: "GitHub Repository", url: "https://github.com/Smokeybear10/211.PROJ.versus", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/STRATOS.png"]
   },
