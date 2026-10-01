@@ -83,6 +83,7 @@ svg { display: block; }
 .project-source { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -10px; flex-shrink: 0; color: var(--muted); border-radius: 6px; transition: color 240ms var(--ease), transform 350ms var(--ease); }
 .project-source:hover { color: var(--link-hover); transform: translateY(-2px); }
 .project-description { max-width: 43ch; margin-top: 0; padding-right: 30px; color: var(--muted); font-size: 16px; line-height: 1.65; letter-spacing: -.015em; text-wrap: pretty; }
+.brand, .page-title, .project-heading h2 { transform: translate(var(--text-x, 0px), var(--text-y, 0px)); }
 .collection { padding-bottom: 48px; border-bottom: 1px solid var(--line); }
 .skip-link { position: absolute; z-index: 5; top: -80px; left: var(--gutter); padding: 10px 16px; background: var(--ink); color: white; }
 .skip-link:focus { top: 12px; }
