@@ -35,6 +35,8 @@ main { min-width: 0; }
 main:focus { outline: none; }
 svg { display: block; }
 
+.ambient-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .8; }
+.ambient-field { display: block; width: 100%; height: 100%; }
 .site { position: relative; z-index: 1; width: min(calc(100% - var(--gutter) * 2), 1160px); margin: max(clamp(32px, 6svh, 64px), env(safe-area-inset-top)) auto max(64px, env(safe-area-inset-bottom)); }
 .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 24px; margin-bottom: 40px; }
 .page-title { justify-self: start; font-family: var(--serif); font-size: clamp(88px, 9vw, 120px); font-style: italic; font-weight: 400; line-height: .98; letter-spacing: -.06em; }
