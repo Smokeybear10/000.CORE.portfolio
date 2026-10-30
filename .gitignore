@@ -1,1 +1,5 @@
 .vercel
+
+# Local OS and browser-automation state
+.DS_Store
+.gstack/
