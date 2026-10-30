@@ -98,7 +98,6 @@ const projectData = {
     ],
     technical: "The codebase is organized as a Rust library for NLHE: hand evaluation and equity sit in a fast path for nanosecond-level work; isomorphic abstractions feed hierarchical k-means; Earth Mover's Distance is computed through optimal transport between abstraction masses. MCCFR (external sampling and regret accumulation) trains blueprint strategies toward near-optimal play. Abstractions, distance structures, and learned strategies serialize cleanly so training can persist and resume without rebuilding state from scratch.",
     links: [
-      { text: "Live Website", url: "https://river-002.vercel.app", type: "live" },
       { text: "GitHub Repository", url: "https://github.com/Smokeybear10/103.RSCH.river", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/R1VER1.gif", "Images/ProjectPhotos/R1VER2.gif"]
