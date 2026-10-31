@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css?v=pdf-links">
   <script src="navigation.js" defer></script>
   <script src="attractor.js" defer></script>
+  <script src="geometry.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -22,6 +23,7 @@
       </div>
       <nav aria-label="Main navigation">
         <a href="#home" aria-current="page">Home</a>
+        <a href="#math">Math</a>
       </nav>
     </header>
     <main id="main" tabindex="-1">
@@ -52,6 +54,26 @@
               <button id="attractor-reset" type="button">Reset</button>
             </div>
           </figure>
+        </div>
+      </section>
+      <section id="math" class="page-section math" aria-labelledby="math-title">
+        <h1 id="math-title">A little knot theory</h1>
+        <p class="page-intro">The trefoil is the simplest nontrivial knot. Drag to turn it around.</p>
+        <figure aria-labelledby="math-title" aria-describedby="figure-description">
+          <div class="plot">
+            <canvas id="knot-canvas" tabindex="0" role="img" aria-label="Interactive trefoil knot. Drag or use the arrow keys to rotate." aria-describedby="figure-description">A trefoil knot, a closed curve in three dimensions with three crossings.</canvas>
+            <noscript><p class="no-script">Enable JavaScript to explore the knot.</p></noscript>
+          </div>
+          <div class="figure-controls">
+            <label for="tube-radius">Thickness <input id="tube-radius" type="range" min="0.12" max="0.4" step="0.01" value="0.23"><output id="radius-value" for="tube-radius">0.23</output></label>
+            <div class="figure-buttons"><button type="button" id="motion-toggle" aria-pressed="true">Pause</button><button type="button" id="reset-figure">Reset</button></div>
+          </div>
+          <figcaption id="figure-description">One closed curve, three crossings, no loose ends.</figcaption>
+        </figure>
+        <div class="equation" aria-label="x equals sine t plus two sine two t; y equals cosine t minus two cosine two t; z equals negative sine three t">
+          <span>x(t) = sin t + 2 sin 2t</span>
+          <span>y(t) = cos t − 2 cos 2t</span>
+          <span>z(t) = −sin 3t</span>
         </div>
       </section>
     </main>
