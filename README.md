@@ -16,6 +16,7 @@ Open http://localhost:4317.
 
 - Interactive Lorenz attractor with rotation, parameter controls, and reduced-motion support
 - Interactive trefoil knot with rotation and adjustable thickness
+- Nine handwritten PDF note sets, grouped into undergraduate and graduate sections
 
 ## Tech Stack
 

@@ -2,7 +2,7 @@
   const sections = Array.from(document.querySelectorAll('.page-section'));
   const links = Array.from(document.querySelectorAll('.site-header nav a'));
   const main = document.getElementById('main');
-  const titles = { home: 'Thomas Ou', math: 'Math — Thomas Ou' };
+  const titles = { home: 'Thomas Ou', notes: 'Notes — Thomas Ou', math: 'Math — Thomas Ou' };
 
   function navigate(moveFocus = false) {
     const requested = window.location.hash.slice(1) || 'home';
