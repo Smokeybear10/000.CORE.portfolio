@@ -18,7 +18,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.7 var(--serif); -webkit-font-smoothing: antialiased; }
 .ambient-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .ambient-field { position: absolute; display: block; inset: 0; width: 100%; height: 100%; }
-.reactive-word { display: inline-block; max-width: 100%; overflow-wrap: anywhere; text-decoration: inherit; }
+.reactive-text-inline { display: inline-block; max-width: 100%; }
 ::selection { background: #dfe8ef; }
 a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color var(--duration) var(--ease); }
 a:hover { color: #183d63; }
@@ -237,7 +237,7 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .note-pdf:hover .pdf-arrow { transform: translate(2px, -2px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .reactive-word { transform: none !important; }
+  .reactive-text { translate: none !important; }
   a, .social-links a, .note-row, .note-pdf .pdf-arrow, .site-header nav a::after { transition: none; }
   .social-links a:hover { transform: none; }
   .note-pdf:hover, .note-pdf:active, .note-pdf:hover .pdf-arrow { transform: none; }
