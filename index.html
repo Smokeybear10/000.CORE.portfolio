@@ -8,7 +8,7 @@
   <title>Thomas Ou</title>
   <link rel="icon" href="notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
   <link rel="stylesheet" href="notebook-assets/newsreader.css">
-  <link rel="stylesheet" href="styles.css?v=mobile-polish">
+  <link rel="stylesheet" href="styles.css?v=notebook-blog">
   <script src="ambient.js?v=canvas-resize" defer></script>
   <script src="navigation.js?v=research-scroll" defer></script>
   <script src="attractor.js?v=canvas-resize" defer></script>
@@ -257,11 +257,20 @@
         </section>
       </section>
       <section id="blog" hidden class="page-section blog" aria-labelledby="blog-title">
-        <h1 id="blog-title">Blog</h1>
-        <div class="blog-placeholder">
-          <img class="blog-doodle" src="notebook-assets/blog-cat.png" width="200" height="160" alt="A sleepy cat resting on a notebook.">
-          <p class="page-intro">In development</p>
-        </div>
+        <h1 id="blog-title">posts</h1>
+        <section class="blog-group" aria-labelledby="blog-drafts-title">
+          <h2 id="blog-drafts-title" class="blog-group-title">Drafts</h2>
+          <ol class="blog-list" role="list">
+            <li class="blog-entry">
+              <div class="blog-entry-copy">
+                <p class="blog-entry-meta">Formatting preview</p>
+                <h3><a href="blog/formatting-preview.html">A note on randomness</a></h3>
+                <p class="blog-entry-summary">Why averaging independent observations reduces uncertainty, with a short Python simulation.</p>
+              </div>
+              <a class="blog-entry-image" href="blog/formatting-preview.html" tabindex="-1" aria-hidden="true"><img src="blog/randomness.svg" width="640" height="320" alt=""></a>
+            </li>
+          </ol>
+        </section>
       </section>
       <section id="math" hidden class="page-section math" aria-labelledby="math-title">
         <h1 id="math-title">A little knot theory</h1>
