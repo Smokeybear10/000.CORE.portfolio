@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fafaf8">
-  <meta name="description" content="A reproducible experiment in pooled calibration, subgroup errors, and what changes when the population shifts.">
+  <meta name="description" content="Two groups, opposite errors, and a calibration curve that looks perfect. A small Python example of what gets lost when predictions are pooled.">
   <title>Trying to break a calibrated predictor — Thomas Ou</title>
   <link rel="canonical" href="https://thomasou.com/blog/trying-to-break-a-calibrated-predictor.html">
   <link rel="icon" href="../notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
@@ -22,38 +22,37 @@
       <article class="blog-post" aria-labelledby="post-title">
         <header class="post-header">
           <h1 id="post-title">Trying to break a calibrated predictor</h1>
-          <p class="post-deck">A perfect reliability plot can hide two very wrong predictions.</p>
+          <p class="post-deck">A small example of what a calibration curve can miss.</p>
           <p class="post-meta"><time datetime="2025-07">July 2025</time> <span aria-hidden="true">|</span> 8 min read</p>
         </header>
         <div class="post-prose">
-          <p>A predictor can pass a calibration check while being systematically wrong about every group in the data. The trick is to make the errors cancel. Overpredict for one group, underpredict for another, and the combined reliability plot can sit exactly on the diagonal.</p>
-          <p>That sounds like a loophole in the metric. It is really a question about what the metric conditions on. Ordinary calibration asks about examples receiving the same score. It does not automatically make the same promise after you split those examples by some other information.</p>
-          <p>Here is a small construction where that distinction is visible all the way down to the arithmetic. There is no trained neural network to blame, no choice of histogram bins to hide behind, and no random seed to search for.</p>
+          <p>If a model says 70%, I expect the event to happen about 70% of the time among examples getting that prediction. I also want to know whether that holds for different groups within those examples.</p>
+          <p>Those two checks can disagree by quite a lot. Here’s an example where the usual calibration error is exactly zero, but the model overpredicts for one group and underpredicts for the other. Everything is small enough to calculate by hand.</p>
 
-          <h2>A predictor that passes</h2>
-          <p>Take two streams of binary outcomes, A and B. An outcome is either 0 or 1. In A, the probability of a 1 is 20%. In B, it is 80%. Draw from the streams equally often, and give every example the prediction 50%.</p>
-          <p>Across the mixture, half the outcomes are positive. Since the predictor only ever emits 50%, its calibration claim is correct: among examples assigned that score, the event happens half the time. In the population, the usual condition is</p>
+          <h2>One score</h2>
+          <p>Take two streams of binary outcomes, A and B. An outcome is either 0 or 1. In A, the probability of a 1 is 20%. In B, it’s 80%. Draw from the streams equally often and predict 50% for everything.</p>
+          <p>The mixture has an event probability of 50%, so the prediction is calibrated. Formally, calibration means</p>
           <div class="post-equation" tabindex="0" role="region" aria-label="Calibration condition">
             <math display="block" aria-label="The expected value of Y conditional on P equals p is p"><mi mathvariant="normal">E</mi><mo>[</mo><mi>Y</mi><mo>∣</mo><mi>P</mi><mo>=</mo><mi>p</mi><mo>]</mo><mo>=</mo><mi>p</mi><mo>.</mo></math>
           </div>
-          <p>Here, P is the predicted probability, Y is the binary outcome, and the only score we need to check is p = 0.5. The predictor satisfies the condition. It also ignores an extremely useful piece of information: which stream an example came from.</p>
+          <p>P is the predicted probability and Y is the outcome. The only score here is p = 0.5, and the expected outcome among examples receiving it is also 0.5. But split the examples by stream:</p>
           <div class="post-table" tabindex="0" role="region" aria-label="Calibration of the constant predictor">
             <table><caption>Every prediction is 50%; equal group sizes</caption><thead><tr><th scope="col">Stream</th><th scope="col">Event rate</th><th scope="col">Gap</th></tr></thead><tbody><tr><th scope="row">A</th><td>20%</td><td>−30 pp</td></tr><tr><th scope="row">B</th><td>80%</td><td>+30 pp</td></tr><tr><th scope="row">Combined</th><td>50%</td><td>0 pp</td></tr></tbody></table>
           </div>
-          <p>The last column is a signed error, measured in percentage points. Combining the groups averages −30 and +30 to zero. The cancellation does not tell us that either group received a good estimate.</p>
-          <p>Assume the stream identifier is available before prediction. Someone who knows it can issue 20% for A and 80% for B. Those predictions are calibrated too, and they distinguish two situations the original predictor treats as identical. If the identifier were unavailable, that improvement would require finding some other informative feature.</p>
+          <p>The gap is the event rate minus the prediction, in percentage points. A gets predictions 30 points too high; B gets predictions 30 points too low. Averaging the two gaps gives zero.</p>
+          <p>For the rest of this example, assume we know the stream before making a prediction. We could then predict 20% for A and 80% for B. That predictor is calibrated too. The difference is that it uses information the constant predictor throws away. Without the stream identifier, we’d need another feature that lets us tell the cases apart.</p>
 
-          <h2>Give it more than one score</h2>
-          <p>A model that says 50% to everything is an easy target. The same construction works when the predictions vary.</p>
-          <p>Use three scores: 20%, 50%, and 80%. At each score, include equal numbers of A and B examples. Give A an event probability 15 percentage points below the score, and B an event probability 15 points above it. The resulting probabilities are all valid: A gets 5%, 35%, and 65%; B gets 35%, 65%, and 95%.</p>
-          <p>At a score of 20%, averaging 5% and 35% gives 20%. At 50%, averaging 35% and 65% gives 50%. The same happens at 80%. The combined predictor is calibrated separately at every score it produces.</p>
+          <h2>Three scores</h2>
+          <p>The constant prediction makes this particularly easy to arrange. The construction also works with several scores.</p>
+          <p>Use three scores: 20%, 50%, and 80%. At each score, include equal numbers of A and B examples. Set A’s event probability 15 percentage points below the score and B’s 15 points above it. A then has probabilities 5%, 35%, and 65%; B has 35%, 65%, and 95%.</p>
+          <p>Among examples assigned 20%, the average event probability is (5% + 35%) / 2 = 20%. The arithmetic works the same way at 50% and 80%. Each combined point lands on the diagonal.</p>
           <figure><img src="calibration.svg" width="640" height="480" alt="A reliability plot at predictions 0.2, 0.5, and 0.8. Pooled event rates lie on the diagonal. Group A lies 0.15 below it, and group B lies 0.15 above it."><figcaption>Equal group sizes at each score. The combined curve is perfect; both group curves miss by 15 percentage points.</figcaption></figure>
-          <p>This failure survives arbitrarily precise score grouping. The examples with opposite errors have exactly the same prediction, so making the calibration bins narrower cannot separate them. The missing distinction is the group, not another decimal place in the score.</p>
-          <p>Checking only each group’s overall mean would not be sufficient in general either. Errors at different scores could cancel inside a group. The stronger question conditions on both the group and the predicted probability.</p>
+          <p>Narrower calibration bins won’t help here. An A example and a B example can have exactly the same score, so they’ll stay in the same bin however fine we make it. We have to split by group to see the two errors.</p>
+          <p>It’s also worth keeping the scores separate within each group. In a different construction, A could be overpredicted at one score and underpredicted at another. Checking just A’s average would let those errors cancel again.</p>
 
-          <h2>Make the example reproducible</h2>
-          <p>The <a href="calibration.py" download>complete Python experiment</a> uses only the standard library. It constructs 1,000 examples for every group–score pair, with exactly the intended number of positive outcomes. This produces 2,000 rows for the constant predictor and 6,000 for the three-score predictor.</p>
-          <p>The central step is deliberately plain. Given a score <code>p</code> and a gap, generate one group on either side of the score:</p>
+          <h2>Checking the arithmetic</h2>
+          <p>The <a href="calibration.py" download>Python script</a> builds 1,000 examples for each group–score pair: 2,000 rows for the constant predictor and 6,000 for the three-score version. The number of positive outcomes is fixed. A cell with an event rate of 5%, for instance, gets 50 ones and 950 zeros.</p>
+          <p>Given a score <code>p</code> and a gap, the two groups are constructed like this:</p>
           <pre tabindex="0" aria-label="Construct the two groups"><code>for group, rate in (
     ("A", p - gap),
     ("B", p + gap),
@@ -64,41 +63,43 @@
          int(i &lt; positives))
         for i in range(1000)
     )</code></pre>
-          <p>Each row keeps the group, the prediction, the generating probability, and the outcome. The script uses rational numbers so the equalities can be checked exactly instead of depending on floating-point rounding. The order of the rows is irrelevant to the calculations.</p>
-          <p>For calibration error, group rows by their prediction, average the signed residuals within each bucket, take the absolute value, and weight by the bucket’s share of the data. Repeat with buckets identified by both group and prediction. Only the grouping changes.</p>
+          <p>Each row contains the group, prediction, generating probability, and outcome. The script uses Python’s <code>Fraction</code> type so the checks are exact. Row order doesn’t matter.</p>
+          <p>To get a calibration error, bucket the rows by prediction and average the signed errors in each bucket. Then take the absolute values and weight them by each bucket’s share of the rows. Run the calculation again, this time bucketing by both group and prediction:</p>
           <pre tabindex="0" aria-label="Experiment results"><code>          pooled  grouped
 constant  0.0000   0.3000
 3 scores  0.0000   0.1500</code></pre>
-          <p>These are exact properties of a constructed dataset, not evidence that a fitted model generalizes. Random Bernoulli draws from the same probabilities would fluctuate around these rates. Using fixed counts removes that noise so the cancellation is the only thing under examination.</p>
+          <p>Nothing about the predictions changed between the two columns. The first calculation lets A’s errors cancel B’s; the second takes their absolute values separately.</p>
+          <p>These exact zeros come from fixing the counts. If we sampled the outcomes instead, the observed rates would fluctuate around the probabilities above. Fixed counts make the cancellation easier to inspect, but they don’t tell us how well a fitted model would do on new data.</p>
 
-          <h2>What the calibration number leaves out</h2>
-          <p>Another way to compare the predictors is the binary Brier score: average the squared difference between the predicted probability and the outcome. Smaller is better.</p>
+          <h2>Brier score</h2>
+          <p>The Brier score averages the squared error of the predictions. For binary outcomes:</p>
           <div class="post-equation" tabindex="0" role="region" aria-label="Binary Brier score">
             <math display="block" aria-label="Brier equals one over n times the sum of p i minus y i squared"><mi mathvariant="normal">Brier</mi><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msup><mrow><mo>(</mo><msub><mi>p</mi><mi>i</mi></msub><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub><mo>)</mo></mrow><mn>2</mn></msup><mo>.</mo></math>
           </div>
-          <p>The constant 50% predictor scores 0.25. Every outcome is half a unit away from its prediction, so every squared error is one quarter. Predicting the known stream probabilities instead gives 0.16: in A, the average is 0.2 × 0.8² + 0.8 × 0.2², and B gives the same result.</p>
-          <p>For the three-score example, with equal counts in all six group–score combinations, the original predictor scores 0.19. The predictor using the true group probabilities scores 0.1675. Its improvement is 0.0225, exactly 0.15².</p>
-          <p>Those better predictions use the generating probabilities supplied by the experiment. They are an oracle comparison, not estimates learned from the evaluation labels. In a real dataset, estimating those rates would be another statistical problem.</p>
-          <p>Brier score is useful here because it can distinguish two predictors that both pass the pooled calibration check. It is not a substitute for that check: it reflects several aspects of prediction quality, including discrimination. The <a href="https://scikit-learn.org/stable/modules/calibration.html">scikit-learn calibration guide</a> explains why a lower Brier score alone does not establish better calibration.</p>
+          <p>Lower is better. The constant 50% predictor scores 0.25 because it’s half a unit away from every outcome. Predicting 20% for A and 80% for B gives 0.16. For A, that’s 0.2 × 0.8² + 0.8 × 0.2²; B gives the same answer.</p>
+          <p>In the three-score example, with equal counts in all six cells, the original predictor scores 0.19. Using the true probabilities in each cell brings it down to 0.1675. The improvement is 0.0225, or 0.15².</p>
+          <p>There’s a reason the square appears. If the event probability is q, the expected squared error at prediction p is q(1 − q) + (p − q)². Predicting q removes the second term. Here, p and q are 0.15 apart in every cell.</p>
+          <p>So Brier score can distinguish these predictors even though both pass the pooled calibration check. The improved predictor has an unfair advantage: we gave it the true probabilities. On real data, we’d have to estimate them from training data and see whether the improvement held up on a separate test set.</p>
+          <p>I wouldn’t use a lower Brier score as proof of better calibration, though. It also rewards a predictor for separating high-probability cases from low-probability ones. The <a href="https://scikit-learn.org/stable/modules/calibration.html">scikit-learn calibration guide</a> goes through this distinction.</p>
 
-          <h2>A score-only repair cannot fix this</h2>
-          <p>Suppose we try to repair the constant predictor by passing its output through another function. Every input to that function is 0.5, so every output must be the same number, q. To calibrate A, q would have to be 0.2. To calibrate B, it would have to be 0.8. One number cannot satisfy both requirements.</p>
-          <p>The same obstruction occurs at each score in the second example. A deterministic function of the score alone cannot distinguish A from B when their scores are identical. Fitting a more flexible curve does not give it the missing identifier.</p>
-          <p>Allow the repair to use the group, and this particular example becomes easy: subtract 0.15 for A and add 0.15 for B. That works because the construction tells us the correct adjustment. It does not establish that the same adjustment would work for unknown groups, changing data, or noisy estimates.</p>
-          <p>This is the motivation for asking for calibration over a specified collection of groups. <a href="https://proceedings.mlr.press/v80/hebert-johnson18a.html">Multicalibration</a>, introduced by Hebert-Johnson, Kim, Reingold, and Rothblum, formalizes that stronger requirement for identifiable subpopulations. The choice of group class, approximation tolerance, and available data matters. Checking two streams is a small illustration of the idea, not a guarantee for every possible subgroup or every definition of fairness.</p>
+          <h2>Why recalibrating the score doesn’t help</h2>
+          <p>Suppose we pass the constant predictor’s output through a function that adjusts its probabilities. Every input is 0.5, so a deterministic function must return the same number, q, for everyone. A needs q = 0.2. B needs q = 0.8. There’s no choice of q that works for both.</p>
+          <p>The same problem occurs at each score in the second example. A more flexible recalibration curve still sees identical inputs for A and B. It has no way to tell them apart.</p>
+          <p>If we let the function use the group, the fix is simple: subtract 0.15 for A and add 0.15 for B. We know those offsets because we constructed the data. Learning a correction from finite samples, especially across many overlapping groups, is a harder problem.</p>
+          <p><a href="https://proceedings.mlr.press/v80/hebert-johnson18a.html">Multicalibration</a>, introduced by Hebert-Johnson, Kim, Reingold, and Rothblum, asks for approximate calibration across a specified collection of identifiable subpopulations. Our two streams are a small example of why that extra requirement matters. The collection has to be specified: passing checks for A and B doesn’t give a guarantee for every subgroup someone might ask about later.</p>
 
-          <h2>Change who shows up</h2>
-          <p>Return to the constant predictor and change the mixture. A still has a 20% event rate and B still has an 80% event rate, but now B supplies 80% of the examples.</p>
-          <p>The new combined rate is 0.2 × 0.2 + 0.8 × 0.8 = 0.68. The unchanged prediction of 50% is now off by 18 percentage points. Neither stream changed internally. The balance that made their errors cancel changed.</p>
-          <p>There is a slightly annoying detail here: the constant predictor’s Brier score stays at 0.25. A prediction of 0.5 has the same squared error whether the outcome is 0 or 1. The calibration failure is real even though that single score does not move.</p>
-          <p>Predicting 20% for A and 80% for B remains calibrated under this particular mixture change, because we kept the within-stream probabilities fixed. If those probabilities change too, that argument no longer applies. The experiment isolates one kind of shift; it does not make the stronger predictor immune to distribution shift in general.</p>
+          <h2>Changing the mixture</h2>
+          <p>Go back to the constant predictor. Keep A’s event rate at 20% and B’s at 80%, but let B supply 80% of the examples instead of half.</p>
+          <p>The combined event rate becomes 0.2 × 0.2 + 0.8 × 0.8 = 0.68. Our prediction of 50% is now off by 18 percentage points. The only thing that changed was how often each stream showed up.</p>
+          <p>The Brier score stays at 0.25. Predicting 0.5 gives the same squared error for a 0 as for a 1, so changing their proportions can’t move it. That’s another reason to look at the calibration curve separately.</p>
+          <p>The predictor that uses 20% for A and 80% for B still works under this shift. It doesn’t rely on the two groups arriving equally often. It does rely on their internal event rates staying fixed; if those change too, we’d need to check again.</p>
 
-          <h2>What would count as passing?</h2>
-          <p>For actual model evaluation, start by stating what the calibration claim covers: which outcome, which population, which period, and which groups. A plot from one test set cannot silently stand in for all of them.</p>
-          <p>Keep the data used to fit a recalibration function separate from the data used to evaluate it. If a group is discovered by searching for the largest residual on the evaluation set, treat it as a hypothesis and check it on fresh data. Otherwise the search can select noise and make it look like a stable failure.</p>
-          <p>Group size also changes what a discrepancy means. For independent binary observations with probability 0.5, the standard deviation of the sample mean is 0.5 divided by the square root of the sample size. That is 5 percentage points for 100 observations and 0.5 points for 10,000. A gap needs a count and an uncertainty assessment beside it, especially when many groups are being checked.</p>
-          <p>With continuous scores, the bins or smoothing used to estimate a calibration curve introduce another choice. Arrieta-Ibarra and coauthors’ <a href="https://jmlr.org/papers/v23/22-0658.html">paper on calibration metrics</a> examines how aggregation can trade resolution against statistical noise. Our discrete construction avoids that issue on purpose: the failure exists even when identical scores are grouped exactly.</p>
-          <p>The predictor was never falsely certified by the definition. It was calibrated for the pooled population we gave it. The mistake would be reading that certificate as a claim about every subset of the population. Reporting the group curves alongside the pooled one makes the actual limitation much harder to miss.</p>
+          <h2>Checking this on real data</h2>
+          <p>This example gives us the groups and their event rates in advance. On real data, I’d start by choosing which groups to check and recording how many examples fall into each group at each score. The population and time period matter too, as the mixture change above shows.</p>
+          <p>I’d keep the data used to fit a recalibration function separate from the data used to evaluate it. There’s a similar issue with searching for groups: if we keep splitting a test set until we find a large error, we may just have found an unusual sample. That group needs to be checked on fresh data before treating the gap as a repeatable failure.</p>
+          <p>Even without a search, small groups give noisy curves. For independent binary observations with probability 0.5, the standard deviation of the sample mean is 0.5 / √n. With 100 observations, that’s 5 percentage points. With 10,000, it’s 0.5 points. A five-point gap means something quite different in those two cases, and checking many groups makes uncertainty harder to handle.</p>
+          <p>Continuous predictions add a choice we avoided here: how to group nearby scores. Very narrow bins give more detail but fewer observations per bin. Arrieta-Ibarra and coauthors’ <a href="https://jmlr.org/papers/v23/22-0658.html">paper on calibration metrics</a> discusses that tradeoff. In this construction, the scores are identical within each bucket, so the group errors remain even when there’s no binning approximation.</p>
+          <p>The pooled calculation checks E[Y ∣ P = p] = p. Splitting by group checks E[Y ∣ P = p, G = g] = p. In this example, averaging over G is exactly where the errors disappear.</p>
           <aside class="post-footnotes" aria-label="Reproduce the experiment"><p><a href="calibration.py" download>Download the complete experiment</a> · Python 3.10 or newer, no dependencies. All numerical results above come from the exact synthetic construction.</p></aside>
         </div>
         <footer class="post-end"><a class="post-back" href="../index.html#blog">← Blog</a></footer>
