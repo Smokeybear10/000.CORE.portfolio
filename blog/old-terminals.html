@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fafaf8">
+  <meta name="description" content="The VT100, escape sequences, and why an old interface is still useful.">
+  <meta name="robots" content="noindex">
+  <title>The terminal is a protocol — draft — Thomas Ou</title>
+  <link rel="icon" href="../notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
+  <link rel="stylesheet" href="../notebook-assets/newsreader.css">
+  <link rel="stylesheet" href="../styles.css?v=notebook-blog">
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site">
+    <header class="post-masthead">
+      <a class="post-home" href="../index.html#about">Thomas Ou</a>
+      <a href="../index.html#blog">← Blog</a>
+    </header>
+    <main id="main" tabindex="-1">
+      <article class="blog-post" aria-labelledby="post-title">
+        <header class="post-header">
+          <h1 id="post-title">The terminal is a protocol</h1>
+          <p class="post-deck">What a 1978 terminal has in common with the window on your laptop.</p>
+          <p class="post-meta">Draft <span aria-hidden="true">|</span> 2 min read</p>
+        </header>
+        <div class="post-prose">
+          <p>A terminal window looks like a place to type commands. Underneath, it is also a conversation: key presses go one way, and text plus display instructions come back.</p>
+          <p>The <a href="https://www.vintagecomputer.net/digital/VT100/vt100_manual/chapter3.html">VT100 manual</a> describes this arrangement for a physical keyboard and screen. A program on the attached computer sends a sequence such as <code>ESC [ 2 J</code> to erase the display, or <code>ESC [ H</code> to move the cursor home. Those operations let a program update a screen instead of printing an endless transcript.</p>
+          <figure><img src="terminal.svg" width="640" height="320" alt="A line drawing of a terminal displaying an escape sequence and a cursor."></figure>
+          <p>Modern terminal emulators still recognize many of these sequences. That shared vocabulary is one reason a command-line interface can work across machines without shipping a separate graphical interface for each one.</p>
+          <h2>Compatibility has edges</h2>
+          <p>A shared vocabulary does not mean identical capabilities. Unicode, colors, and newer control sequences need support at the other end. Nikhil Jha’s <a href="https://nikhiljha.com/posts/vt100/">experiment with a real VT100</a> makes those assumptions visible: software that behaves well in a modern emulator can still overwhelm or confuse the older hardware.</p>
+          <p>That suggests a useful design exercise even without an old terminal on the desk. Decide which features are essential. Keep the plain-text output useful. Add richer rendering only when the terminal can handle it. A progress indicator should not make the underlying command harder to use.</p>
+          <p>The interesting part of the VT100 today is the boundary it exposes. The application decides what to say; the terminal decides how to display the bytes it understands.</p>
+          <aside class="post-footnotes" aria-label="Inspiration"><p>Topic inspired by Nikhil Jha’s <a href="https://nikhiljha.com/posts/vt100/">Using a 1978 terminal in 2026</a>.</p></aside>
+        </div>
+        <footer class="post-end"><a class="post-back" href="../index.html#blog">← Blog</a></footer>
+      </article>
+    </main>
+  </div>
+</body>
+</html>
