@@ -115,6 +115,7 @@ a.note-course:hover { text-decoration: underline; }
 .notes-group-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
 .notes-group-heading h2 { font-size: clamp(21px, 2.1vw, 23px); }
 .notes-group-heading > span { color: var(--muted); font: 12px/1.5 var(--mono); white-space: nowrap; }
+.cv > .visually-hidden + .cv-group, .notes > .visually-hidden + .notes-group { margin-top: 0; }
 .pdf-preview-open { overflow: hidden; }
 .pdf-preview { width: min(1040px, calc(100% - 32px)); height: min(960px, calc(100dvh - 48px)); max-width: none; max-height: none; margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--paper); box-shadow: 0 20px 80px rgb(0 0 0 / .15); }
 .pdf-preview[open] { display: flex; flex-direction: column; }
