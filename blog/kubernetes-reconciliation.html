@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fafaf8">
+  <meta name="description" content="Desired state, controllers, and why deleting a Pod does not change the plan.">
+  <meta name="robots" content="noindex">
+  <title>Kubernetes keeps putting things back — draft — Thomas Ou</title>
+  <link rel="icon" href="../notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
+  <link rel="stylesheet" href="../notebook-assets/newsreader.css">
+  <link rel="stylesheet" href="../styles.css?v=notebook-blog">
+</head>
+<body class="post-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site">
+    <header class="post-masthead">
+      <a class="post-home" href="../index.html#about">Thomas Ou</a>
+      <a href="../index.html#blog">← Blog</a>
+    </header>
+    <main id="main" tabindex="-1">
+      <article class="blog-post" aria-labelledby="post-title">
+        <header class="post-header">
+          <h1 id="post-title">Kubernetes keeps putting things back</h1>
+          <p class="post-deck">What happens after the deployment command finishes.</p>
+          <p class="post-meta">Draft <span aria-hidden="true">|</span> 2 min read</p>
+        </header>
+        <div class="post-prose">
+          <p>Set a Deployment to three replicas, then delete one of its Pods. A replacement appears. Change the replica count to two, and two becomes the target. The difference is where you made the change: the Pod was part of the current state; the Deployment describes the state Kubernetes should maintain.</p>
+          <p>A controller watches objects, compares what exists with what was requested, and makes changes. It keeps doing this as the cluster changes. The API server exposes the shared objects, so separate controllers can respond to one another’s work without one giant procedure coordinating every step. The <a href="https://kubernetes.io/docs/concepts/architecture/controller/">controller documentation</a> describes this arrangement.</p>
+          <figure><img src="reconciliation.svg" width="640" height="320" alt="Three requested replicas compared with two existing replicas and one missing replica to replace."></figure>
+          <h2>A successful request is only the beginning</h2>
+          <p>For a Deployment, the work passes through a ReplicaSet, which maintains the requested number of Pods. Updating the Pod template starts a rollout. With the default rolling-update strategy, a new ReplicaSet grows while the old one shrinks. There can be several intermediate states between submitting the change and having the updated application available.</p>
+          <p>That makes status worth reading. A valid specification can still request an image that cannot be downloaded, exceed a quota, or produce Pods that never become ready. Repeating the request does not fix those conditions. Kubernetes records the stalled rollout; exceeding its progress deadline does not automatically roll it back. These cases are covered in the <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#failed-deployment">Deployment documentation</a>.</p>
+          <p>For an existing Deployment named <code>api</code>, check the rollout and inspect its conditions:</p>
+          <pre tabindex="0" aria-label="Inspect an existing Kubernetes Deployment"><code>kubectl rollout status \
+  deployment/api
+kubectl describe \
+  deployment api</code></pre>
+          <p>Start with the gap between the requested state and the observed state. Then find the component that is failing to close it.</p>
+          <aside class="post-footnotes" aria-label="Inspiration"><p>Topic inspired by Nikhil Jha’s <a href="https://nikhiljha.com/posts/kubernetes-intro/">Kubernetes is a container orchestration system, but that’s not the point.</a></p></aside>
+        </div>
+        <footer class="post-end"><a class="post-back" href="../index.html#blog">← Blog</a></footer>
+      </article>
+    </main>
+  </div>
+</body>
+</html>
