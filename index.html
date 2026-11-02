@@ -8,12 +8,12 @@
   <title>Thomas Ou</title>
   <link rel="icon" href="notebook-assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="notebook-assets/newsreader.css">
-  <link rel="stylesheet" href="styles.css?v=publish-3">
+  <link rel="stylesheet" href="styles.css?v=technical-projects">
   <script src="ambient.js?v=canvas-resize" defer></script>
-  <script src="navigation.js?v=publish-3" defer></script>
+  <script src="navigation.js?v=research-scroll" defer></script>
   <script src="attractor.js?v=canvas-resize" defer></script>
   <script src="geometry.js?v=canvas-resize" defer></script>
-  <script src="text-motion.js?v=publish-3" defer></script>
+  <script src="text-motion.js?v=technical-projects" defer></script>
   <script src="pdf-preview.js?v=pdf-preview" defer></script>
 </head>
 <body>
@@ -29,6 +29,7 @@
       </div>
       <nav aria-label="Main navigation">
         <a href="#about" aria-current="page">About</a>
+        <a href="#research">Research</a>
         <a href="#notes">Notes</a>
         <a href="#cv">CV</a>
         <a href="#blog">Blog</a>
@@ -52,6 +53,42 @@
             </figcaption>
           </figure>
         </div>
+      </section>
+      <section id="research" hidden class="page-section research" aria-labelledby="research-title">
+        <h1 id="research-title" class="visually-hidden">Research</h1>
+        <div class="research-group">
+          <ul class="research-list" role="list" aria-label="Research topics">
+            <li class="research-entry">
+              <div class="research-details">
+                <h2><a href="https://h4bor.vercel.app/" target="_blank" rel="noopener" aria-label="Maritime intelligence research project (opens in a new tab)">Maritime Intelligence and Risk Modeling</a></h2>
+                <p>At Penn, I’m working with Prof. M. Horowitz on vessel anomaly detection and fuzzy inference for interpretable maritime risk assessment.</p>
+              </div>
+            </li>
+            <li class="research-entry">
+              <div class="research-details">
+                <h2><a href="https://arxiv.org/abs/1906.08837" target="_blank" rel="noopener" aria-label="Related paper: Minimal resolutions of monomial ideals (opens in a new tab)">Combinatorial Minimal Free Resolutions</a></h2>
+                <p>Explicit combinatorial constructions for resolving monomial ideals, connecting algebraic structure with topology.</p>
+              </div>
+            </li>
+            <li class="research-entry">
+              <div class="research-details">
+                <h2><a href="https://arxiv.org/abs/2104.13753" target="_blank" rel="noopener" aria-label="Related paper: Sum-of-norms clustering does not separate nearby balls (opens in a new tab)">Sum-of-norms Clustering</a></h2>
+                <p>Geometric and measure-theoretic approaches to understanding how convex clustering behaves on discrete samples and continuous distributions.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <section class="research-group" aria-labelledby="selected-projects-title">
+          <div class="research-group-heading">
+            <h2 id="selected-projects-title">Select Technical Projects</h2>
+          </div>
+          <ul class="technical-projects">
+            <li>
+              <a href="https://github.com/Smokeybear10/002.CORE.r1ver" target="_blank" rel="noopener" aria-label="Counterfactual regret minimization solver for No-Limit Hold’em (opens in a new tab)">Counterfactual regret minimization solver for No-Limit Hold’em</a>
+              <span class="project-tools">(Rust, Rayon, Actix Web)</span>
+            </li>
+          </ul>
+        </section>
       </section>
       <section id="cv" hidden class="page-section cv" aria-labelledby="cv-title">
         <h1 id="cv-title">CV</h1>
