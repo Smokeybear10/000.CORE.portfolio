@@ -5,7 +5,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let entrance;
   let initialScrollPending = true;
-  const titles = { about: 'About — Thomas Ou', research: 'Research — Thomas Ou', cv: 'CV — Thomas Ou', notes: 'Notes — Thomas Ou', blog: 'Blog — Thomas Ou', math: 'Math — Thomas Ou' };
+  const titles = { about: 'About — Thomas Ou', research: 'Research — Thomas Ou', projects: 'Projects — Thomas Ou', cv: 'CV — Thomas Ou', notes: 'Notes — Thomas Ou', blog: 'Blog — Thomas Ou', math: 'Math — Thomas Ou' };
 
   function navigate(moveFocus = false) {
     const requested = window.location.hash.slice(1) || 'about';
