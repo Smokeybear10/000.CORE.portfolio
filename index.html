@@ -8,10 +8,9 @@
   <title>Thomas Ou</title>
   <link rel="icon" href="notebook-assets/favicon.svg?v=trefoil" type="image/svg+xml">
   <link rel="stylesheet" href="notebook-assets/newsreader.css">
-  <link rel="stylesheet" href="styles.css?v=project-catalog">
+  <link rel="stylesheet" href="styles.css?v=calibration-post">
   <script src="ambient.js?v=canvas-resize" defer></script>
-  <script src="navigation.js?v=project-catalog" defer></script>
-  <script src="projects.js?v=project-catalog" defer></script>
+  <script src="navigation.js?v=research-scroll" defer></script>
   <script src="attractor.js?v=canvas-resize" defer></script>
   <script src="geometry.js?v=canvas-resize" defer></script>
   <script src="text-motion.js?v=smooth-text" defer></script>
@@ -31,7 +30,6 @@
       <nav aria-label="Main navigation">
         <a href="#about" aria-current="page">About</a>
         <a href="#research">Research</a>
-        <a href="#projects">Projects</a>
         <a href="#notes">Notes</a>
         <a href="#cv">CV</a>
         <a href="#blog">Blog</a>
@@ -91,141 +89,6 @@
             </li>
           </ul>
         </section>
-      </section>
-      <section id="projects" hidden class="page-section projects" aria-labelledby="projects-title">
-        <div class="projects-heading">
-          <div>
-            <h1 id="projects-title">Projects</h1>
-            <p class="page-intro">Software, research, and experiments.</p>
-          </div>
-          <a class="projects-github" href="https://github.com/Smokeybear10?tab=repositories">All repositories <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="project-toolbar">
-          <div class="project-filters" role="group" aria-label="Filter projects by category" hidden>
-            <button type="button" data-project-filter="all" aria-pressed="true" aria-controls="project-catalog">All</button>
-            <button type="button" data-project-filter="CORE" aria-pressed="false" aria-controls="project-catalog">Core</button>
-            <button type="button" data-project-filter="RSCH" aria-pressed="false" aria-controls="project-catalog">Research</button>
-            <button type="button" data-project-filter="PROJ" aria-pressed="false" aria-controls="project-catalog">Projects</button>
-            <button type="button" data-project-filter="GAME" aria-pressed="false" aria-controls="project-catalog">Games</button>
-            <button type="button" data-project-filter="DATA" aria-pressed="false" aria-controls="project-catalog">Data</button>
-            <button type="button" data-project-filter="MISC" aria-pressed="false" aria-controls="project-catalog">Other</button>
-          </div>
-          <p class="project-count" role="status" aria-live="polite" aria-atomic="true">16 projects</p>
-        </div>
-        <div id="project-catalog">
-          <section class="project-group" data-project-category="CORE" aria-labelledby="projects-core-title">
-            <header class="project-group-heading">
-              <p class="project-tag">CORE</p>
-              <h2 id="projects-core-title">Core</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>thomasou.com</h3><p>This website: mathematics, research, notes, and interactive visualizations.</p></div>
-                <div class="project-links"><a href="#about" aria-label="Visit thomasou.com">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/000.CORE.portfolio" aria-label="thomasou.com source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>D4NCE</h3><p>A browser DJ with two decks, audio effects, and AI-assisted transitions through text and voice.</p></div>
-                <div class="project-links"><a href="https://dance.thomasou.com/" aria-label="Visit D4NCE">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/001.CORE.d4nce" aria-label="D4NCE source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Harbor</h3><p>Maritime intelligence combining vessel tracking, behavioral anomaly detection, and satellite verification.</p></div>
-                <div class="project-links"><a href="https://harbor.thomasou.com/" aria-label="Visit Harbor">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/003.CORE.harbor" aria-label="Harbor source on GitHub">Source</a></div>
-              </li>
-            </ul>
-          </section>
-          <section class="project-group" data-project-category="RSCH" aria-labelledby="projects-research-title">
-            <header class="project-group-heading">
-              <p class="project-tag">RSCH</p>
-              <h2 id="projects-research-title">Research</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>Strike</h3><p>Computer vision for detecting strikes in MMA footage through fighter segmentation and temporal action recognition.</p></div>
-                <div class="project-links"><a href="https://str1ke.vercel.app/" aria-label="Visit Strike">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/100.RSCH.strike" aria-label="Strike source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>River</h3><p>Poker solver research in Rust using equity abstractions and Monte Carlo counterfactual regret minimization.</p></div>
-                <div class="project-links"><a href="https://github.com/Smokeybear10/103.RSCH.river" aria-label="River source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Fortify</h3><p>Digital history research tracing U.S. military invention proposals and research spending from 1888 to 1920.</p></div>
-                <div class="project-links"><a href="https://smokeybear10.github.io/104.RSCH.fortify/" aria-label="Visit Fortify">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/104.RSCH.fortify" aria-label="Fortify source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Relay</h3><p>Financial NLP research connecting stock moves to evidence in news, filings, and earnings transcripts.</p></div>
-                <div class="project-links"><a href="https://github.com/Smokeybear10/105.RSCH.relay" aria-label="Relay source on GitHub">Source</a></div>
-              </li>
-            </ul>
-          </section>
-          <section class="project-group" data-project-category="PROJ" aria-labelledby="projects-apps-title">
-            <header class="project-group-heading">
-              <p class="project-tag">PROJ</p>
-              <h2 id="projects-apps-title">Projects</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>Draft</h3><p>Resume review and building with keyword feedback, suggested rewrites, and PDF export.</p></div>
-                <div class="project-links"><a href="https://proj-dr4ft.vercel.app/" aria-label="Visit Draft">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/203.PROJ.draft" aria-label="Draft source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Governor</h3><p>A VS Code and Cursor extension that enforces dollar budgets on multi-step AI work.</p></div>
-                <div class="project-links"><a href="https://marketplace.visualstudio.com/items?itemName=governor.token-governor-vscode" aria-label="Install Governor from the Visual Studio Marketplace">Install <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/207.PROJ.governor" aria-label="Governor source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Sonder</h3><p>EV charger site screening using street-level 3D scans, infrastructure data, and AI surveyor agents.</p></div>
-                <div class="project-links"><a href="https://sonder-206.vercel.app/" aria-label="Visit Sonder">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/208.PROJ.sonder" aria-label="Sonder source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Versus</h3><p>UFC outcome prediction research using ensemble classifiers, fighter statistics, and feature attribution.</p></div>
-                <div class="project-links"><a href="https://github.com/Smokeybear10/211.PROJ.versus" aria-label="Versus source on GitHub">Source</a></div>
-              </li>
-            </ul>
-          </section>
-          <section class="project-group" data-project-category="GAME" aria-labelledby="projects-games-title">
-            <header class="project-group-heading">
-              <p class="project-tag">GAME</p>
-              <h2 id="projects-games-title">Games</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>SWEEPER.EXE</h3><p>Minesweeper with timed levels, character classes, and relics inside a simulated Windows 98 desktop.</p></div>
-                <div class="project-links"><a href="https://sweeperexe.vercel.app/" aria-label="Play SWEEPER.EXE">Play <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/300.GAME.sweeper" aria-label="SWEEPER.EXE source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Zetamax</h3><p>Timed mental arithmetic with targeted practice, ranked rounds, daily challenges, and private leagues.</p></div>
-                <div class="project-links"><a href="https://zeta-max.vercel.app/" aria-label="Play Zetamax">Play <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/301.GAME.zetamax" aria-label="Zetamax source on GitHub">Source</a></div>
-              </li>
-            </ul>
-          </section>
-          <section class="project-group" data-project-category="DATA" aria-labelledby="projects-data-title">
-            <header class="project-group-heading">
-              <p class="project-tag">DATA</p>
-              <h2 id="projects-data-title">Data</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>Music Assets</h3><p>Shared audio assets for the D4NCE track library and Zetamax music.</p></div>
-                <div class="project-links"><a href="https://github.com/Smokeybear10/803.DATA.music" aria-label="Music Assets repository on GitHub">Repository</a></div>
-              </li>
-            </ul>
-          </section>
-          <section class="project-group" data-project-category="MISC" aria-labelledby="projects-other-title">
-            <header class="project-group-heading">
-              <p class="project-tag">MISC</p>
-              <h2 id="projects-other-title">Other</h2>
-            </header>
-            <ul class="project-list" role="list">
-              <li class="project-entry">
-                <div class="project-copy"><h3>Portfolio 2025 <span class="project-note">Archived</span></h3><p>My first portfolio, built as a single page with HTML and CSS.</p></div>
-                <div class="project-links"><a href="https://smokeybear10.github.io/902.MISC.portfolio-2025/" aria-label="Visit Portfolio 2025">Visit <span aria-hidden="true">↗</span></a><a href="https://github.com/Smokeybear10/902.MISC.portfolio-2025" aria-label="Portfolio 2025 source on GitHub">Source</a></div>
-              </li>
-              <li class="project-entry">
-                <div class="project-copy"><h3>Cursor Boston <span class="project-note">Fork</span></h3><p>A fork of the Cursor Boston community platform for events and collaboration.</p></div>
-                <div class="project-links"><a href="https://github.com/Smokeybear10/cursor-boston" aria-label="Cursor Boston fork on GitHub">Source</a></div>
-              </li>
-            </ul>
-          </section>
-        </div>
       </section>
       <section id="cv" hidden class="page-section cv" aria-labelledby="cv-title">
         <h1 id="cv-title" class="visually-hidden">CV</h1>
