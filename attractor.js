@@ -8,6 +8,7 @@
   const concepts = {
     chaos: {
       title: 'Lorenz attractor',
+      pitch: 0.12,
       accessible: 'Lorenz attractor. Drag or use arrow keys to rotate the trajectory.'
     },
     mobius: {
@@ -16,7 +17,7 @@
     },
     klein: {
       title: 'Klein bottle',
-      accessible: 'A figure-eight immersion of a Klein bottle in three dimensions, with self-intersections. Drag or use arrow keys to rotate.'
+      accessible: 'A classic Klein bottle immersed in three dimensions, with its neck passing through its side. Drag or use arrow keys to rotate.'
     },
     harmonic: {
       title: 'Spherical harmonic',
@@ -25,10 +26,36 @@
     topology: {
       title: 'Trefoil knot',
       accessible: 'A trefoil knot drawn as a wire mesh. Drag or use arrow keys to rotate.'
+    },
+    helicoid: {
+      title: 'Helicoid',
+      accessible: 'A finite patch of a helicoid, a minimal surface shaped like a spiral ramp. Drag or use arrow keys to rotate.'
+    },
+    cinquefoil: {
+      title: 'Cinquefoil knot',
+      pitch: 1.1,
+      accessible: 'A cinquefoil, the two-five torus knot, drawn as a wire mesh. Drag or use arrow keys to rotate.'
+    },
+    calabi: {
+      title: 'Calabi–Yau · slice',
+      pitch: 0.55,
+      accessible: 'A three-dimensional projection of a finite two-dimensional slice of the Fermat quintic Calabi–Yau threefold. This shows a slice of the six-dimensional manifold. Drag or use arrow keys to rotate.'
+    },
+    hopf: {
+      title: 'Hopf fibration',
+      pitch: 0.5,
+      accessible: 'Twelve selected circular fibers of the Hopf fibration, stereographically projected from the three-sphere. Each pair of circles is linked. Drag or use arrow keys to rotate.'
+    },
+    boys: {
+      title: 'Boy’s surface',
+      pitch: 0.55,
+      accessible: 'Boy’s surface, an immersion of the real projective plane in three dimensions, with self-intersections. Drag or use arrow keys to rotate.'
     }
   };
   const conceptNames = Object.keys(concepts);
-  const concept = conceptNames[Math.floor(Math.random() * conceptNames.length)];
+  let concept = conceptNames[Math.floor(Math.random() * conceptNames.length)];
+  const home = document.getElementById('about');
+  let onHome = !home.hidden;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const count = 6500;
   const step = 0.006;
@@ -38,11 +65,9 @@
   const backdrop = document.createElement('canvas');
   const background = backdrop.getContext('2d');
   const lostSurfaces = new Set();
-  const initialYaw = 0.42;
-  const initialPitch = 0.12;
   const rho = 28;
-  let yaw = concept === 'chaos' ? initialYaw : 0.45;
-  let pitch = concept === 'chaos' ? initialPitch : 0.65;
+  let yaw = concept === 'chaos' ? 0.42 : 0.45;
+  let pitch = concepts[concept].pitch ?? 0.65;
   let width = 0;
   let height = 0;
   let ratio = 1;
@@ -163,16 +188,20 @@
   const surfaces = {};
 
   function buildSurface(name) {
-    const rows = name === 'mobius' ? 120 : name === 'klein' ? 96 : 64;
-    const columns = name === 'mobius' ? 14 : name === 'klein' ? 28 : 40;
+    if (name === 'calabi') return buildCalabiYau();
+    if (name === 'hopf') return buildHopfFibration();
+    if (name === 'boys') return buildBoySurface();
+    const [rows, columns] = { mobius: [120, 14], harmonic: [64, 40], helicoid: [96, 24] }[name] ?? [96, 28];
+    const periodicU = name !== 'helicoid';
     const periodicV = name === 'klein';
+    const rowCount = periodicU ? rows : rows + 1;
     const stride = periodicV ? columns : columns + 1;
-    const vertices = new Float64Array(rows * stride * 3);
+    const vertices = new Float64Array(rowCount * stride * 3);
     const faces = [];
     const minimum = [Infinity, Infinity, Infinity];
     const maximum = [-Infinity, -Infinity, -Infinity];
-    for (let i = 0; i < rows; i += 1) {
-      const u = i / rows * Math.PI * 2;
+    for (let i = 0; i < rowCount; i += 1) {
+      const u = periodicU ? i / rows * Math.PI * 2 : (i / rows * 3 - 1.5) * Math.PI;
       for (let j = 0; j < stride; j += 1) {
         let point;
         if (name === 'mobius') {
@@ -181,8 +210,22 @@
           point = [radial * Math.cos(u), radial * Math.sin(u), v * Math.sin(u / 2)];
         } else if (name === 'klein') {
           const v = j / columns * Math.PI * 2;
-          const radial = 2 + Math.cos(u / 2) * Math.sin(v) - Math.sin(u / 2) * Math.sin(2 * v);
-          point = [radial * Math.cos(u), radial * Math.sin(u), Math.sin(u / 2) * Math.sin(v) + Math.cos(u / 2) * Math.sin(2 * v)];
+          // Classic immersion, factored from VTK's vtkParametricKlein equations:
+          // https://vtk.org/doc/nightly/html/classvtkParametricKlein.html
+          // u / 2 and a quarter-turn in v preserve the seam (2π, v) ~ (0, -v).
+          const sine = Math.sin(u / 2);
+          const cosine = Math.cos(u / 2);
+          const sine2 = sine * sine;
+          const cosine2 = cosine * cosine;
+          const radius = (3 + 5 * sine * cosine) / 15;
+          point = [
+            4 * cosine * sine2 * sine2 * sine * (1 + 2 * cosine2) + 2 * cosine * radius * Math.sin(v),
+            2 * radius * Math.cos(v),
+            4 * sine2 + sine2 * sine * radius * (1 - 16 * cosine2 * cosine2) * Math.sin(v)
+          ];
+        } else if (name === 'helicoid') {
+          const v = (j / columns * 2 - 1) * 1.25;
+          point = [v * Math.cos(u), v * Math.sin(u), 0.28 * u];
         } else {
           const theta = j / columns * Math.PI;
           const sine = Math.sin(theta);
@@ -205,7 +248,7 @@
     }
     for (let i = 0; i < vertices.length; i += 1) vertices[i] /= radius;
     for (let i = 0; i < rows; i += 1) {
-      const nextI = (i + 1) % rows;
+      const nextI = periodicU ? (i + 1) % rows : i + 1;
       for (let j = 0; j < columns; j += 1) {
         const nextJ = periodicV ? (j + 1) % columns : j + 1;
         let seamJ = j;
@@ -221,6 +264,191 @@
       }
     }
     return { vertices, faces, projected: new Float32Array(vertices.length) };
+  }
+
+  function buildCalabiYau() {
+    // Hanson: https://homes.luddy.indiana.edu/hansona/papers/CP2-94.pdf
+    // z1^5 + z2^5 = 1 gives the slice [-1:z1:z2:0:0] of the quintic in CP4.
+    const rows = 12;
+    const columns = 16;
+    const stride = columns + 1;
+    const vertices = [];
+    const faces = [];
+    const seams = new Map();
+    let radius = 0;
+
+    function complexPower(real, imaginary, phase) {
+      const magnitude = Math.hypot(real, imaginary) ** 0.4;
+      const angle = Math.atan2(imaginary, real) * 0.4 + phase * Math.PI * 2 / 5;
+      return [magnitude * Math.cos(angle), magnitude * Math.sin(angle)];
+    }
+
+    for (let k1 = 0; k1 < 5; k1 += 1) {
+      for (let k2 = 0; k2 < 5; k2 += 1) {
+        const patch = new Uint32Array((rows + 1) * stride);
+        for (let i = 0; i <= rows; i += 1) {
+          const theta = (1 - Math.cos(i / rows * Math.PI)) * Math.PI / 4;
+          const cosine = i === rows ? 0 : Math.cos(theta);
+          const sine = i === 0 ? 0 : Math.sin(theta);
+          for (let j = 0; j <= columns; j += 1) {
+            const t = j / columns * 2 - 1;
+            const xi = t * Math.abs(t);
+            let key;
+            // Weld in the complex surface, never by coincident projected positions.
+            if (i === 0) {
+              key = j === columns / 2 ? `a:${k1}:tip`
+                : `a:${k1}:${j > columns / 2 ? (k2 + 1) % 5 : k2}:${Math.min(j, columns - j)}`;
+            } else if (i === rows) {
+              key = j === columns / 2 ? `b:${k2}:tip`
+                : `b:${j > columns / 2 ? (k1 + 4) % 5 : k1}:${k2}:${Math.min(j, columns - j)}`;
+            }
+            let index = key === undefined ? undefined : seams.get(key);
+            if (index === undefined) {
+              const cosh = Math.cosh(xi);
+              const sinh = Math.sinh(xi);
+              const z1 = complexPower(cosine * cosh, -sine * sinh, k1);
+              const z2 = complexPower(sine * cosh, cosine * sinh, k2);
+              const point = [z1[0], z2[0], (z1[1] + z2[1]) / Math.SQRT2];
+              index = vertices.length / 3;
+              vertices.push(...point);
+              radius = Math.max(radius, Math.hypot(...point));
+              if (key !== undefined) seams.set(key, index);
+            }
+            patch[i * stride + j] = index;
+          }
+        }
+        for (let i = 0; i < rows; i += 1) {
+          for (let j = 0; j < columns; j += 1) {
+            faces.push({ indices: [patch[i * stride + j], patch[(i + 1) * stride + j], patch[(i + 1) * stride + j + 1], patch[i * stride + j + 1]], depth: 0 });
+          }
+        }
+      }
+    }
+    return {
+      vertices: Float64Array.from(vertices, value => value / radius),
+      faces,
+      projected: new Float32Array(vertices.length)
+    };
+  }
+
+  function buildHopfFibration() {
+    // Stereographic Hopf fibers: https://www.math.uni-bielefeld.de/~sek/top/hopf/hopf-fib.htm
+    // Project (cos(eta)e^(i(t+phi)), sin(eta)e^(it)) from S3 to R3.
+    const segments = 80;
+    const sides = 6;
+    const tubeRadius = 0.025;
+    const vertices = new Float64Array(12 * segments * sides * 3);
+    const faces = [];
+    const latitudes = [0.28, 0.56, 0.85];
+    let radius = 0;
+    for (let group = 0; group < latitudes.length; group += 1) {
+      const a = Math.cos(latitudes[group]);
+      const b = Math.sin(latitudes[group]);
+      for (let fiber = 0; fiber < 4; fiber += 1) {
+        const phi = fiber * Math.PI / 2 + group * Math.PI / 12;
+        const cosine = Math.cos(phi);
+        const sine = Math.sin(phi);
+        const u = [a * cosine, a * sine, b];
+        const v = [-sine, cosine, 0];
+        const normal = [-b * cosine, -b * sine, a];
+        const center = v.map(value => b / a * value);
+        const offset = (group * 4 + fiber) * segments * sides;
+        for (let i = 0; i < segments; i += 1) {
+          const theta = i / segments * Math.PI * 2;
+          const radial = u.map((value, axis) => value * Math.cos(theta) + v[axis] * Math.sin(theta));
+          for (let j = 0; j < sides; j += 1) {
+            const psi = j / sides * Math.PI * 2;
+            const point = center.map((value, axis) => value + (1 / a + tubeRadius * Math.cos(psi)) * radial[axis] + tubeRadius * Math.sin(psi) * normal[axis]);
+            const index = offset + i * sides + j;
+            vertices.set(point, index * 3);
+            radius = Math.max(radius, Math.hypot(...point));
+            const nextI = (i + 1) % segments;
+            const nextJ = (j + 1) % sides;
+            faces.push({ indices: [index, offset + nextI * sides + j, offset + nextI * sides + nextJ, offset + i * sides + nextJ], depth: 0 });
+          }
+        }
+      }
+    }
+    for (let i = 0; i < vertices.length; i += 1) vertices[i] /= radius;
+    return { vertices, faces, projected: new Float32Array(vertices.length) };
+  }
+
+  function buildBoySurface() {
+    // Bryant–Kusner disk model: https://www.maplesoft.com/support/help/maple/view.aspx?path=MathApps/BoysSurface
+    const rings = 40;
+    const segments = 144;
+    const poleRing = 29;
+    const poleRadius = Math.cbrt((3 - Math.sqrt(5)) / 2);
+    const vertices = [];
+    const faces = [];
+
+    function point(r, theta) {
+      const r2 = r * r;
+      const r3 = r2 * r;
+      const r5 = r3 * r2;
+      const r6 = r3 * r3;
+      const z6Real = r6 * Math.cos(6 * theta);
+      const z6Imaginary = r6 * Math.sin(6 * theta);
+      const dReal = z6Real + Math.sqrt(5) * r3 * Math.cos(3 * theta) - 1;
+      const dImaginary = z6Imaginary + Math.sqrt(5) * r3 * Math.sin(3 * theta);
+      const d2 = dReal * dReal + dImaginary * dImaginary;
+      const aReal = r * Math.cos(theta) - r5 * Math.cos(5 * theta);
+      const aImaginary = r * Math.sin(theta) - r5 * Math.sin(5 * theta);
+      const bReal = r * Math.cos(theta) + r5 * Math.cos(5 * theta);
+      const bImaginary = r * Math.sin(theta) + r5 * Math.sin(5 * theta);
+      const cImaginary = z6Imaginary * dReal - (1 + z6Real) * dImaginary;
+      // Cancel the removable rational poles before inversion, including the triple point.
+      const denominator = 2.25 * (r2 + r5 * r5) + 2 * z6Real + 2.5 * r6 - cImaginary + d2 / 4;
+      return [
+        -1.5 * (aImaginary * dReal - aReal * dImaginary) / denominator,
+        -1.5 * (bReal * dReal + bImaginary * dImaginary) / denominator,
+        (cImaginary - d2 / 2) / denominator
+      ];
+    }
+
+    vertices.push(...point(0, 0));
+    for (let i = 1; i <= rings; i += 1) {
+      const r = i <= poleRing ? poleRadius * i / poleRing
+        : poleRadius + (1 - poleRadius) * (i - poleRing) / (rings - poleRing);
+      const count = i === rings ? segments / 2 : segments;
+      for (let j = 0; j < count; j += 1) vertices.push(...point(r, j / segments * Math.PI * 2));
+    }
+
+    function vertex(i, j) {
+      if (i === 0) return 0;
+      // Antipodal boundary points are one point of RP2, not separate rim vertices.
+      return 1 + (i - 1) * segments + j % (i === rings ? segments / 2 : segments);
+    }
+
+    for (let j = 0; j < segments; j += 1) {
+      const a = vertex(1, j);
+      const b = vertex(1, j + 1);
+      faces.push({ indices: [0, a, b, b], depth: 0 });
+    }
+    for (let i = 1; i < rings; i += 1) {
+      for (let j = 0; j < segments; j += 1) {
+        faces.push({ indices: [vertex(i, j), vertex(i + 1, j), vertex(i + 1, j + 1), vertex(i, j + 1)], depth: 0 });
+      }
+    }
+
+    const minimum = [Infinity, Infinity, Infinity];
+    const maximum = [-Infinity, -Infinity, -Infinity];
+    for (let i = 0; i < vertices.length; i += 1) {
+      const axis = i % 3;
+      minimum[axis] = Math.min(minimum[axis], vertices[i]);
+      maximum[axis] = Math.max(maximum[axis], vertices[i]);
+    }
+    const center = minimum.map((value, axis) => (value + maximum[axis]) / 2);
+    let radius = 0;
+    for (let i = 0; i < vertices.length; i += 3) {
+      for (let axis = 0; axis < 3; axis += 1) vertices[i + axis] -= center[axis];
+      radius = Math.max(radius, Math.hypot(vertices[i], vertices[i + 1], vertices[i + 2]));
+    }
+    return {
+      vertices: Float64Array.from(vertices, value => value / radius),
+      faces,
+      projected: new Float32Array(vertices.length)
+    };
   }
 
   function drawSurface() {
@@ -262,23 +490,24 @@
     }
   }
 
-  const knotSegments = 200;
   const knotSides = 10;
-  const knotRadius = 0.18;
   let knotPoints = [];
 
   function buildKnot() {
+    const knotTurns = concept === 'cinquefoil' ? 5 : 3;
+    const knotSegments = concept === 'cinquefoil' ? 320 : 200;
+    const knotRadius = concept === 'cinquefoil' ? 0.14 : 0.18;
     knotPoints = Array.from({ length: knotSegments }, (_, i) => {
       const t = i / knotSegments * Math.PI * 2;
       const c2 = Math.cos(2 * t);
       const s2 = Math.sin(2 * t);
-      const c3 = Math.cos(3 * t);
-      const s3 = Math.sin(3 * t);
-      const center = [(2 + c3) * c2, (2 + c3) * s2, s3];
-      const tangent = [-3 * s3 * c2 - 2 * (2 + c3) * s2, -3 * s3 * s2 + 2 * (2 + c3) * c2, 3 * c3];
+      const cq = Math.cos(knotTurns * t);
+      const sq = Math.sin(knotTurns * t);
+      const center = [(2 + cq) * c2, (2 + cq) * s2, sq];
+      const tangent = [-knotTurns * sq * c2 - 2 * (2 + cq) * s2, -knotTurns * sq * s2 + 2 * (2 + cq) * c2, knotTurns * cq];
       const length = Math.hypot(...tangent);
       const [tx, ty, tz] = tangent.map(value => value / length);
-      const normal = [c3 * c2, c3 * s2, s3];
+      const normal = [cq * c2, cq * s2, sq];
       const binormal = [ty * normal[2] - tz * normal[1], tz * normal[0] - tx * normal[2], tx * normal[1] - ty * normal[0]];
       return Array.from({ length: knotSides }, (_, j) => {
         const a = j / knotSides * Math.PI * 2;
@@ -289,6 +518,7 @@
 
   function drawKnot() {
     if (!knotPoints.length) buildKnot();
+    const knotSegments = knotPoints.length;
     context.clearRect(0, 0, width, height);
     const cy = Math.cos(yaw);
     const sy = Math.sin(yaw);
@@ -336,7 +566,7 @@
       if (concept !== 'chaos') yaw += delta * 0.12;
     }
     if (concept === 'chaos') drawChaos();
-    else if (concept === 'topology') drawKnot();
+    else if (concept === 'topology' || concept === 'cinquefoil') drawKnot();
     else drawSurface();
     if (playing && !dragging) requestDraw();
   }
@@ -377,10 +607,24 @@
   }
 
   function resetView() {
-    yaw = concept === 'chaos' ? initialYaw : 0.45;
-    pitch = concept === 'chaos' ? initialPitch : 0.65;
+    yaw = concept === 'chaos' ? 0.42 : 0.45;
+    pitch = concepts[concept].pitch ?? 0.65;
     dirty = true;
     requestDraw();
+  }
+
+  function chooseNextConcept() {
+    suspend();
+    if (pointer) endDrag({ pointerId: pointer.id });
+    const choices = conceptNames.filter(name => name !== concept);
+    concept = choices[Math.floor(Math.random() * choices.length)];
+    knotPoints = [];
+    phase = 4200;
+    title.textContent = concepts[concept].title;
+    canvas.dataset.concept = concept;
+    updateMotion();
+    resetView();
+    resize();
   }
 
   function endDrag(event) {
@@ -472,7 +716,16 @@
   new ResizeObserver(resize).observe(canvas);
   window.addEventListener('resize', resize, { passive: true });
   window.visualViewport?.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('pageshow', resize);
+  window.addEventListener('hashchange', () => {
+    const nextHome = !home.hidden;
+    if (nextHome && !onHome) chooseNextConcept();
+    onHome = nextHome;
+  });
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && !home.hidden) chooseNextConcept();
+    onHome = !home.hidden;
+    resize();
+  });
   integrate();
   title.textContent = concepts[concept].title;
   canvas.dataset.concept = concept;
