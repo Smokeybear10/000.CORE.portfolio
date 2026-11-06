@@ -275,7 +275,7 @@
     else if (client) startTracking();
     else scheduleSdk();
     replay.checked = consent === 'replay';
-    setPanel(consent === null && !privacySignal);
+    setPanel(false);
   });
   window.addEventListener('hashchange', pageview);
   window.addEventListener('pagehide', flushEngagement);
@@ -283,7 +283,7 @@
     if (!event.persisted) return;
     consent = readConsent();
     replay.checked = consent === 'replay';
-    setPanel(consent === null && !privacySignal);
+    setPanel(false);
     lastPage = '';
     activeSeconds = 0;
     wasVisible = !document.hidden;
@@ -336,8 +336,6 @@
     replay.disabled = true;
     form.querySelector('[type="submit"]').disabled = true;
     stopTracking();
-  } else if (consent === null) {
-    setPanel(true);
   } else if (permitted()) {
     scheduleSdk();
   }
