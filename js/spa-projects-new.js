@@ -116,7 +116,6 @@ const projectData = {
     ],
     technical: "FastAPI backend serves the analysis, builder, and jobs endpoints; a Next.js + TypeScript frontend renders the Blue Book interface. Resume parsing handles both PDF and DOCX. Standard scoring runs local NLP across ATS compatibility, keyword match, format, and section coverage; AI scoring calls xAI Grok for structured quality assessment and skill-gap identification. The builder renders five templates to ATS-parseable PDF. Job discovery aggregates seven portals into direct search links with market insight summaries.",
     links: [
-      { text: "Live Website", url: "https://proj-dr4ft.vercel.app", type: "live" },
       { text: "GitHub Repository", url: "https://github.com/Smokeybear10/203.PROJ.draft", type: "github" }
     ],
     gallery: ["Images/ProjectPhotos/PR0XIM.png"]
