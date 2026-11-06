@@ -11,10 +11,12 @@
   <link rel="stylesheet" href="styles.css?v=calibration-post">
   <script src="ambient.js?v=canvas-resize" defer></script>
   <script src="navigation.js?v=research-scroll" defer></script>
-  <script src="attractor.js?v=canvas-resize" defer></script>
+  <script src="attractor.js?v=home-model-shuffle" defer></script>
   <script src="geometry.js?v=canvas-resize" defer></script>
   <script src="text-motion.js?v=smooth-text" defer></script>
   <script src="pdf-preview.js?v=pdf-preview" defer></script>
+  <link rel="stylesheet" href="analytics.css?v=posthog">
+  <script src="analytics.js?v=posthog" defer></script>
 </head>
 <body>
   <div class="ambient-background" aria-hidden="true">
@@ -305,6 +307,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.64 7.584H.47l8.6-9.835L0 1.154h7.594l5.243 6.932 6.064-6.933zm-1.29 19.49h2.039L6.487 3.24H4.3l13.311 17.403z"/></svg>
         </a>
       </nav>
+      <button class="analytics-settings ph-no-capture" type="button" aria-controls="analytics-preferences" aria-expanded="false" hidden>Privacy</button>
     </footer>
   </div>
   <dialog id="pdf-preview" class="pdf-preview" aria-labelledby="pdf-preview-title" data-preview-root="notebook-assets/note-previews/">
@@ -328,5 +331,21 @@
       </div>
     </footer>
   </dialog>
+  <section id="analytics-preferences" class="analytics-preferences ph-no-capture" aria-labelledby="analytics-heading" tabindex="-1" hidden>
+    <button id="analytics-close" type="button" aria-label="Close analytics preferences">×</button>
+    <h2 id="analytics-heading">Site analytics</h2>
+    <p>May I use PostHog to understand visits, clicks, and reading activity? A browser ID helps recognize return visits. You can change your choice under Privacy.</p>
+    <form id="analytics-consent">
+      <div class="analytics-controls">
+        <label class="analytics-replay-option"><input id="analytics-replay" type="checkbox"> Include session replays and heatmaps</label>
+        <p class="analytics-detail">Replays show activity on this site. Inputs and animated graphics stay hidden.</p>
+        <div class="analytics-actions">
+          <button type="submit">Allow analytics</button>
+          <button id="analytics-decline" type="button">No thanks</button>
+        </div>
+      </div>
+      <p id="analytics-status" role="status" hidden></p>
+    </form>
+  </section>
 </body>
 </html>
