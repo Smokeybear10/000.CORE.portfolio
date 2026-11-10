@@ -44,5 +44,12 @@
       "source": "/contact",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/play",
+      "destination": "/play/",
+      "permanent": true
+    }
   ]
 }
