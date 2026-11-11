@@ -41,8 +41,9 @@ svg { display: block; }
 .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 24px; margin-bottom: 40px; }
 .page-title { justify-self: start; font-family: var(--serif); font-size: clamp(88px, 9vw, 120px); font-style: italic; font-weight: 400; line-height: .98; letter-spacing: -.06em; }
 .page-title span { color: var(--link); }
-.brand { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); font-size: 14px; font-weight: 500; letter-spacing: -.01em; line-height: 1.5; text-decoration: none; }
-.brand:hover { color: var(--link); text-decoration: underline; }
+.brand { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font: 500 22px/1.2 var(--serif); letter-spacing: -.02em; text-decoration: none; white-space: nowrap; }
+.brand:visited { color: var(--ink); }
+.brand:hover, .brand:focus-visible { color: var(--link); }
 .intro-copy { grid-column: 1 / -1; color: var(--muted); font-size: 16px; letter-spacing: -.015em; line-height: 1.6; text-wrap: pretty; }
 .site-nav { grid-column: 1 / -1; display: flex; align-items: center; gap: 28px; min-width: 0; margin-top: 14px; border-bottom: 1px solid var(--line); }
 .site-nav a { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; margin-bottom: -1px; padding: 8px 0 12px; border-bottom: 2px solid transparent; color: var(--muted); font-size: 15px; font-weight: 500; text-decoration: none; }
@@ -97,7 +98,7 @@ svg { display: block; }
   .site { width: min(calc(100% - var(--gutter) * 2), 580px); margin-top: max(28px, env(safe-area-inset-top)); margin-bottom: max(32px, env(safe-area-inset-bottom)); }
   .site-header { gap: 12px 20px; margin-bottom: 30px; }
   .page-title { font-size: 88px; }
-  .brand { font-size: 14px; }
+  .brand { font-size: 20px; }
   .intro-copy { max-width: 30ch; font-size: 16px; }
   .site-nav { gap: 24px; margin-top: 8px; }
   .repository-group { grid-template-columns: minmax(0, 1fr); gap: 7px; padding: 28px 0; }

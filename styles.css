@@ -200,7 +200,9 @@ a.note-course:hover { text-decoration: underline; }
 .pdf-preview-pagination { display: flex; align-items: center; gap: 12px; }
 #pdf-preview-count { min-width: 5ch; text-align: center; color: var(--muted); font: 12px/1.5 var(--mono); }
 .site-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); }
-.footer-play { display: inline-flex; align-items: center; min-height: 44px; margin-left: auto; font: 16px/1.5 var(--serif); }
+.footer-play { display: inline-flex; align-items: center; min-height: 44px; margin-left: auto; color: var(--ink); font: italic 400 28px/1 var(--serif); letter-spacing: -.06em; text-decoration: none; }
+.footer-play span { color: var(--link); }
+.footer-play:hover, .footer-play:focus-visible { color: var(--link); }
 .social-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px clamp(12px, 2.2vw, 28px); }
 .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: #111; border-radius: 3px; text-decoration: none; transition: color var(--duration) var(--ease), transform var(--duration) var(--ease); }
 .social-links svg { display: block; width: 28px; height: 28px; }
@@ -345,6 +347,9 @@ figcaption { font-size: 16px; color: var(--muted); margin-top: 18px; }
   .figure-buttons { margin-left: auto; gap: 14px; }
   .figure-buttons button { min-height: 44px; }
   .equation { flex-direction: column; }
+}
+@media (max-width: 360px) {
+  .social-links { gap: 10px; }
 }
 @media (min-width: 821px) and (max-height: 500px) {
   .attractor-plot { max-height: 240px; }
