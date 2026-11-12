@@ -70,8 +70,9 @@ main { display: flex; flex: 1; flex-direction: column; min-width: 0; margin-top:
 .technical-projects { margin: 0; padding: 0; list-style: none; font-size: clamp(18px, 1.4vw, 23px); line-height: 1.5; }
 .technical-projects li { display: grid; grid-template-columns: minmax(250px, 30%) minmax(0, 1fr); align-items: baseline; column-gap: 16px; }
 .technical-projects li + li { margin-top: 8px; }
-.technical-projects a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; white-space: nowrap; text-decoration-color: #bccbd9; }
+.technical-projects a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; white-space: nowrap; color: var(--ink); text-decoration-color: #8b8e89; transition: text-decoration-color var(--duration) var(--ease); }
 .technical-projects a:hover, .technical-projects a:focus-visible { text-decoration-color: currentColor; }
+.technical-projects a:focus-visible { outline-color: var(--ink); }
 .technical-projects p { color: var(--muted); font-size: 16px; line-height: 1.6; }
 .cv { max-width: 1120px; }
 .resume-request { margin-top: 32px; font-size: clamp(16px, 1.2vw, 19px); }
